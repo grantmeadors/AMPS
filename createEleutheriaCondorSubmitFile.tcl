@@ -40,7 +40,7 @@ if {[catch {exec mkdir logs} result]}  {
 }
 
 # Find all the data using ligo_data_find
-set fp [open "testSeglist.txt" r]
+set fp [open "dividedSeglist.txt" r]
 set file_data [read $fp]
 close $fp
 set data [split $file_data "\n"]
