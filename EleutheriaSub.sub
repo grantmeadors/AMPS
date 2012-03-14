@@ -1,10 +1,10 @@
 universe = vanilla
-executable = /archive/home/gmeadors/2012/03/14-0/run_eleutheria-well.sh
-output = /archive/home/gmeadors/2012/03/14-0/logs/eleutheria.out.$(process)
+executable = /archive/home/gmeadors/2012/03/14-1/AMPS/run_eleutheria-well.sh
+output = /archive/home/gmeadors/2012/03/14-1/AMPS/logs/eleutheria.out.$(process)
 error = logs/eleutheria.err.$(process)
 log = logs/eleutheria.log.$(process)
 requirements = Memory >= 6000
 environment = HOME=/archive/home/gmeadors;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/sys/os/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/opt/lscsoft/lalstochastic/lib64:/opt/lscsoft/lalpulsar/lib64:/opt/lscsoft/lalburst/lib64:/opt/lscsoft/lalinspiral/lib64:/opt/lscsoft/lalxml/lib64:/opt/lscsoft/lalmetaio/lib64:/opt/lscsoft/lalframe/lib64:/opt/lscsoft/lal/lib64:/opt/lscsoft/glue/lib64/python2.4/site-packages:/opt/lscsoft/libframe/lib64:/opt/lscsoft/libmetaio/lib64:/opt/lscsoft/ldas-tools/lib64:/opt/lscsoft/dol/lib64:/opt/lscsoft/root/lib:/opt/lscsoft/root/lib/5.26:/opt/vdt/globus/lib:/ligotools/lib
  
-arguments = 953164815 953166875 cache/fileList-DARM-953164815-953166875.txt cache/fileList-NOISE-953164815-953166875.txt
+arguments = 953164815 953164875 cache/fileList-DARM-953164815-953164875.txt cache/fileList-NOISE-953164815-953164875.txt
 queue

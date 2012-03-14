@@ -1,7 +1,7 @@
 classdef Data < handle
     % Retrieve data from LIGO servers
     % Grant David Meadors
-    % 02012-02-28
+    % 02012-03-14
     
     properties (SetAccess = private)
         t0
@@ -137,7 +137,7 @@ classdef Data < handle
                 
                 % DARM supplied by frames; grab before and after times too
                 if addenda.passFirstFlag == 1
-                    if channels.durationPlus > 512
+                    if channels.duration > 512
                         if addenda.frameTailFlag == 0
                             disp('This message will display if the second subsection is doing the correct thing for DARM')
                             channels.darm = [addenda.passDARM;...
@@ -153,10 +153,12 @@ classdef Data < handle
                                 readFramesVerily(addenda.inputFileDARM, channelname{1},channels.t(1)+512,(channels.tau2-channels.t(1)-512), 16384)];
                             addenda.destroyer('passDARM');
                         end
-                    else
+                    elseif addenda.frameTailFlag == 1;
                         channels.darm = [addenda.passDARM;...
                             readFramesVerily(addenda.inputFileDARM, channelname{1},channels.t(2),(channels.tau2-channels.t(2)), 16384)];
                         addenda.destroyer('passDARM');
+                    else
+                        disp('This situation should not be encountered in normal use: unexpected input times')
                     end
                 else
                     channels.darm =...

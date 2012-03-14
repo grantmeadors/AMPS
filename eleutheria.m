@@ -1,9 +1,9 @@
-function Hoft = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
+function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % eleutheria
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-02-29
+% 02012-03-14
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % supplies science times to feedforward function
@@ -89,7 +89,7 @@ function Hoft = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
 
         
         segmentHoft = 0;
-        for ii = 1:length(T.list{1})
+        for ii = 1 % Do not iterate unless for special debugging purposes :length(T.list{1})
             % This is just a check bit that will be 0 if all's well
             segmentHoft = segmentHoft + windower(T, ii, inputFileDARM, inputFileNOISE);
         end
@@ -98,9 +98,15 @@ function Hoft = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
     end
 
 
-% Assign "allHoft" from "windower" to the overall output, "Hoft",
-% which we return 0 if successful
-tic
-Hoft = filterer(time0, time1, inputFileDARM, inputFileNOISE);
-toc
+    % Assign "allHoft" from "windower" to the overall output, "Hoft",
+    % which we return 0 if successful
+    tic
+    complete = filterer(time0, time1, inputFileDARM, inputFileNOISE);
+    disp('Science segment feedforward complete')
+    toc
+    
+    close all
+    clear all
+    complete = 0;
+
 end

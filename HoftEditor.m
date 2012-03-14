@@ -930,7 +930,9 @@ classdef HoftEditor < handle
             
             
             % Now, perform writing and range gain calculation for each frame
-            if ((Hoft.successVector.range == 0) & (Hoft.successVector.comb == 0))
+            % Or, if the Hoft veto has already been trigged,
+            % then write anyway -- we have done all possible to preserve data.
+            if ((Hoft.successVector.range == 0) & (Hoft.successVector.comb == 0)) | Hoft.vetoAlarm
                 for kk = 1:numberOfFrames
                     
                     
