@@ -167,6 +167,12 @@ classdef HoftEditor < handle
             % Frames are 128 seconds long, so round up the science
             % segment length to the nearest multiple of 128 seconds,
             totalFrameDuration = T.s*ceil((tSub.tEnd(1) - Hoft.gpsStart)/T.s);
+            % If the GPS start time coincides with a frame boundary
+            % (i.e. is divisible by 128), then add 128 s more.            
+            if Hoft.gpsStart == Hoft.gpsStart - mod(Hoft.gpsStart, 128)
+                totalFrameDuration = totalFrameDuration + 128;
+            end
+
             % Find the different between the start of the science segment
             % and the start of the first frame, in number of samples
             Hoft.startOffset = 16384*(tSegment.tA - Hoft.gpsStart);
@@ -192,6 +198,8 @@ classdef HoftEditor < handle
             
             % Construct the vectors where our data will be placed:
             Hoft.constructVector(totalFrameDuration);
+            disp('Length of Hoft data vector')
+            disp(length(Hoft.data))
             %Hoft.data = ones(16384*totalFrameDuration, 1);
             
             if T.pipe == 1
@@ -441,6 +449,10 @@ classdef HoftEditor < handle
                 %clear oldSegmentLast
             end
             if jj == length(tSub.tStart)
+                disp('Displaying lengths of Hoft.data, Hoft.data((jjStart+s+1):end), and Hoft.frameTail')
+                disp(length(Hoft.data))
+                disp(length(Hoft.data((jjStart+s+1))))
+                disp(length(Hoft.frameTail))
                 Hoft.data((jjStart+s+1):end) = Hoft.frameTail;
                 disp('Continuing to attach dangling frame after segment')
             end
