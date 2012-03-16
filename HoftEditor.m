@@ -169,7 +169,7 @@ classdef HoftEditor < handle
             totalFrameDuration = T.s*ceil((tSub.tEnd(1) - Hoft.gpsStart)/T.s);
             % If the GPS start time coincides with a frame boundary
             % (i.e. is divisible by 128), then add 128 s more.            
-            if Hoft.gpsStart == Hoft.gpsStart - mod(Hoft.gpsStart, 128)
+            if tSub.tStart(1) == tSub.tStart(1) - mod(tSub.tStart, 128)
                 totalFrameDuration = totalFrameDuration + 128;
             end
 
