@@ -2,3 +2,2695 @@
 Setting up environment variables
 ---
 LD_LIBRARY_PATH is /ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/sys/os/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/opt/lscsoft/lalstochastic/lib64:/opt/lscsoft/lalpulsar/lib64:/opt/lscsoft/lalburst/lib64:/opt/lscsoft/lalinspiral/lib64:/opt/lscsoft/lalxml/lib64:/opt/lscsoft/lalmetaio/lib64:/opt/lscsoft/lalframe/lib64:/opt/lscsoft/lal/lib64:/opt/lscsoft/glue/lib64/python2.4/site-packages:/opt/lscsoft/libframe/lib64:/opt/lscsoft/libmetaio/lib64:/opt/lscsoft/ldas-tools/lib64:/opt/lscsoft/dol/lib64:/opt/lscsoft/root/lib:/opt/lscsoft/root/lib/5.26:/opt/vdt/globus/lib:/ligotools/lib
+Warning: No display specified.  You will not be able to display graphics on the screen.
+Beginning science segment ...1
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931052708
+
+   931052672
+
+   931053732
+
+   931053732
+
+        1024
+
+        1060
+
+   931053220
+
+   931053184
+
+   512
+
+   548
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 27,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialMICH at 106
+  In eleutheria>windower at 31
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialMICH at 106
+  In eleutheria>windower at 31
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 53,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialMICH at 106
+  In eleutheria>windower at 31
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.765051 seconds.
+Sizes of frame heads being written
+      589824           1
+
+      589824           1
+
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931052708
+
+   931052708
+
+   931053732
+
+   931053732
+
+        1024
+
+        1024
+
+   931053220
+
+   931053220
+
+   512
+
+   512
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 27,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialPRC at 153
+  In eleutheria>windower at 34
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialPRC at 153
+  In eleutheria>windower at 34
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 52,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialPRC at 153
+  In eleutheria>windower at 34
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.111219 seconds.
+Amount of data to be written
+    18874368
+
+        1152
+
+Calculating pre- and post-filter PSD
+Elapsed time is 5.351303 seconds.
+
+ans =
+
+    86
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+    'Pre-filter range was 13226.7401 kpc'
+
+    'Post-filter range is 13263.6354 kpc'
+
+    'Improvement factor is 1.0028'
+
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.initialFrameWriter at 248
+  In eleutheria>windower at 39
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.initialFrameWriter at 248
+  In eleutheria>windower at 39
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Comb limit for this window
+
+ans =
+
+    1.2000
+
+Values of combed points
+
+ans =
+
+    0.9963
+    1.0026
+    0.9997
+    1.0104
+    1.0079
+    1.0101
+    1.0018
+    0.9929
+    0.9926
+    0.9947
+    1.0010
+    0.9920
+    0.9849
+    0.9940
+    1.0003
+    0.9980
+    0.9988
+    0.9989
+    1.0070
+    0.9992
+    1.0051
+    1.0006
+    1.0044
+    0.9993
+    0.9977
+    1.0047
+    1.0002
+    1.0001
+    1.0013
+    1.0008
+    1.0006
+    1.0008
+    1.0004
+    1.0003
+    1.0000
+    1.0001
+    1.0001
+    1.0000
+    1.0001
+    0.9999
+
+Maximum should be Boolean
+
+ans =
+
+     0
+
+success (0) or failure (1) of the data in range and comb veto tests:
+
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+This many frames are being written
+     4
+
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052672-931052800-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052672-931052800-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052672-931052800-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052800-931052928-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052800-931052928-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052800-931052928-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052928-931053056-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052928-931053056-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931052928-931053056-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053056-931053184-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053056-931053184-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053056-931053184-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+Offline ZPKs displayed below
+ 
+Zero/pole/gain:
+0
+ 
+ 
+Zero/pole/gain:
+ 
+                                                                                       
+2.4538e-16 (s-117.1) (s^2 + 2.579s + 1.122e05) (s^2 + 32.22s + 1.65e05)                
+                                                                                       
+        (s^2 + 0.9366s + 1.819e05) (s^2 + 2.664s + 1.935e05) (s^2 + 12.72s + 2.012e05) 
+                                                                                       
+        (s^2 + 90.62s + 2.098e05) (s^2 + 3.983s + 2.188e05) (s^2 + 4.701s + 2.49e05)   
+                                                                                       
+        (s^2 + 7.007s + 2.747e05) (s^2 + 3.53s + 3.423e05) (s^2 + 0.1346s + 3.883e05)  
+                                                                                       
+        (s^2 + 1.167s + 4.697e05) (s^2 + 4.524s + 5.273e05) (s^2 + 5.657s + 6.119e05)  
+                                                                                       
+        (s^2 + 5.259s + 9.575e05) (s^2 - 0.4074s + 9.976e05) (s^2 + 3.727s + 1.323e06) 
+                                                                                       
+        (s^2 + 0.1769s + 1.38e06) (s^2 + 9.106s + 1.539e06) (s^2 + 8.967s + 2.005e06)  
+                                                                                       
+        (s^2 - 3.035s + 3.076e06) (s^2 - 20.4s + 4.201e06) (s^2 + 5.176s + 4.254e06)   
+                                                                                       
+        (s^2 + 6.646s + 6.893e06) (s^2 - 27.1s + 6.896e06) (s^2 + 3.661s + 8.965e06)   
+                                                                                       
+        (s^2 + 1.367s + 1.318e07) (s^2 + 6363s + 2.524e07) (s^2 + 22.81s + 1.868e07)   
+                                                                                       
+        (s^2 - 1.856s + 1.889e07) (s^2 + 2.638s + 1.895e07) (s^2 - 41.68s + 1.959e07)  
+                                                                                       
+----------------------------------------------------------------------------------------
+                                                                                        
+(s^2 + 3.9s + 1.112e05) (s^2 + 125.4s + 1.236e05) (s^2 + 11.41s + 1.615e05)             
+                                                                                        
+        (s^2 + 2.618s + 1.817e05) (s^2 + 3.299s + 1.905e05) (s^2 + 5.376s + 1.992e05)   
+                                                                                        
+        (s^2 + 4.464s + 2.174e05) (s^2 + 10.11s + 2.487e05) (s^2 + 9.014s + 2.51e05)    
+                                                                                        
+        (s^2 + 11.8s + 2.733e05) (s^2 + 3.732s + 3.431e05) (s^2 + 0.2145s + 3.893e05)   
+                                                                                        
+        (s^2 + 0.3317s + 4.7e05) (s^2 + 1.707s + 5.278e05) (s^2 + 6.145s + 6.145e05)    
+                                                                                        
+        (s^2 + 6.377s + 9.578e05) (s^2 + 0.4379s + 9.978e05) (s^2 + 0.5424s + 1.321e06) 
+                                                                                        
+        (s^2 + 0.05945s + 1.38e06) (s^2 + 8.106s + 1.545e06) (s^2 + 8.191s + 1.999e06)  
+                                                                                        
+        (s^2 + 2.215s + 3.07e06) (s^2 + 14.34s + 4.22e06) (s^2 + 9.882s + 4.238e06)     
+                                                                                        
+        (s^2 + 0.9758s + 6.867e06) (s^2 + 2.423s + 6.959e06) (s^2 + 2.796s + 8.969e06)  
+                                                                                        
+        (s^2 + 2.049s + 1.318e07) (s^2 + 2.779s + 1.863e07) (s^2 + 1.619s + 1.88e07)    
+                                                                                        
+        (s^2 + 0.743s + 1.895e07) (s^2 + 6.975s + 1.908e07) (s^2 + 6.22e04s + 1.934e09) 
+                                                                                        
+ 
+RMS errors displayered below
+
+ans =
+
+   2.1064e-18
+
+
+ans =
+
+   6.6818e-19
+
+Lengths of passed DARM, MICH and PRC vrctors:
+     0
+
+     0
+
+     0
+
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931053220
+
+   931053220
+
+   931054244
+
+   931054244
+
+        1024
+
+        1024
+
+   931053732
+
+   931053732
+
+   512
+
+   512
+
+This message will display if the second subsection is doing the correct thing for DARM
+Check on DARM
+
+ans =
+
+   1.0e-15 *
+
+   -0.1307
+   -0.1304
+   -0.1303
+   -0.1303
+   -0.1300
+   -0.1298
+   -0.1297
+   -0.1294
+   -0.1293
+   -0.1291
+   -0.1289
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+   1.0e-15 *
+
+   -0.1293
+   -0.1291
+   -0.1289
+   -0.1287
+   -0.1284
+   -0.1283
+   -0.1279
+   -0.1278
+   -0.1276
+   -0.1272
+   -0.1271
+   -0.1267
+   -0.1265
+
+This message will display if the second subsection is doing the correct thing for MICH
+Check on MICH
+
+ans =
+
+  -67.2925
+  -67.6649
+  -68.0349
+  -68.4013
+  -68.7746
+  -69.1509
+  -69.5189
+  -69.8762
+  -70.2416
+  -70.6218
+  -70.9868
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+  -70.2416
+  -70.6218
+  -70.9868
+  -71.3555
+  -71.7331
+  -72.1041
+  -72.4795
+  -72.8538
+  -73.2217
+  -73.5792
+  -73.9500
+  -74.3268
+  -74.6936
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 25,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 31,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 50,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 53,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.588610 seconds.
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931053220
+
+   931053220
+
+   931054244
+
+   931054244
+
+        1024
+
+        1024
+
+   931053732
+
+   931053732
+
+   512
+
+   512
+
+This message will display if the second subsection is doing the correct thing for PRC
+Check on PRC
+
+ans =
+
+ -322.1536
+ -321.7864
+ -321.3708
+ -320.9052
+ -320.4420
+ -320.0028
+ -319.5804
+ -319.1879
+ -318.8260
+ -318.4648
+ -318.0847
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+ -318.8260
+ -318.4648
+ -318.0847
+ -317.6931
+ -317.2950
+ -316.9049
+ -316.5522
+ -316.2210
+ -315.8480
+ -315.4263
+ -315.0228
+ -314.6652
+ -314.3186
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 27,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 48,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 63,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.343662 seconds.
+Offline ZPKs displayed below
+ 
+Zero/pole/gain:
+ 
+                                                                                      
+3.4724e-16 (s-998.4) (s+1810) (s+2908) (s^2 + 2.095s + 1.196e05)                      
+                                                                                      
+        (s^2 + 29.94s + 1.327e05) (s^2 + 2.696s + 1.769e05) (s^2 + 9.884s + 1.94e05)  
+                                                                                      
+        (s^2 + 24.83s + 2.048e05) (s^2 + 1.313s + 2.359e05) (s^2 + 2.951s + 2.509e05) 
+                                                                                      
+        (s^2 + 2.111s + 2.743e05) (s^2 + 61.83s + 3.243e05) (s^2 - 1.345s + 3.907e05) 
+                                                                                      
+        (s^2 + 17.97s + 5.24e05) (s^2 + 3.738s + 9.891e05) (s^2 - 0.4849s + 1.001e06) 
+                                                                                      
+        (s^2 - 1.687s + 1.331e06) (s^2 + 2.12s + 1.826e06) (s^2 + 0.2891s + 3.155e06) 
+                                                                                      
+        (s^2 + 52.04s + 4.239e06) (s^2 + 19.13s + 4.327e06) (s^2 - 2.159s + 5.468e06) 
+                                                                                      
+        (s^2 - 59.21s + 6.857e06) (s^2 + 15.15s + 6.943e06) (s^2 - 0.6951s + 7.18e06) 
+                                                                                      
+        (s^2 - 5.832s + 9.692e06) (s^2 + 26.66s + 1.158e07) (s^2 + 16.38s + 1.332e07) 
+                                                                                      
+        (s^2 + 62.59s + 1.721e07) (s^2 - 23.22s + 1.869e07) (s^2 + 9.391s + 1.903e07) 
+                                                                                      
+        (s^2 - 447.3s + 2.271e07) (s^2 + 14.42s + 2.303e07) (s^2 - 5.707s + 2.395e07) 
+                                                                                      
+---------------------------------------------------------------------------------------
+                                                                                       
+(s^2 + 12.89s + 9.683e04) (s^2 + 2.553s + 1.191e05) (s^2 + 53.52s + 1.719e05)          
+                                                                                       
+        (s^2 + 4.909s + 1.776e05) (s^2 + 8.828s + 1.949e05) (s^2 + 40.85s + 2.141e05)  
+                                                                                       
+        (s^2 + 0.3998s + 2.367e05) (s^2 + 6.558s + 2.55e05) (s^2 + 2.632s + 2.757e05)  
+                                                                                       
+        (s^2 + 67.86s + 3.423e05) (s^2 + 0.5748s + 3.914e05) (s^2 + 15s + 5.233e05)    
+                                                                                       
+        (s^2 + 8.149s + 9.916e05) (s^2 + 5.366s + 9.973e05) (s^2 + 2.516s + 1.326e06)  
+                                                                                       
+        (s^2 + 4.961s + 1.829e06) (s^2 + 3.843s + 3.152e06) (s^2 + 14.81s + 4.253e06)  
+                                                                                       
+        (s^2 + 8.963s + 4.342e06) (s^2 + 3.24s + 5.487e06) (s^2 + 0.987s + 6.914e06)   
+                                                                                       
+        (s^2 + 2.461s + 6.971e06) (s^2 + 4.616s + 7.22e06) (s^2 + 3.694s + 9.694e06)   
+                                                                                       
+        (s^2 + 2.53s + 1.151e07) (s^2 + 4.29s + 1.333e07) (s^2 + 5.41s + 1.723e07)     
+                                                                                       
+        (s^2 + 3.719s + 1.862e07) (s^2 + 16.91s + 1.903e07) (s^2 + 6.694s + 1.906e07)  
+                                                                                       
+        (s^2 + 1.661s + 2.312e07) (s^2 + 7.657s + 2.395e07) (s^2 + 6.22e04s + 1.934e09)
+                                                                                       
+ 
+ 
+Zero/pole/gain:
+ 
+                                                                                        
+3.3264e-16 (s-28.91) (s^2 + 4.214s + 1.036e05) (s^2 + 16.27s + 1.146e05)                
+                                                                                        
+        (s^2 - 5.472s + 1.297e05) (s^2 + 2.69s + 1.838e05) (s^2 + 1.875s + 1.952e05)    
+                                                                                        
+        (s^2 - 0.05683s + 2.281e05) (s^2 + 49.12s + 2.294e05) (s^2 + 1.068s + 2.489e05) 
+                                                                                        
+        (s^2 + 1.66s + 2.871e05) (s^2 - 0.4332s + 3.138e05) (s^2 + 0.6101s + 3.801e05)  
+                                                                                        
+        (s^2 + 8.499s + 4.004e05) (s^2 + 5.272s + 4.851e05) (s^2 + 1.907s + 6.611e05)   
+                                                                                        
+        (s^2 + 11.11s + 7.623e05) (s^2 - 1.503s + 9.97e05) (s^2 - 1.672s + 1.24e06)     
+                                                                                        
+        (s^2 + 9.547s + 1.331e06) (s^2 + 0.2702s + 1.722e06) (s^2 + 3.221s + 2.161e06)  
+                                                                                        
+        (s^2 + 1.046s + 3.077e06) (s^2 - 7.791s + 4.277e06) (s^2 + 0.9865s + 4.364e06)  
+                                                                                        
+        (s^2 - 20.72s + 6.839e06) (s^2 + 0.6382s + 6.94e06) (s^2 - 1.165s + 1.151e07)   
+                                                                                        
+        (s^2 + 2.986s + 1.6e07) (s^2 + 4148s + 2.08e07) (s^2 + 21.63s + 1.881e07)       
+                                                                                        
+        (s^2 - 10.31s + 1.888e07) (s^2 + 10.62s + 1.902e07) (s^2 + 114.9s + 2.068e07)   
+                                                                                        
+-----------------------------------------------------------------------------------------
+                                                                                         
+(s^2 + 1.165s + 1.046e05) (s^2 + 122.4s + 1.115e05) (s^2 + 8.062s + 1.145e05)            
+                                                                                         
+        (s^2 + 12.16s + 1.54e05) (s^2 + 4.073s + 1.852e05) (s^2 + 4.293s + 1.966e05)     
+                                                                                         
+        (s^2 + 0.001988s + 2.294e05) (s^2 + 5.939s + 2.496e05) (s^2 + 7.465s + 2.501e05) 
+                                                                                         
+        (s^2 + 2.415s + 2.876e05) (s^2 + 1.848s + 3.153e05) (s^2 + 1.495s + 3.8e05)      
+                                                                                         
+        (s^2 + 5.594s + 4.027e05) (s^2 + 7.232s + 4.873e05) (s^2 + 1.991s + 6.634e05)    
+                                                                                         
+        (s^2 + 9.79s + 7.631e05) (s^2 + 2.035s + 9.953e05) (s^2 + 1.515s + 1.237e06)     
+                                                                                         
+        (s^2 + 3.386s + 1.32e06) (s^2 + 0.5392s + 1.722e06) (s^2 + 2.518s + 2.16e06)     
+                                                                                         
+        (s^2 + 0.6314s + 3.067e06) (s^2 + 3.039s + 4.279e06) (s^2 + 9.864s + 4.357e06)   
+                                                                                         
+        (s^2 + 5.702s + 6.944e06) (s^2 + 4.016s + 6.956e06) (s^2 + 0.06347s + 1.151e07)  
+                                                                                         
+        (s^2 + 2.733s + 1.6e07) (s^2 + 9.372s + 1.868e07) (s^2 + 1.093s + 1.881e07)      
+                                                                                         
+        (s^2 + 4.699s + 1.9e07) (s^2 + 5.159s + 1.908e07) (s^2 + 6.22e04s + 1.934e09)    
+                                                                                         
+ 
+RMS errors are displayed below
+
+ans =
+
+   9.6654e-19
+
+
+ans =
+
+   5.9640e-19
+
+Amount of data to be written
+    18874368
+
+        1152
+
+Calculating pre- and post-filter PSD
+Elapsed time is 4.820162 seconds.
+
+ans =
+
+    86
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+    'Pre-filter range was 13407.8869 kpc'
+
+    'Post-filter range is 13525.071 kpc'
+
+    'Improvement factor is 1.0087'
+
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Comb limit for this window
+
+ans =
+
+    1.2000
+
+Values of combed points
+
+ans =
+
+    0.9969
+    0.9892
+    0.9936
+    0.9735
+    0.9887
+    0.9929
+    0.9788
+    0.9840
+    0.9845
+    0.9820
+    0.9839
+    0.9908
+    0.9865
+    0.9996
+    1.0009
+    0.9961
+    1.0018
+    1.0076
+    1.0023
+    0.9990
+    1.0000
+    1.0001
+    0.9984
+    0.9986
+    1.0012
+    0.9972
+    0.9995
+    0.9999
+    1.0017
+    1.0003
+    1.0003
+    1.0002
+    1.0000
+    1.0004
+    1.0001
+    0.9998
+    1.0002
+    0.9999
+    0.9999
+    1.0001
+
+Maximum should be Boolean
+
+ans =
+
+     0
+
+success (0) or failure (1) of the data in range and comb veto tests:
+
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+This many frames are being written
+     4
+
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053184-931053312-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053184-931053312-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053184-931053312-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053312-931053440-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053312-931053440-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053312-931053440-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053440-931053568-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053440-931053568-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053440-931053568-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053568-931053696-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053568-931053696-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053568-931053696-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+Lengths of passed DARM, MICH and PRC vrctors:
+     0
+
+     0
+
+     0
+
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931053732
+
+   931053732
+
+   931054756
+
+   931054756
+
+        1024
+
+        1024
+
+   931054244
+
+   931054244
+
+   512
+
+   512
+
+This message will display if the second subsection is doing the correct thing for DARM
+Check on DARM
+
+ans =
+
+   1.0e-16 *
+
+   -0.1689
+   -0.1733
+   -0.1759
+   -0.1779
+   -0.1802
+   -0.1843
+   -0.1890
+   -0.1929
+   -0.1962
+   -0.1993
+   -0.2005
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+   1.0e-16 *
+
+   -0.1962
+   -0.1993
+   -0.2005
+   -0.2037
+   -0.2082
+   -0.2121
+   -0.2170
+   -0.2185
+   -0.2210
+   -0.2237
+   -0.2263
+   -0.2317
+   -0.2355
+
+This message will display if the second subsection is doing the correct thing for MICH
+Check on MICH
+
+ans =
+
+  -65.6257
+  -65.7649
+  -65.9009
+  -66.0363
+  -66.1719
+  -66.3096
+  -66.4437
+  -66.5782
+  -66.7170
+  -66.8588
+  -66.9953
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+  -66.7170
+  -66.8588
+  -66.9953
+  -67.1261
+  -67.2632
+  -67.4098
+  -67.5496
+  -67.6775
+  -67.8080
+  -67.9451
+  -68.0769
+  -68.2039
+  -68.3318
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 26,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 53,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.776791 seconds.
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931053732
+
+   931053732
+
+   931054756
+
+   931054756
+
+        1024
+
+        1024
+
+   931054244
+
+   931054244
+
+   512
+
+   512
+
+This message will display if the second subsection is doing the correct thing for PRC
+Check on PRC
+
+ans =
+
+ -467.8804
+ -467.4048
+ -466.8588
+ -466.3011
+ -465.7858
+ -465.3233
+ -464.8915
+ -464.4600
+ -464.0017
+ -463.4987
+ -462.9650
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+ -464.0017
+ -463.4987
+ -462.9650
+ -462.4412
+ -461.9405
+ -461.4267
+ -460.8759
+ -460.3169
+ -459.7887
+ -459.2929
+ -458.8017
+ -458.2971
+ -457.7909
+
+darm is this long
+
+ans =
+
+    16777216
+
+vnoise is this long
+
+ans =
+
+    16777216
+
+vector fitting...
+{Warning: Rank deficient, rank = 29,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 50,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 6.238547 seconds.
+Offline ZPKs displayed below
+ 
+Zero/pole/gain:
+ 
+                                                                                       
+1.424e-16 (s+9471) (s+567.6) (s-1107) (s^2 + 0.4125s + 1.076e05)                       
+                                                                                       
+        (s^2 + 22.93s + 1.304e05) (s^2 - 0.4699s + 1.717e05) (s^2 + 1.579s + 1.883e05) 
+                                                                                       
+        (s^2 + 4.243s + 2.062e05) (s^2 + 6.919s + 2.246e05) (s^2 + 18.15s + 2.441e05)  
+                                                                                       
+        (s^2 + 4.665s + 2.742e05) (s^2 + 5.042s + 2.965e05) (s^2 + 21.67s + 3.396e05)  
+                                                                                       
+        (s^2 + 22.08s + 4.638e05) (s^2 + 47.66s + 5.217e05) (s^2 + 20.68s + 8.389e05)  
+                                                                                       
+        (s^2 - 1.778s + 9.862e05) (s^2 - 1.163s + 1.338e06) (s^2 + 1.252s + 1.476e06)  
+                                                                                       
+        (s^2 - 1.782s + 3.163e06) (s^2 + 13.98s + 4.294e06) (s^2 - 6.514s + 5.338e06)  
+                                                                                       
+        (s^2 - 28.93s + 6.102e06) (s^2 + 6.051s + 6.865e06) (s^2 - 0.6151s + 6.944e06) 
+                                                                                       
+        (s^2 - 129.6s + 6.951e06) (s^2 + 5.412s + 7.322e06) (s^2 + 10.91s + 1.142e07)  
+                                                                                       
+        (s^2 + 3.321s + 1.173e07) (s^2 + 51.41s + 1.729e07) (s^2 - 19.8s + 1.871e07)   
+                                                                                       
+        (s^2 + 8.679s + 1.896e07) (s^2 + 21.56s + 2.065e07) (s^2 + 22.55s + 2.43e07)   
+                                                                                       
+---------------------------------------------------------------------------------------
+                                                                                      
+(s^2 + 7.137s + 9.847e04) (s^2 + 2.711s + 1.07e05) (s^2 + 18.71s + 1.582e05)          
+                                                                                      
+        (s^2 + 3.019s + 1.734e05) (s^2 + 1.293s + 1.899e05) (s^2 + 2.855s + 2.08e05)  
+                                                                                      
+        (s^2 + 2.415s + 2.262e05) (s^2 + 12.26s + 2.527e05) (s^2 + 3.553s + 2.76e05)  
+                                                                                      
+        (s^2 + 3.439s + 2.965e05) (s^2 + 11.2s + 3.434e05) (s^2 + 12.23s + 4.575e05)  
+                                                                                      
+        (s^2 + 23.06s + 5.194e05) (s^2 + 14.85s + 8.307e05) (s^2 + 1.197s + 9.823e05) 
+                                                                                      
+        (s^2 + 5.091s + 1.335e06) (s^2 + 2.732s + 1.473e06) (s^2 + 2.647s + 3.159e06) 
+                                                                                      
+        (s^2 + 5.159s + 4.3e06) (s^2 + 28.53s + 5.391e06) (s^2 + 1.353s + 6.088e06)   
+                                                                                      
+        (s^2 + 0.84s + 6.863e06) (s^2 + 4.295s + 6.921e06) (s^2 + 0.7833s + 6.957e06) 
+                                                                                      
+        (s^2 + 2.396s + 7.315e06) (s^2 + 0.2745s + 1.15e07) (s^2 + 1.594s + 1.172e07) 
+                                                                                      
+        (s^2 + 3.16s + 1.722e07) (s^2 + 1.33s + 1.863e07) (s^2 + 5.81s + 1.893e07)    
+                                                                                      
+        (s^2 + 4.14s + 1.906e07) (s^2 + 5.605s + 2.07e07) (s^2 + 6.22e04s + 1.934e09) 
+                                                                                      
+ 
+ 
+Zero/pole/gain:
+ 
+                                                                                        
+3.537e-16 (s-79.27) (s^2 + 2.379s + 1.076e05) (s^2 + 8.266s + 1.146e05)                 
+                                                                                        
+        (s^2 - 0.3359s + 1.218e05) (s^2 + 1.693s + 1.831e05) (s^2 + 4.156s + 2.06e05)   
+                                                                                        
+        (s^2 + 16.12s + 2.168e05) (s^2 + 1.493s + 2.281e05) (s^2 + 45.71s + 2.326e05)   
+                                                                                        
+        (s^2 + 3.347s + 2.485e05) (s^2 + 2.275s + 3.089e05) (s^2 + 2.554s + 3.423e05)   
+                                                                                        
+        (s^2 + 0.1658s + 3.938e05) (s^2 - 0.945s + 4.579e05) (s^2 + 0.5102s + 6.188e05) 
+                                                                                        
+        (s^2 + 7.586s + 7.714e05) (s^2 + 7.6s + 8.755e05) (s^2 + 2.174s + 1.241e06)     
+                                                                                        
+        (s^2 + 4.345s + 1.326e06) (s^2 - 0.5957s + 1.578e06) (s^2 + 4.06s + 1.835e06)   
+                                                                                        
+        (s^2 + 0.8771s + 3.067e06) (s^2 + 2.058s + 4.251e06) (s^2 + 2.146s + 4.992e06)  
+                                                                                        
+        (s^2 - 33.67s + 6.813e06) (s^2 + 6.805s + 6.987e06) (s^2 + 3.163s + 8.553e06)   
+                                                                                        
+        (s^2 - 4.387s + 1.151e07) (s^2 + 4466s + 1.939e07) (s^2 + 23.07s + 1.882e07)    
+                                                                                        
+        (s^2 - 4.463s + 1.888e07) (s^2 + 18s + 1.901e07) (s^2 - 30.73s + 2.039e07)      
+                                                                                        
+----------------------------------------------------------------------------------------
+                                                                                       
+(s^2 + 24.41s + 1.025e05) (s^2 + 1.932s + 1.09e05) (s^2 + 3.317s + 1.19e05)            
+                                                                                       
+        (s^2 + 56.27s + 1.46e05) (s^2 + 2.643s + 1.835e05) (s^2 + 3.182s + 2.074e05)   
+                                                                                       
+        (s^2 + 15.98s + 2.2e05) (s^2 + 4.772s + 2.293e05) (s^2 + 7.897s + 2.486e05)    
+                                                                                       
+        (s^2 + 8.12s + 2.51e05) (s^2 + 3.98s + 3.09e05) (s^2 + 0.586s + 3.432e05)      
+                                                                                       
+        (s^2 + 0.5183s + 3.93e05) (s^2 + 1.234s + 4.585e05) (s^2 + 0.6194s + 6.202e05) 
+                                                                                       
+        (s^2 + 5.721s + 7.726e05) (s^2 + 6.36s + 8.764e05) (s^2 + 1.569s + 1.235e06)   
+                                                                                       
+        (s^2 + 1.115s + 1.321e06) (s^2 + 0.7557s + 1.578e06) (s^2 + 3.076s + 1.833e06) 
+                                                                                       
+        (s^2 + 8.887s + 3.046e06) (s^2 + 0.2053s + 4.244e06) (s^2 + 3.922s + 4.988e06) 
+                                                                                       
+        (s^2 + 9.673s + 6.961e06) (s^2 + 8.071s + 6.982e06) (s^2 + 3.825s + 8.554e06)  
+                                                                                       
+        (s^2 + 0.2725s + 1.151e07) (s^2 + 11.5s + 1.87e07) (s^2 + 0.8512s + 1.881e07)  
+                                                                                       
+        (s^2 + 9.115s + 1.902e07) (s^2 + 5.327s + 1.908e07) (s^2 + 6.22e04s + 1.934e09)
+                                                                                       
+ 
+RMS errors are displayed below
+
+ans =
+
+   6.8719e-19
+
+
+ans =
+
+   5.7329e-19
+
+Amount of data to be written
+    18874368
+
+        1152
+
+Calculating pre- and post-filter PSD
+Elapsed time is 4.974940 seconds.
+
+ans =
+
+    86
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+    'Pre-filter range was 13348.1548 kpc'
+
+    'Post-filter range is 13560.5545 kpc'
+
+    'Improvement factor is 1.0159'
+
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Comb limit for this window
+
+ans =
+
+    1.2000
+
+Values of combed points
+
+ans =
+
+    0.9896
+    0.9883
+    0.9989
+    0.9728
+    1.0008
+    0.9723
+    0.9795
+    0.9771
+    0.9721
+    0.9746
+    0.9806
+    0.9889
+    0.9781
+    0.9970
+    0.9959
+    0.9939
+    1.0042
+    1.0079
+    0.9944
+    0.9993
+    0.9990
+    0.9917
+    0.9942
+    1.0005
+    0.9987
+    0.9999
+    1.0005
+    1.0011
+    1.0015
+    1.0007
+    1.0014
+    1.0005
+    1.0001
+    1.0004
+    1.0002
+    1.0000
+    0.9999
+    0.9999
+    0.9999
+    0.9999
+
+Maximum should be Boolean
+
+ans =
+
+     0
+
+success (0) or failure (1) of the data in range and comb veto tests:
+
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+This many frames are being written
+     4
+
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053696-931053824-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053696-931053824-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053696-931053824-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053824-931053952-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053824-931053952-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053824-931053952-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053952-931054080-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053952-931054080-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931053952-931054080-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054080-931054208-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054080-931054208-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054080-931054208-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+Lengths of passed DARM, MICH and PRC vrctors:
+     0
+
+     0
+
+     0
+
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931054244
+
+   931054244
+
+   931055109
+
+   931055109
+
+   865
+
+   865
+
+   931054756
+
+   931054756
+
+   353
+
+   353
+
+This message will display if the second subsection is doing the correct thing for DARM
+Check on DARM
+
+ans =
+
+   1.0e-15 *
+
+    0.2649
+    0.2635
+    0.2622
+    0.2609
+    0.2596
+    0.2583
+    0.2569
+    0.2554
+    0.2541
+    0.2527
+    0.2513
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+   1.0e-15 *
+
+    0.2541
+    0.2527
+    0.2513
+    0.2499
+    0.2484
+    0.2469
+    0.2455
+    0.2440
+    0.2426
+    0.2411
+    0.2396
+    0.2381
+    0.2365
+
+This message will display if the second subsection is doing the correct thing for MICH
+Check on MICH
+
+ans =
+
+  -73.6127
+  -73.5586
+  -73.5029
+  -73.4470
+  -73.3895
+  -73.3361
+  -73.2814
+  -73.2254
+  -73.1790
+  -73.1350
+  -73.0879
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+  -73.1790
+  -73.1350
+  -73.0879
+  -73.0469
+  -73.0050
+  -72.9530
+  -72.9029
+  -72.8522
+  -72.7906
+  -72.7349
+  -72.6805
+  -72.6194
+  -72.5731
+
+darm is this long
+
+ans =
+
+    14172160
+
+vnoise is this long
+
+ans =
+
+    14172160
+
+vector fitting...
+{Warning: Rank deficient, rank = 29,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 46,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 52,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 5.426289 seconds.
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931054244
+
+   931054244
+
+   931055109
+
+   931055109
+
+   865
+
+   865
+
+   931054756
+
+   931054756
+
+   353
+
+   353
+
+This message will display if the second subsection is doing the correct thing for PRC
+Check on PRC
+
+ans =
+
+ -263.1568
+ -263.2077
+ -263.2633
+ -263.3000
+ -263.3020
+ -263.2867
+ -263.2775
+ -263.2852
+ -263.3217
+ -263.3806
+ -263.4349
+
+Check on new: first three samples should be same as last above
+
+ans =
+
+ -263.3217
+ -263.3806
+ -263.4349
+ -263.4731
+ -263.5025
+ -263.5435
+ -263.6196
+ -263.7134
+ -263.7765
+ -263.8017
+ -263.8199
+ -263.8640
+ -263.9507
+
+darm is this long
+
+ans =
+
+    14172160
+
+vnoise is this long
+
+ans =
+
+    14172160
+
+vector fitting...
+{Warning: Rank deficient, rank = 33,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 46,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 52,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 61,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 5.384065 seconds.
+Offline ZPKs displayed below
+ 
+Zero/pole/gain:
+0
+ 
+ 
+Zero/pole/gain:
+0
+ 
+RMS errors are displayed below
+
+ans =
+
+   5.6889e-17
+
+
+ans =
+
+   2.0570e-16
+
+Amount of data to be written
+    16777216
+
+        1024
+
+Calculating pre- and post-filter PSD
+Elapsed time is 5.275432 seconds.
+
+ans =
+
+    86
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+    'Pre-filter range was 13518.9122 kpc'
+
+    'Post-filter range is 13676.8678 kpc'
+
+    'Improvement factor is 1.0117'
+
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 375
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Comb limit for this window
+
+ans =
+
+    1.2000
+
+Values of combed points
+
+ans =
+
+    0.9919
+    0.9906
+    0.9970
+    0.9872
+    0.9761
+    0.9783
+    0.9697
+    0.9983
+    0.9820
+    0.9682
+    0.9802
+    0.9950
+    0.9882
+    0.9951
+    1.0007
+    1.0070
+    0.9967
+    0.9986
+    1.0010
+    1.0029
+    0.9994
+    1.0001
+    0.9987
+    1.0007
+    1.0004
+    0.9972
+    1.0003
+    1.0002
+    1.0002
+    1.0004
+    1.0002
+    1.0000
+    1.0000
+    1.0004
+    0.9999
+    1.0001
+    0.9999
+    1.0000
+    1.0000
+    1.0001
+
+Maximum should be Boolean
+
+ans =
+
+     0
+
+success (0) or failure (1) of the data in range and comb veto tests:
+
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+This many frames are being written
+     4
+
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054208-931054336-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054208-931054336-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054208-931054336-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054336-931054464-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054336-931054464-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054336-931054464-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054464-931054592-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054464-931054592-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054464-931054592-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054592-931054720-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054592-931054720-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054592-931054720-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+Lengths of passed DARM, MICH and PRC vrctors:
+     0
+
+     0
+
+     0
+
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931054756
+
+   931054756
+
+   931055109
+
+   931055232
+
+   353
+
+   476
+
+   931055268
+
+   931055268
+
+  -159
+
+   -36
+
+darm is this long
+
+ans =
+
+     5783552
+
+vnoise is this long
+
+ans =
+
+     5783552
+
+vector fitting...
+{Warning: Rank deficient, rank = 29,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 46,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 48,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 63,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 295
+  In eleutheria>windower at 69
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     2015232
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 2.182571 seconds.
+Preparing to attach dangling frame after segment
+A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
+   931054756
+
+   931054756
+
+   931055109
+
+   931055109
+
+   353
+
+   353
+
+   931055268
+
+   931055268
+
+  -159
+
+  -159
+
+darm is this long
+
+ans =
+
+     5783552
+
+vnoise is this long
+
+ans =
+
+     5783552
+
+vector fitting...
+{Warning: Rank deficient, rank = 30,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 91
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 46,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 50,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 62,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 95
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 320
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Done.
+Resulting state space model produced (see offlinezpks.mat)
+frame tail length
+     0
+
+Filtering (offline)!
+Exporting baseline to check filter improvement
+Elapsed time is 2.247038 seconds.
+Offline ZPKs displayed below
+ 
+Zero/pole/gain:
+0
+ 
+ 
+Zero/pole/gain:
+0
+ 
+RMS errors are displayed below
+
+ans =
+
+   5.2284e-17
+
+
+ans =
+
+   2.0809e-16
+
+Continuing to attach dangling frame after segment
+Amount of data to be written
+     8388608
+
+   512
+
+Calculating pre- and post-filter PSD
+Elapsed time is 3.746162 seconds.
+
+ans =
+
+    86
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+    'Pre-filter range was 13133.8708 kpc'
+
+    'Post-filter range is 13134.6304 kpc'
+
+    'Improvement factor is 1.0001'
+
+
+ans =
+
+    43
+
+
+ans =
+
+    50
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+
+ans =
+
+     1
+
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 377
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+{Warning: Imaginary parts of complex X and/or Y arguments ignored} 
+> In HoftEditor>HoftEditor.frameWriter at 843
+  In HoftEditor>HoftEditor.dataReviewer at 385
+  In HoftEditor>HoftEditor.loopPRC at 377
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 94
+  In eleutheria at 104
+Comb limit for this window
+
+ans =
+
+    1.4452
+
+Values of combed points
+
+ans =
+
+    1.0000
+    0.9998
+    0.9999
+    0.9998
+    0.9999
+    0.9999
+    1.0000
+    1.0000
+    0.9998
+    1.0000
+    1.0000
+    1.0000
+    0.9999
+    1.0000
+    1.0000
+    1.0001
+    1.0000
+    1.0001
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    0.9999
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+
+Maximum should be Boolean
+
+ans =
+
+     0
+
+success (0) or failure (1) of the data in range and comb veto tests:
+
+ans =
+
+     0
+
+
+ans =
+
+     0
+
+This many frames are being written
+     4
+
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054720-931054848-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054720-931054848-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054720-931054848-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054848-931054976-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054848-931054976-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054848-931054976-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054976-931055104-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054976-931055104-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931054976-931055104-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+HoftSub.data is this long
+
+ans =
+
+     2097152
+
+MKFRAME: Create new frame file
+MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
+MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931055104-931055232-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+stateVectorSub.data is this long
+
+ans =
+
+        2048
+
+MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931055104-931055232-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+dqFlagSub.data is this long
+
+ans =
+
+   128
+
+MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
+MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9310/H-H1_AMPS_C02_L2-931055104-931055232-128.gwf
+MKFRAME: Write EOF 
+MKFRAME: Complete frame file writing
+Science segment feedforward complete
+Elapsed time is 38.205047 seconds.
