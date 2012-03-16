@@ -781,9 +781,9 @@ classdef HoftEditor < handle
                 fidFit = fopen(outputFileFit, 'w');
                 fprintf(fidFit, '%s', 'Window, RMS MICH TF error, RMS PRC TF error')
                 fprintf(fidFit, '\n');
-                for qq = 1:length(Hoft.rmserr)
+                for qq = 1:length(Hoft.rmserr.MICH)
                     clear rmserrString
-                    rmserrString = strcat(num2str(qq), 32, num2str(Hoft.rmserr(qq).MICH), 32, num2str(Hoft.rmserr(qq).PRC) );
+                    rmserrString = strcat(num2str(qq), 32, num2str(Hoft.rmserr.MICH(qq)), 32, num2str(Hoft.rmserr.PRC(qq)) );
                     fprintf(fidFit, '%s', rmserrString);
                     clear rmserrString
                     fprintf(fidFit, '\n');
