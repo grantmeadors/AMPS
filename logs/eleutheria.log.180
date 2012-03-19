@@ -1,19 +1,20 @@
-000 (50325285.180.000) 03/16 22:37:08 Job submitted from host: <10.14.0.18:43218>
+000 (50386391.180.000) 03/19 14:02:59 Job submitted from host: <10.14.0.18:43218>
 ...
-001 (50325285.180.000) 03/17 00:27:05 Job executing on host: <10.14.2.190:54868>
+001 (50386391.180.000) 03/19 14:04:29 Job executing on host: <10.14.2.196:46769>
 ...
-006 (50325285.180.000) 03/17 00:27:13 Image size of job updated: 766004
-...
-006 (50325285.180.000) 03/17 00:28:21 Image size of job updated: 2818712
-...
-005 (50325285.180.000) 03/17 00:28:21 Job terminated.
-	(1) Normal termination (return value 0)
-		Usr 0 00:01:09, Sys 0 00:00:46  -  Run Remote Usage
+005 (50386391.180.000) 03/19 14:04:33 Job terminated.
+	(1) Normal termination (return value 255)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
 		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
-		Usr 0 00:01:09, Sys 0 00:00:46  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
 		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
 	0  -  Run Bytes Sent By Job
 	0  -  Run Bytes Received By Job
 	0  -  Total Bytes Sent By Job
 	0  -  Total Bytes Received By Job
+...
+000 (50386579.180.000) 03/19 14:15:00 Job submitted from host: <10.14.0.18:43218>
+...
+009 (50386579.180.000) 03/19 14:15:10 Job was aborted by the user.
+	via condor_rm (by user gmeadors)
 ...
