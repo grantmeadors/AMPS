@@ -35,11 +35,11 @@ maximum_imagesize = max(imagesize);
 disp(maximum_imagesize)
 
 % Make file of range estimates files
-system('ls ~/public_html/feedforward/diagnostics/*/*Range* > whole_rangelist.txt');
+system('ls ~/public_html/feedforward/diagnostics/*/*Range* > logs/whole_rangelist.txt');
 % Make file of range estimates
-system('tail -q -n 1 ~/public_html/feedforward/diagnostics/*/*Range* > whole_range.txt');
+system('tail -q -n 1 ~/public_html/feedforward/diagnostics/*/*Range* > logs/whole_range.txt');
 % Load into Matlab
-rangematrix = load('whole_range.txt');
+rangematrix = load('logs/whole_range.txt');
 
 % Make plot of range versus time
 figure(4000)

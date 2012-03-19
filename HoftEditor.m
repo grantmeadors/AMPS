@@ -402,6 +402,9 @@ classdef HoftEditor < handle
             Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
             if (Hoft.vetoAlarm & ~(Hoft.isFirstSubFlag)) == 1
                 disp('Veto alarm raised in window; writing baseline instead of filtered data')
+                % First we have to back out bad data and renormalize the preceding window
+                windowRenormalize(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
+                % Now write in the baseline instead of the filtered data
                 newHoft.vetoSubstituteBaseline;
                 windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
                 clear vetoHoft
@@ -410,6 +413,34 @@ classdef HoftEditor < handle
                 disp('Veto alarm raised; will write baseline')
                 frameWriter(Hoft);
             end
+        end
+        function windowRenormalize(Hoft, tSub, p, s, newHoft, jj, jjStart);
+           if p <= s 
+               % Weight the bad filtered data
+               newSegmentFirst = ...
+                    Hoft.qWindow(1:p) .*...
+                    newHoft.data(1:p);
+               % Pass the existing, window Hoft
+               oldSegmentLast = Hoft.data((jjStart+1):(jjStart+p)); 
+               % Subtract off the bad filtered data from the section of Hoft
+               Hoft.data((jjStart+1):(jjStart+p)) = ...
+                    -1 .* newSegmentFirst + oldSegmentLast;
+               % Renormalize the back-to-normal section 
+               Hoft.data((jjStart+1):(jjStart+p)) = ...
+                   (1./Hoft.qWindow((p+1):end)) .* Hoft.data((jjStart+1):(jjStart+p));
+               % The remaining, non-overlapping part will be overwritten
+               % completely and cleanly when windowFramer is next called.
+               
+           else
+               newSegmentFirst = ...
+                   Hoft.qWindow(1:s) .*...
+                   newHoft.data(1:s);
+               oldSegmentLast = Hoft.data((jjStart+1):(jjStart+s));
+               Hoft.data((jjStart+1):(jjStart+s)) = ...
+                   -1 .* newSegmentFirst + oldSegmentLast;
+               Hoft.data((jjStart+1):(jjStart+s)) = ...
+                   (1./Hoft.qWindow((p+1):(p+s))) .* Hoft.data((jjStart+1):(jjStart+s));
+           end
         end
         
         function windowFramer(Hoft, tSub, p, s, newHoft, jj, jjStart)
@@ -538,10 +569,10 @@ classdef HoftEditor < handle
             disp(rTotal)
             disp(secondsDuration)
             
-            % If the vetoAlarm has been risen and this is a single window,
+            % If the vetoAlarm has been risen and this is the first window,
             % the only thing we can do is not replace the data: write the
             % baseline instead
-            if ((Hoft.vetoAlarm & Hoft.isFirstSubFlag ) & ~(Hoft.anticipateFlag))== 1
+            if ((Hoft.vetoAlarm & Hoft.isFirstSubFlag ))== 1
                 Hoft.data = Hoft.baseline;
                 disp('Filtering unable to improve data; writing baseline instead')
             end
