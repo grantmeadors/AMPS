@@ -80,7 +80,7 @@ classdef ScienceFinder < handle
             end
             for ii = length(T.list{2})
                 if sum(T.segments(:, 2) == T.list{2}(ii))
-                    T.list{4}(ii) = T.segments(T.segments(:,2) == T.list{2}(ii), 3);
+                    T.list{4}(ii) = T.segments(T.segments(:,2) == T.list{2}(ii), 4);
                 else
                     T.list{4}(ii) = 0;
                 end
