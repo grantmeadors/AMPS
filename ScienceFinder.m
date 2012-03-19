@@ -18,7 +18,7 @@ classdef ScienceFinder < handle
             % Analyze the start and end times to determine the boundaries
             % of science segments in between
             % Load a list of science segments
-            T.segments = load('dividedSeglist.txt');
+            T.segments = load('testSeglist.txt');
             
             % Decide  what type of pipeline to use:
             % T.pipe = 1 for science run S6, T.pipe = 2 for squeezing

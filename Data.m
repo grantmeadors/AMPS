@@ -93,7 +93,7 @@ classdef Data < handle
 
             % insert a catch function to ensure that the correct amount of data is retrieved from servers
             function dataArray = readFramesVerily(cache, whichChannel, startTime, duration, samplingFrequency)
-                numberOfTries = 10;
+                numberOfTries = 100;
                 for hh = 1:numberOfTries
                     dataArray = readFrames(cache, whichChannel, startTime, duration);
                     if length(dataArray) == (samplingFrequency*duration)
