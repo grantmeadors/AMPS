@@ -3,7 +3,7 @@ function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
 % eleutheria
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-03-14
+% 02012-04-03
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % supplies science times to feedforward function
@@ -25,7 +25,7 @@ function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
         % Create the addenda object as a messenger for data
         addenda = AddendaEditor(ii, 0, T.pipe, T.s,...
             inputFileDARM, inputFileNOISE, 0,...
-            0, 0);
+            0, 0, Hoft.site);
         
         % Filter the first 1024 s subsection for MICH
         Hoft.initialMICH(T, tSub, addenda);
@@ -57,7 +57,8 @@ function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
             
             
             addenda = AddendaEditor(0, 0, T.pipe, T.s,...
-                inputFileDARM, inputFileNOISE, 1, 0, 0);
+                inputFileDARM, inputFileNOISE, 1, 0, 0,...
+                Hoft.site);
             
 
             % To be sure, clear all remaining large variables

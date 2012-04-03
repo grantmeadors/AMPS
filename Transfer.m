@@ -16,6 +16,8 @@ classdef Transfer < handle
         s
         sub12
         pipe
+        site
+        siteFull
     end
     
     methods
@@ -35,6 +37,8 @@ classdef Transfer < handle
             frequencies.t1 = channels.t1;
             frequencies.s = channels.s;
             frequencies.pipe = channels.pipe;
+            frequencies.site = channels.site;
+            frequencies.siteFull = channels.siteFull;
         end
     end
     

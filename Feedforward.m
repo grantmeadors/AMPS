@@ -74,11 +74,15 @@ classdef Feedforward < handle
             
             % Quack the newMICHD filter at 16384 Hz and save the z, p, and k
             % as well as the newMICHD filter
+
+            % Copy site names for convenience
+            site = addenda.site;
+            siteFull = addenda.siteFull;
             
             startName = strcat('-', num2str(addenda.s*floor(t0/addenda.s)));
             stopName = strcat('-', num2str(addenda.s*ceil(t1/addenda.s)));
-            individualFrameName = strcat('H-H1_AMPS_C02_L2', startName, stopName, '-', num2str(addenda.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', individualFrameName(1:21));
+            individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2', startName, stopName, '-', num2str(addenda.s), '.gwf');
+            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, individualFrameName(1:21));
             setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
             system('mkdir -p $systemDirectoryDiagnosticsFrameName');
             

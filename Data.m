@@ -26,6 +26,8 @@ classdef Data < handle
         mich
         prc
         PRCfilter
+        site
+        siteFull
     end
     
     methods
@@ -39,6 +41,8 @@ classdef Data < handle
             channels.t1 = t1;
             channels.s = addenda.s;
             channels.pipe = addenda.pipe;
+            channels.site = addenda.site;
+            channels.siteFull = addenda.siteFull;
             
             % Find the start of the first frame and end of the last
             if addenda.frameHeadFlag == 1

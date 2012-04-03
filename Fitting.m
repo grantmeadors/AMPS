@@ -1,7 +1,7 @@
 classdef Fitting < handle
     % Apply Vectfit to find a fit to the transfer function
     % Grant David Meadors
-    % 02012-02-28
+    % 02012-04-03
     
     properties (SetAccess = private)
         newNOISE
@@ -16,20 +16,21 @@ classdef Fitting < handle
     methods
         function filtering = Fitting(frequencies)
             
-            coh = frequencies.coh;
+            % For convenience, copy object variables into shorter local ones 
             f = frequencies.f;
             filtering.Fs = frequencies.Fs;
             pipe = frequencies.pipe;
+            site = frequencies.site;
+            siteFull = frequencies.siteFull;
             
             
             % Vector fit!
             filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
             
-            n = find(f > 50 & f < 5500 & ~isnan(coh) & ~isnan(frequencies.subNOISE_DARM));
+            n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
-            % zcoh = transpose(coh(n));
             % This is the subtraction TF (e.g. DARM_ERR/MICH_CTRL)
             % Do not use subNOISE_DARM' as it takes the complex conjugate.
             f = f(n)';
@@ -193,8 +194,8 @@ classdef Fitting < handle
             end
             startName = strcat('-', num2str(frequencies.s*floor(frequencies.t0/frequencies.s)));
             stopName = strcat('-', num2str(frequencies.s*ceil(frequencies.t1/frequencies.s)));
-            individualFrameName = strcat('H-H1_AMPS_C02_L2', startName, stopName, '-', num2str(frequencies.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', individualFrameName(1:21));
+            individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2', startName, '-', num2str(frequencies.s), '.gwf');
+            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, individualFrameName(1:21));
             setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
             system('mkdir -p $systemDirectoryDiagnosticsFrameName');
             graphName = strcat(directoryDiagnosticsFrameName, '/', 'EleutheriaFilter-', num2str(frequencies.t(1)),'-', noiseNameString);

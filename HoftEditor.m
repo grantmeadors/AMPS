@@ -1,7 +1,7 @@
 classdef HoftEditor < handle
     % Edit and manages the Hoft object for feedforward
     % Grant David Meadors
-    % 02012-02-29
+    % 02012-04-03
     
     properties (SetAccess = private)
         tSub
@@ -43,6 +43,8 @@ classdef HoftEditor < handle
         stateVector
         dqFlag
         successVector
+        site
+        siteFull
     end
     
     methods
@@ -76,6 +78,10 @@ classdef HoftEditor < handle
             elseif T.pipe == 2
                 Hoft.gpsStart = sscanf(listContents(5:15),'%d');
             end
+            % Now we need to extract the site name from the
+            % files that the program is being told to process
+            Hoft.site = listContents(1);
+            Hoft.siteFull  = strcat('L', listContents(1), 'O');
             Hoft.T = T;
             Hoft.tStart = tSub.tStart(1);
             Hoft.tEnd = tSub.tEnd(1);
@@ -559,8 +565,9 @@ classdef HoftEditor < handle
             
             % Now we want to write the data to frames
             
-           
-            
+            site = Hoft.site;
+            siteFull = Hoft.siteFull;
+             
             rTotal = length(Hoft.data);
             secondsDuration = rTotal / 16384;
             
@@ -625,8 +632,8 @@ classdef HoftEditor < handle
             % Uncomment the mkframe commands below to write output
             
             
-            prototypeFrameName = strcat('H-H1_AMPS_C02_L2',startNameBasic, stopNameBasic,'-', num2str(Hoft.T.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', prototypeFrameName(1:21));
+            prototypeFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startNameBasic,'-', num2str(Hoft.T.s), '.gwf');
+            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, prototypeFrameName(1:21));
             
             % Generate names
             %startSubName = strcat('-', num2str(gpsStart) );
@@ -1002,11 +1009,11 @@ classdef HoftEditor < handle
                     HoftSub.data = double(HoftSub.data);
                     disp('HoftSub.data is this long')
                     length(HoftSub.data)
-                    HoftSub.channel = 'H1:AMPS-STRAIN';
+                    HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
-                    individualFrameName = strcat('H-H1_AMPS_C02_L2',startName, stopName,'-', num2str(Hoft.T.s), '.gwf');
-                    directoryDataFrameName = strcat('/home/gmeadors/public_html/feedforward/data/', individualFrameName(1:21));
+                    individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(Hoft.T.s), '.gwf');
+                    directoryDataFrameName = strcat('/home/gmeadors/public_html/feedforward/data/', siteFull, individualFrameName(1:21));
                     %directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', individualFrameName(1:21));
                     setenv('systemDirectoryDataFrameName', directoryDataFrameName);
                     setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);

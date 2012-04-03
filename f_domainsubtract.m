@@ -25,6 +25,8 @@ function varargout = f_domainsubtract(X, Y, window1, nfft, Fs, varargin)
 %
 % added varargout - Rana  - Apr 24, 2010
 
+% Altered for speed of use in feedforward - Grant David Meadors, 2012-04-03
+% Cohxy, Pyy, Pyx = 1;
 
 %% Estimate the Transfer Function of my System
 TFest = tfestimate(Y, X, window1, nfft/2, nfft, Fs); % Y-->H(s)-->X
@@ -32,10 +34,10 @@ TFest = tfestimate(Y, X, window1, nfft/2, nfft, Fs); % Y-->H(s)-->X
 % Calculating PSD of my Subtraction
 numavg = floor(2*length(X)/nfft) - 1; % Number of averages
 
-[Cohxy]    = mscohere(X, Y, window1, nfft/2, nfft, Fs);
+[Cohxy]    = 1; % for speed when Cohxy is never used; mscohere(X, Y, window1, nfft/2, nfft, Fs);
 [Pxx,Pxxf] = pwelch(X,  window1, nfft/2, nfft, Fs);
-[Pyy]      = pwelch(Y,  window1, nfft/2, nfft, Fs);
-[Pyx]      = cpsd(Y, X, window1, nfft/2, nfft, Fs);
+[Pyy]      = 1; % for speed; pwelch(Y,  window1, nfft/2, nfft, Fs);
+[Pyx]      = 1; % for speed; cpsd(Y, X, window1, nfft/2, nfft, Fs);
 
 PSDsub  = Pxx + abs(TFest).^2.*Pyy - 2*real(TFest.*Pyx);
 PSDsubf = Pxxf;

@@ -2,7 +2,7 @@ classdef AddendaEditor < handle
     % Produces the ubiquitous addenda object that carries information
     % between the filtering and the Hoft generation stages
     % Grant David Meadors
-    % 02012-02-28
+    % 02012-04-03
     
     properties (SetAccess = private)
         darm
@@ -19,13 +19,15 @@ classdef AddendaEditor < handle
         inputFileNOISE
         passFirstFlag
         baselineCheck
+        site
+        siteFull
     end
     
     methods
         function addenda = AddendaEditor(...
                 baselineCheck, PRCfilter, pipe, s,...
                 inputFileDARM, inputFileNOISE, passFirstFlag,...
-                frameHeadFlag, frameTailFlag)
+                frameHeadFlag, frameTailFlag, siteName)
             addenda.darm = [];
             addenda.passDARM = [];
             addenda.passPRC = [];
@@ -40,6 +42,8 @@ classdef AddendaEditor < handle
             addenda.inputFileNOISE = inputFileNOISE;
             addenda.passFirstFlag = passFirstFlag;
             addenda.baselineCheck = baselineCheck;
+            addenda.site = siteName;
+            addenda.siteFull = strcat('L', siteName, 'O');
         end
         function initialFixer(addenda, tSub, T)
             tau1 = floor(tSub.tStart(1) / T.s)*T.s;
