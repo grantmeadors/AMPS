@@ -420,7 +420,7 @@ classdef HoftEditor < handle
                 Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
                 % If not...
                 breakCounter = 0;
-                breakCutoff = 10;
+                breakCutoff = 4;
                 while (Hoft.vetoAlarm & (breakCounter < breakCutoff))
                     % Now try progressively sharper cutoffs
                     %  of the 'old' half of the window
@@ -436,17 +436,22 @@ classdef HoftEditor < handle
                     % affecting the data due to noise non-stationarity,
                     % which would comprimise the filter's validity,
                     % this should cure it.
-                    windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
+                    for dd = 1:8
+                        windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
+                    end
                     frameWriter(Hoft);
                     Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
                 end
                 % But at some point we have to give up. If we have exhausted
                 % The while loop, write out that which we have to disk
-                % Setting breakCutoff = 10 is probably reasonable; by then
+                % Setting breakCutoff = 4 is probably reasonable;
+                % for each level of the while loop,
                 % every element in the latter half of the Hoft array
-                % takes less than 1 part in 2^(10) of its value from
-                % oldSegment, and the latter (1/2)^(1/10) = 93 percent
+                % takes less than 1 part in 2^(8) of its value from
+                % oldSegment, and the latter (1/2)^(1/8) = 92 percent
                 % of the segment will be majority newSegment 
+                % After four loops, these will respectively be
+                % 1 part in 2^(32) and (1/2)^(1/32) = 98 percent.
                 if breakCounter == breakCutoff
                     % Set Hoft.vetoAlarm to a 'surrender' flag
                     Hoft.vetoAlarm = 2;
