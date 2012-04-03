@@ -414,7 +414,44 @@ classdef HoftEditor < handle
                 newHoft.vetoSubstituteBaseline;
                 windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
                 clear vetoHoft
+                % Attempt writing again
                 frameWriter(Hoft);
+                % Determine whether that result was better 
+                Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
+                % If not...
+                breakCounter = 0;
+                breakCutoff = 10;
+                while (Hoft.vetoAlarm & (breakCounter < breakCutoff))
+                    % Now try progressively sharper cutoffs
+                    %  of the 'old' half of the window
+                    % until we are in 'clean', raw data. 
+                    breakCounter = breakCounter + 1;
+                    % This stage reapplies the triangular window
+                    % with the inputs being the already-windowed Hoft (oldSegment)
+                    % and the carried-along raw Hoft (newSegment).
+                    % Re-windowing results in the exponentiation of the
+                    % triangular windowing shape, so the already-windowed Hoft
+                    % decays faster: first quadratically, then cubically,
+                    % et cetera. If the already-windowed Hoft is adversely
+                    % affecting the data due to noise non-stationarity,
+                    % which would comprimise the filter's validity,
+                    % this should cure it.
+                    windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
+                    frameWriter(Hoft);
+                    Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
+                end
+                % But at some point we have to give up. If we have exhausted
+                % The while loop, write out that which we have to disk
+                % Setting breakCutoff = 10 is probably reasonable; by then
+                % every element in the latter half of the Hoft array
+                % takes less than 1 part in 2^(10) of its value from
+                % oldSegment, and the latter (1/2)^(1/10) = 93 percent
+                % of the segment will be majority newSegment 
+                if breakCounter == breakCutoff
+                    % Set Hoft.vetoAlarm to a 'surrender' flag
+                    Hoft.vetoAlarm = 2;
+                    frameWriter(Hoft);
+                end      
             elseif (Hoft.vetoAlarm & Hoft.isFirstSubFlag ) == 1
                 disp('Veto alarm raised; will write baseline')
                 frameWriter(Hoft);
@@ -671,7 +708,7 @@ classdef HoftEditor < handle
                 system(moveCommand(outputFileGraph, '.pdf', 'Zoom'));
                 system(moveCommand(outputFileGraph, '.png', 'Zoom'));
             end
-            if Hoft.vetoAlarm == 1
+            if Hoft.vetoAlarm == (1|2)
                 vetoMover(outputFileGraph);
             end
             
@@ -992,7 +1029,7 @@ classdef HoftEditor < handle
             % Now, perform writing and range gain calculation for each frame
             % Or, if the Hoft veto has already been trigged,
             % then write anyway -- we have done all possible to preserve data.
-            if ((Hoft.successVector.range == 0) & (Hoft.successVector.comb == 0)) | Hoft.vetoAlarm
+            if ((Hoft.successVector.range == 0) & (Hoft.successVector.comb == 0)) | (Hoft.vetoAlarm == 2)
                 for kk = 1:numberOfFrames
                     
                     
