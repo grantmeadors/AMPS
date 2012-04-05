@@ -1070,7 +1070,7 @@ classdef HoftEditor < handle
                         stateVectorSub.data = double(stateVectorSub.data);
                         disp('stateVectorSub.data is this long')
                         length(stateVectorSub.data)
-                        stateVectorSub.channel = 'H1:AMPS-SV_STATE_VECTOR';
+                        stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
                         stateVectorSub.type = 'd';
                         stateVectorSub.mode = 'a';
                         mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, Hoft.gpsStart);
@@ -1079,7 +1079,7 @@ classdef HoftEditor < handle
                         dqFlagSub.data = double(dqFlagSub.data);
                         disp('dqFlagSub.data is this long')
                         length(dqFlagSub.data)
-                        dqFlagSub.channel = 'H1:AMPS-DATA_QUALITY_FLAG';
+                        dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
                         dqFlagSub.type = 'd';
                         dqFlagSub.mode = 'a';
                         mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, Hoft.gpsStart);
