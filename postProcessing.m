@@ -50,7 +50,7 @@ xlabel('GPS time (seconds)')
 ylabel('Inspiral range (Megaparsecs)')
 title('Inspiral range improvement versus time')
 legend('Before feedforward','After feedforward')
-inspiralGraphName = '/home/gmeadors/public_html/feedforward/diagnostics/inspiralRange';
+inspiralGraphName = '/home/gmeadors/public_html/feedforward/diagnostics/LHO/inspiralRange';
 print('-dpdf', strcat(inspiralGraphName, '.pdf'));
 print('-dpng', strcat(inspiralGraphName, '.png'));
 close(4000)

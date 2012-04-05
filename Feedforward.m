@@ -82,7 +82,7 @@ classdef Feedforward < handle
             startName = strcat('-', num2str(addenda.s*floor(t0/addenda.s)));
             stopName = strcat('-', num2str(addenda.s*ceil(t1/addenda.s)));
             individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2', startName, stopName, '-', num2str(addenda.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, individualFrameName(1:21));
+            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, '/', individualFrameName(1:21));
             setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
             system('mkdir -p $systemDirectoryDiagnosticsFrameName');
             
