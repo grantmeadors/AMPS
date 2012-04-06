@@ -195,7 +195,7 @@ classdef Fitting < handle
             startName = strcat('-', num2str(frequencies.s*floor(frequencies.t0/frequencies.s)));
             stopName = strcat('-', num2str(frequencies.s*ceil(frequencies.t1/frequencies.s)));
             individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2', startName, '-', num2str(frequencies.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, '/', individualFrameName(1:21));
+            directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', siteFull, '/', individualFrameName(1:21));
             setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
             system('mkdir -p $systemDirectoryDiagnosticsFrameName');
             graphName = strcat(directoryDiagnosticsFrameName, '/', 'EleutheriaFilter-', num2str(frequencies.t(1)),'-', noiseNameString);

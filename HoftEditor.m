@@ -675,7 +675,7 @@ classdef HoftEditor < handle
             
             
             prototypeFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startNameBasic,'-', num2str(Hoft.T.s), '.gwf');
-            directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', siteFull, '/',  prototypeFrameName(1:21));
+            directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', siteFull, '/',  prototypeFrameName(1:21));
             
             % Generate names
             %startSubName = strcat('-', num2str(gpsStart) );
@@ -1055,8 +1055,8 @@ classdef HoftEditor < handle
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
                     individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(Hoft.T.s), '.gwf');
-                    directoryDataFrameName = strcat('/home/gmeadors/public_html/feedforward/data/', siteFull, '/', individualFrameName(1:21));
-                    %directoryDiagnosticsFrameName = strcat('/home/gmeadors/public_html/feedforward/diagnostics/', individualFrameName(1:21));
+                    directoryDataFrameName = strcat('/home/pulsar/public_html/feedforward/data/', siteFull, '/', individualFrameName(1:21));
+                    %directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', individualFrameName(1:21));
                     setenv('systemDirectoryDataFrameName', directoryDataFrameName);
                     setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
                     system('mkdir -p $systemDirectoryDataFrameName');

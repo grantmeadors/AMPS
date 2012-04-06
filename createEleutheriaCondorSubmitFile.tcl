@@ -18,10 +18,10 @@ set frameTypeNOISE "R";
 set frameLengthDARM 128;
 set frameLengthNOISE 32;
 set condorSubmitFileName "EleutheriaSub.sub";
-set executablePathAndName "/archive/home/gmeadors/2012/04/03/AMPS/run_eleutheria-well.sh"
+set executablePathAndName "/archive/home/pulsar/2012/04/06/AMPS/run_eleutheria-well.sh"
 #set analysisTime 60; # time per line of output
 set matlabPath "/ldcg/matlab_r2011a"
-set outputDirectory "/archive/home/gmeadors/2012/04/03/AMPS"
+set outputDirectory "/archive/home/pulsar/2012/04/06/AMPS"
 #set stateVectorChan "H1:IFO-SV_STATE_VECTOR"
 #set channelList "H1:IO-1811_I,H1:IO-1811_Q,H1:IOO-MC_PWR_IN,H1:IOO-MC_TRANS_SUM,H1:PSL-ISS_OLMONPD_NW"
 
@@ -111,11 +111,11 @@ puts $fid "log = logs/eleutheria.log.\$(process)"
 puts $fid "requirements = Memory >= 3999"
 puts $fid "concurrency_limits = 40"
 
-#puts $fid "environment = HOME=/archive/home/gmeadors;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/sys/os/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/opt/lscsoft/lalstochastic/lib64:/opt/lscsoft/lalpulsar/lib64:/opt/lscsoft/lalburst/lib64:/opt/lscsoft/lalinspiral/lib64:/opt/lscsoft/lalxml/lib64:/opt/lscsoft/lalmetaio/lib64:/opt/lscsoft/lalframe/lib64:/opt/lscsoft/lal/lib64:/opt/lscsoft/glue/lib64/python2.4/site-packages:/opt/lscsoft/libframe/lib64:/opt/lscsoft/libmetaio/lib64:/opt/lscsoft/ldas-tools/lib64:/opt/lscsoft/dol/lib64:/opt/lscsoft/root/lib:/opt/lscsoft/root/lib/5.26:/opt/vdt/globus/lib:/ligotools/lib"
+#puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/sys/os/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/opt/lscsoft/lalstochastic/lib64:/opt/lscsoft/lalpulsar/lib64:/opt/lscsoft/lalburst/lib64:/opt/lscsoft/lalinspiral/lib64:/opt/lscsoft/lalxml/lib64:/opt/lscsoft/lalmetaio/lib64:/opt/lscsoft/lalframe/lib64:/opt/lscsoft/lal/lib64:/opt/lscsoft/glue/lib64/python2.4/site-packages:/opt/lscsoft/libframe/lib64:/opt/lscsoft/libmetaio/lib64:/opt/lscsoft/ldas-tools/lib64:/opt/lscsoft/dol/lib64:/opt/lscsoft/root/lib:/opt/lscsoft/root/lib/5.26:/opt/vdt/globus/lib:/ligotools/lib"
 
-#puts $fid "environment = HOME=/archive/home/gmeadors;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/ligotools/lib"
+#puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/ligotools/lib"
 
-puts $fid "environment = HOME=/archive/home/gmeadors;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ligotools/lib"
+puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ligotools/lib"
 
 # Write out the command lines for all the condor jobs:
 #set thisStartTime $startTime
