@@ -1,7 +1,7 @@
 ------------------------------------------
 Setting up environment variables
 ---
-LD_LIBRARY_PATH is /ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ligotools/lib
+LD_LIBRARY_PATH is /ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib
 Warning: No display specified.  You will not be able to display graphics on the screen.
 Warning: Unable to load Java Runtime Environment: libjvm.so: cannot open shared object file: No such file or directory
 Warning: Disabling Java support
@@ -42,40 +42,49 @@ ans =
 vector fitting...
 {Warning: Rank deficient, rank = 26,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 91
+  In Fitting>Fitting.Fitting at 92
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 33,  tol =    2.4198e-12.} 
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 44,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 51,  tol =    2.4198e-12.} 
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 47,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 56,  tol =    2.4198e-12.} 
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 62,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 63,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 96
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialMICH at 112
+  In eleutheria>windower at 31
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Done.
 Resulting state space model produced (see offlinezpks.mat)
 {Warning: This functionality is no longer supported under the -nojvm startup
@@ -83,51 +92,49 @@ option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In Fitting>Fitting.Fitting at 168
+> In Fitting>Fitting.Fitting at 169
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In Fitting>Fitting.Fitting at 202
-  In Feedforward>Feedforward.Feedforward at 33
-  In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
-  In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In Fitting>Fitting.Fitting at 203
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialMICH at 106
+  In HoftEditor>HoftEditor.initialMICH at 112
   In eleutheria>windower at 31
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In Fitting>Fitting.Fitting at 204
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialMICH at 112
+  In eleutheria>windower at 31
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 frame tail length
      0
 
 Filtering (offline)!
 Exporting baseline to check filter improvement
-Elapsed time is 5.655279 seconds.
+Elapsed time is 6.127658 seconds.
 Sizes of frame heads being written
      1851392           1
 
@@ -169,49 +176,49 @@ ans =
 vector fitting...
 {Warning: Rank deficient, rank = 28,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 91
+  In Fitting>Fitting.Fitting at 92
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 39,  tol =    2.4198e-12.} 
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 49,  tol =    2.4198e-12.} 
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 46,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 55,  tol =    2.4198e-12.} 
-> In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
-  In Feedforward>Feedforward.Feedforward at 33
-  In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
-  In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: Rank deficient, rank = 63,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 96
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialPRC at 159
+  In eleutheria>windower at 34
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Done.
 Resulting state space model produced (see offlinezpks.mat)
 {Warning: This functionality is no longer supported under the -nojvm startup
@@ -219,51 +226,49 @@ option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In Fitting>Fitting.Fitting at 168
+> In Fitting>Fitting.Fitting at 169
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In Fitting>Fitting.Fitting at 202
-  In Feedforward>Feedforward.Feedforward at 33
-  In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
-  In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In Fitting>Fitting.Fitting at 203
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.initialPRC at 153
+  In HoftEditor>HoftEditor.initialPRC at 159
   In eleutheria>windower at 34
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In Fitting>Fitting.Fitting at 204
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.initialPRC at 159
+  In eleutheria>windower at 34
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 frame tail length
      0
 
 Filtering (offline)!
 Exporting baseline to check filter improvement
-Elapsed time is 5.579876 seconds.
+Elapsed time is 5.859966 seconds.
 Length of Hoft data vector
     16777216
 
@@ -273,89 +278,85 @@ Amount of data to be written
         1024
 
 Calculating pre- and post-filter PSD
-Elapsed time is 7.294677 seconds.
+Elapsed time is 5.518580 seconds.
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 700
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 749
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 713
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 762
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 714
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 763
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 718
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 767
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 731
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 780
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 732
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 781
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 
 ans =
 
@@ -373,102 +374,99 @@ ans =
 
     'Pre-filter range was 12405.4751 kpc'
 
-    'Post-filter range is 12539.5764 kpc'
+    'Post-filter range is 12521.4911 kpc'
 
-    'Improvement factor is 1.0108'
+    'Improvement factor is 1.0094'
 
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 862
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 911
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 869
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 918
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 885
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 934
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 892
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 941
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 894
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 943
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: Imaginary parts of complex X and/or Y arguments ignored} 
-> In HoftEditor>HoftEditor.frameWriter at 896
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 945
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: Imaginary parts of complex X and/or Y arguments ignored} 
-> In HoftEditor>HoftEditor.frameWriter at 896
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+> In HoftEditor>HoftEditor.frameWriter at 945
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 902
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.initialFrameWriter at 264
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 951
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.initialFrameWriter at 270
   In eleutheria>windower at 39
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Comb limit for this window
 
 ans =
@@ -479,41 +477,41 @@ Values of combed points
 
 ans =
 
-    0.9972
-    0.9782
-    0.9995
-    0.9740
-    0.9860
-    0.9641
-    0.9712
-    1.0006
-    1.0046
-    1.0027
-    0.9719
-    0.9689
-    0.9985
-    0.9954
-    0.9917
-    0.9986
-    0.9900
-    0.9922
-    0.9880
-    0.9966
-    0.9924
-    0.9947
+    0.9948
+    0.9818
+    0.9974
+    0.9747
+    0.9871
+    0.9654
+    0.9721
+    1.0005
     1.0072
-    0.9920
+    1.0021
+    0.9704
+    0.9660
+    0.9975
+    0.9946
+    0.9912
+    0.9976
+    0.9893
+    0.9931
+    0.9876
+    0.9960
+    0.9944
+    0.9949
+    1.0054
+    0.9914
     0.9989
-    1.0004
-    1.0034
-    0.9998
-    0.9989
+    1.0002
+    1.0053
+    0.9999
+    0.9988
     1.0025
-    1.0049
+    1.0047
+    1.0028
     1.0030
-    1.0031
-    1.0017
-    1.0003
+    1.0016
+    1.0002
     1.0005
     1.0003
     1.0002
@@ -548,7 +546,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-932434432-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -558,7 +556,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-932434432-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -568,7 +566,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-932434432-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434304-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -579,7 +577,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-932434560-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -589,7 +587,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-932434560-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -599,7 +597,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-932434560-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434432-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -610,7 +608,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-932434688-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -620,7 +618,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-932434688-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -630,7 +628,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-932434688-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434560-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -641,7 +639,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-932434816-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -651,7 +649,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-932434816-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -661,122 +659,118 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-932434816-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434688-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 Offline ZPKs displayed below
  
 Zero/pole/gain:
  
+-1.8661e-16 (s+55.87) (s^2 + 5.761s + 1.057e05) (s^2 + 1.826s + 1.164e05)             
                                                                                       
--3.3251e-16 (s+12.72) (s^2 + 9.63s + 1.057e05) (s^2 + 3.184s + 1.171e05)              
+        (s^2 - 3.072s + 1.489e05) (s^2 + 6.189s + 1.696e05) (s^2 + 16.92s + 2.005e05) 
                                                                                       
-        (s^2 - 11.6s + 1.331e05) (s^2 + 3.088s + 1.693e05) (s^2 + 11.57s + 2.013e05)  
+        (s^2 + 3.108s + 2.208e05) (s^2 + 4.591s + 2.361e05) (s^2 + 16.37s + 2.496e05) 
                                                                                       
-        (s^2 + 1.439s + 2.238e05) (s^2 - 0.627s + 2.368e05) (s^2 + 13.69s + 2.503e05) 
+        (s^2 + 7.785s + 2.913e05) (s^2 + 9.044s + 3.448e05) (s^2 + 11.11s + 3.591e05) 
                                                                                       
-        (s^2 + 5.731s + 3.389e05) (s^2 + 2.46s + 3.548e05) (s^2 + 4.78s + 4.233e05)   
+        (s^2 + 4.656s + 4.473e05) (s^2 + 7.742s + 6.059e05) (s^2 + 1.731s + 8.521e05) 
                                                                                       
-        (s^2 + 4.583s + 5.146e05) (s^2 + 5.585s + 6.786e05) (s^2 + 2.457s + 1.021e06) 
+        (s^2 + 24.67s + 1.48e06) (s^2 + 35.12s + 2.388e06) (s^2 + 34.8s + 3.025e06)   
                                                                                       
-        (s^2 + 8.646s + 1.578e06) (s^2 + 25.71s + 2.665e06) (s^2 + 22.69s + 3.184e06) 
+        (s^2 + 47.09s + 3.82e06) (s^2 + 55.39s + 4.265e06) (s^2 - 18.58s + 5.951e06)  
                                                                                       
-        (s^2 + 5.762s + 4.145e06) (s^2 - 1.187s + 5.733e06) (s^2 + 171.6s + 5.873e06) 
+        (s^2 + 205.1s + 6.811e06) (s^2 - 2.678s + 6.917e06) (s^2 + 12.95s + 6.938e06) 
                                                                                       
-        (s^2 + 11.36s + 6.889e06) (s^2 + 163.4s + 6.919e06) (s^2 - 2.375s + 6.923e06) 
+        (s^2 + 7.677s + 8.991e06) (s^2 - 32.66s + 1.154e07) (s^2 - 1448s + 1.397e07)  
                                                                                       
-        (s^2 + 4.494s + 8.884e06) (s^2 - 69.19s + 1.163e07) (s^2 - 1051s + 1.255e07)  
+        (s^2 + 13.72s + 1.452e07) (s^2 - 15.28s + 1.879e07) (s^2 + 13.23s + 1.898e07) 
                                                                                       
-        (s^2 + 18.05s + 1.595e07) (s^2 - 32.4s + 1.877e07) (s^2 + 34.43s + 1.888e07)  
-                                                                                      
-        (s^2 + 202.4s + 1.945e07) (s^2 + 106.8s + 2.224e07) (s^2 + 139.2s + 2.348e07) 
+        (s^2 + 20.15s + 2.056e07) (s^2 + 25s + 2.36e07) (s^2 + 3718s + 3.314e07)      
                                                                                       
 ---------------------------------------------------------------------------------------
+(s^2 + 5.591s + 1.021e05) (s^2 + 4.904s + 1.149e05) (s^2 + 36.25s + 1.188e05)          
                                                                                        
-(s^2 + 3.614s + 1.014e05) (s^2 + 5.502s + 1.142e05) (s^2 + 13.07s + 1.242e05)          
+        (s^2 + 10s + 1.576e05) (s^2 + 7.397s + 1.709e05) (s^2 + 16.14s + 2.034e05)     
                                                                                        
-        (s^2 + 32.19s + 1.514e05) (s^2 + 4.17s + 1.698e05) (s^2 + 11.74s + 2.034e05)   
+        (s^2 + 3.87s + 2.204e05) (s^2 + 6.326s + 2.355e05) (s^2 + 6.652s + 2.514e05)   
                                                                                        
-        (s^2 + 4.063s + 2.243e05) (s^2 + 2.239s + 2.364e05) (s^2 + 6.067s + 2.512e05)  
+        (s^2 + 6.509s + 2.92e05) (s^2 + 7.746s + 3.453e05) (s^2 + 10s + 3.586e05)      
                                                                                        
-        (s^2 + 6.393s + 3.387e05) (s^2 + 1.942s + 3.55e05) (s^2 + 4.543s + 4.228e05)   
+        (s^2 + 5.129s + 4.461e05) (s^2 + 10.62s + 6.01e05) (s^2 + 4.955s + 8.517e05)   
                                                                                        
-        (s^2 + 5.869s + 5.14e05) (s^2 + 11.31s + 6.776e05) (s^2 + 5.005s + 1.022e06)   
+        (s^2 + 25.05s + 1.502e06) (s^2 + 22.25s + 2.406e06) (s^2 + 17.64s + 3.023e06)  
                                                                                        
-        (s^2 + 6.158s + 1.582e06) (s^2 + 15.02s + 2.677e06) (s^2 + 12.45s + 3.207e06)  
+        (s^2 + 14.81s + 3.781e06) (s^2 + 31.33s + 4.761e06) (s^2 + 2.425s + 5.969e06)  
                                                                                        
-        (s^2 + 3.411s + 4.134e06) (s^2 + 14.76s + 5.748e06) (s^2 + 54.33s + 6.38e06)   
+        (s^2 + 2.043s + 6.869e06) (s^2 + 10.14s + 6.92e06) (s^2 + 7.295s + 6.998e06)   
                                                                                        
-        (s^2 + 0.9774s + 6.867e06) (s^2 + 7.662s + 6.909e06) (s^2 + 7.622s + 7.017e06) 
+        (s^2 + 0.598s + 9.101e06) (s^2 + 2.284s + 1.152e07) (s^2 + 0.6904s + 1.447e07) 
                                                                                        
-        (s^2 + 0.2286s + 9.102e06) (s^2 + 1.585s + 1.152e07) (s^2 + 10.49s + 1.667e07) 
+        (s^2 + 17.48s + 1.865e07) (s^2 + 1.018s + 1.882e07) (s^2 + 1.949s + 1.906e07)  
                                                                                        
-        (s^2 + 3.736s + 1.866e07) (s^2 + 1.365s + 1.88e07) (s^2 + 0.7119s + 1.906e07)  
-                                                                                       
-        (s^2 + 16.39s + 2.081e07) (s^2 + 3.304s + 2.293e07) (s^2 + 6.22e04s + 1.934e09)
+        (s^2 + 2.665s + 2.055e07) (s^2 + 7.087s + 2.366e07) (s^2 + 6.22e04s + 1.934e09)
                                                                                        
  
  
 Zero/pole/gain:
  
+8.4596e-16 (s+62.94) (s^2 + 3.393s + 1.154e05) (s^2 + 29.89s + 1.418e05)               
                                                                                        
-8.9801e-16 (s+62.17) (s^2 + 6.007s + 1.057e05) (s^2 - 4.244s + 1.252e05)               
+        (s^2 + 20.53s + 1.694e05) (s^2 + 4.633s + 1.719e05) (s^2 + 1.206s + 2.003e05)  
                                                                                        
-        (s^2 + 5.479s + 1.729e05) (s^2 + 3.302s + 1.797e05) (s^2 - 1.267s + 2.016e05)  
+        (s^2 + 1.3s + 2.165e05) (s^2 + 0.2758s + 2.281e05) (s^2 + 6.987s + 2.491e05)   
                                                                                        
-        (s^2 + 2.854s + 2.178e05) (s^2 + 1.406s + 2.281e05) (s^2 + 8.058s + 2.489e05)  
+        (s^2 + 21.93s + 2.679e05) (s^2 - 0.02435s + 3.225e05) (s^2 + 1.265s + 3.64e05) 
                                                                                        
-        (s^2 + 23.9s + 2.647e05) (s^2 + 2.194s + 3.63e05) (s^2 + 0.808s + 4.165e05)    
+        (s^2 + 3.504s + 4.571e05) (s^2 + 0.2858s + 4.912e05) (s^2 + 4.134s + 6.557e05) 
                                                                                        
-        (s^2 + 2.257s + 4.574e05) (s^2 + 6.46s + 5.979e05) (s^2 + 2.934s + 8.1e05)     
+        (s^2 + 3.668s + 8.232e05) (s^2 + 2.471s + 1.042e06) (s^2 + 5.937s + 1.408e06)  
                                                                                        
-        (s^2 + 7.68s + 1.006e06) (s^2 + 6.121s + 1.408e06) (s^2 + 5.116s + 1.58e06)    
+        (s^2 + 6.102s + 1.58e06) (s^2 + 1.215s + 2.137e06) (s^2 + 3.285s + 3.07e06)    
                                                                                        
-        (s^2 + 1.351s + 1.994e06) (s^2 + 1.434s + 3.05e06) (s^2 + 7.088s + 3.541e06)   
+        (s^2 + 6.89s + 3.98e06) (s^2 + 10.21s + 4.521e06) (s^2 - 0.2163s + 6.868e06)   
                                                                                        
-        (s^2 + 2.306s + 4.551e06) (s^2 - 0.3479s + 6.869e06) (s^2 - 50.87s + 6.899e06) 
+        (s^2 - 54.9s + 6.905e06) (s^2 + 0.219s + 9.096e06) (s^2 + 2.182s + 1.082e07)   
                                                                                        
-        (s^2 + 0.1584s + 9.102e06) (s^2 + 3.361s + 1.083e07) (s^2 + 3081s + 1.455e07)  
+        (s^2 + 3414s + 1.456e07) (s^2 + 8.114s + 1.187e07) (s^2 + 14.76s + 1.864e07)   
                                                                                        
-        (s^2 + 0.7221s + 1.444e07) (s^2 + 9.066s + 1.862e07) (s^2 + 22.67s + 1.886e07) 
-                                                                                       
-        (s^2 - 9.443s + 1.913e07) (s^2 - 2.496s + 1.944e07) (s^2 + 13.21s + 2.252e07)  
+        (s^2 + 2.549s + 1.889e07) (s^2 - 10.01s + 1.913e07) (s^2 - 0.6738s + 1.951e07) 
                                                                                        
 ----------------------------------------------------------------------------------------
+(s^2 + 7.404s + 1.15e05) (s^2 + 79.63s + 1.18e05) (s^2 + 11.76s + 1.586e05)             
                                                                                         
-(s^2 + 1.966s + 1.057e05) (s^2 + 2.764s + 1.273e05) (s^2 + 247.2s + 1.519e05)           
+        (s^2 + 2.653s + 1.712e05) (s^2 + 161.8s + 2.014e05) (s^2 + 3.206s + 1.994e05)   
                                                                                         
-        (s^2 + 12.59s + 1.717e05) (s^2 + 4.497s + 1.79e05) (s^2 + 1.37s + 2.018e05)     
+        (s^2 + 3.486s + 2.16e05) (s^2 + 0.8219s + 2.282e05) (s^2 + 8.375s + 2.487e05)   
                                                                                         
-        (s^2 + 7.117s + 2.187e05) (s^2 + 3.292s + 2.285e05) (s^2 + 8.898s + 2.484e05)   
+        (s^2 + 11.08s + 2.603e05) (s^2 + 0.9116s + 3.223e05) (s^2 + 1.329s + 3.636e05)  
                                                                                         
-        (s^2 + 10.11s + 2.594e05) (s^2 + 1.493s + 3.623e05) (s^2 + 0.8209s + 4.168e05)  
+        (s^2 + 2.312s + 4.574e05) (s^2 + 0.1409s + 4.911e05) (s^2 + 5.474s + 6.563e05)  
                                                                                         
-        (s^2 + 1.012s + 4.578e05) (s^2 + 6.994s + 5.981e05) (s^2 + 3.401s + 8.104e05)   
+        (s^2 + 3.7s + 8.24e05) (s^2 + 1.437s + 1.042e06) (s^2 + 3.834s + 1.409e06)      
                                                                                         
-        (s^2 + 6.382s + 1.007e06) (s^2 + 4.037s + 1.408e06) (s^2 + 3.328s + 1.578e06)   
+        (s^2 + 3.878s + 1.577e06) (s^2 + 0.9705s + 2.138e06) (s^2 + 1.399s + 3.069e06)  
                                                                                         
-        (s^2 + 2.222s + 1.994e06) (s^2 + 0.8651s + 3.05e06) (s^2 + 5.543s + 3.567e06)   
+        (s^2 + 6.195s + 3.975e06) (s^2 + 15.6s + 4.476e06) (s^2 + 0.04656s + 6.865e06)  
                                                                                         
-        (s^2 + 16.47s + 4.504e06) (s^2 + 0.07366s + 6.865e06) (s^2 + 2.285s + 6.908e06) 
+        (s^2 + 2.739s + 6.909e06) (s^2 + 0.0638s + 9.096e06) (s^2 + 1.85s + 1.081e07)   
                                                                                         
-        (s^2 + 0.4191s + 9.097e06) (s^2 + 2.576s + 1.083e07) (s^2 + 0.53s + 1.444e07)   
+        (s^2 + 10.77s + 1.186e07) (s^2 + 1.615s + 1.863e07) (s^2 + 0.3857s + 1.881e07)  
                                                                                         
-        (s^2 + 0.03211s + 1.863e07) (s^2 + 3.31s + 1.88e07) (s^2 + 0.06074s + 1.907e07) 
-                                                                                        
-        (s^2 + 1.57s + 1.943e07) (s^2 + 17.52s + 2.253e07) (s^2 + 6.22e04s + 1.934e09)  
+        (s^2 + 0.2357s + 1.907e07) (s^2 + 3.734s + 1.951e07) (s^2 + 6.22e04s + 1.934e09)
                                                                                         
  
 RMS errors displayered below
 
 ans =
 
-   5.9576e-19
+   5.9567e-19
 
 
 ans =
 
-   4.3581e-19
+   4.3582e-19
 
 Lengths of passed DARM, MICH and PRC vrctors:
      0
@@ -821,40 +815,49 @@ ans =
 vector fitting...
 {Warning: Rank deficient, rank = 26,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 91
+  In Fitting>Fitting.Fitting at 92
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 38,  tol =    2.4198e-12.} 
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 44,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 50,  tol =    2.4198e-12.} 
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 54,  tol =    2.4198e-12.} 
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 63,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 64,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 96
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Done.
 Resulting state space model produced (see offlinezpks.mat)
 {Warning: This functionality is no longer supported under the -nojvm startup
@@ -862,51 +865,49 @@ option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In Fitting>Fitting.Fitting at 168
+> In Fitting>Fitting.Fitting at 169
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In Fitting>Fitting.Fitting at 202
-  In Feedforward>Feedforward.Feedforward at 33
-  In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In Fitting>Fitting.Fitting at 203
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopMICH at 311
-  In eleutheria>windower at 69
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In Fitting>Fitting.Fitting at 204
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopMICH at 317
+  In eleutheria>windower at 70
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 frame tail length
       294912
 
 Filtering (offline)!
 Exporting baseline to check filter improvement
-Elapsed time is 2.290686 seconds.
+Elapsed time is 2.351946 seconds.
 Preparing to attach dangling frame after segment
 A list of relevant variables: t1, tau1, t2, tau2, duration, durationPlus, t1+512, tau1+512, duration-512, durationPlus-512
    932434929
@@ -942,33 +943,51 @@ ans =
      6242304
 
 vector fitting...
-{Warning: Rank deficient, rank = 28,  tol =    2.4198e-12.} 
+{Warning: Rank deficient, rank = 29,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 91
+  In Fitting>Fitting.Fitting at 92
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 45,  tol =    2.4198e-12.} 
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 47,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: Rank deficient, rank = 51,  tol =    2.4198e-12.} 
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 49,  tol =    2.4198e-12.} 
 > In vectfit4 at 629
-  In Fitting>Fitting.Fitting at 95
+  In Fitting>Fitting.Fitting at 96
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 65,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 96
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: Rank deficient, rank = 65,  tol =    2.4198e-12.} 
+> In vectfit4 at 629
+  In Fitting>Fitting.Fitting at 96
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Done.
 Resulting state space model produced (see offlinezpks.mat)
 {Warning: This functionality is no longer supported under the -nojvm startup
@@ -976,164 +995,160 @@ option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In Fitting>Fitting.Fitting at 168
+> In Fitting>Fitting.Fitting at 169
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In Fitting>Fitting.Fitting at 202
-  In Feedforward>Feedforward.Feedforward at 33
-  In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In Fitting>Fitting.Fitting at 203
   In Feedforward>Feedforward.Feedforward at 33
   In aletheia at 18
-  In HoftEditor>HoftEditor.loopPRC at 336
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In Fitting>Fitting.Fitting at 204
+  In Feedforward>Feedforward.Feedforward at 33
+  In aletheia at 18
+  In HoftEditor>HoftEditor.loopPRC at 342
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 frame tail length
      0
 
 Filtering (offline)!
 Exporting baseline to check filter improvement
-Elapsed time is 2.485423 seconds.
+Elapsed time is 2.281084 seconds.
 Offline ZPKs displayed below
  
 Zero/pole/gain:
  
-                                                                                         
-9.5331e-17 (s+6722) (s-5506) (s+41.9) (s^2 + 3.224s + 1.05e05) (s^2 - 1.157s + 1.166e05) 
-                                                                                         
-        (s^2 - 21.83s + 1.376e05) (s^2 + 5.027s + 1.695e05) (s^2 + 7.419s + 1.98e05)     
-                                                                                         
-        (s^2 - 3.563s + 2.373e05) (s^2 + 30.03s + 2.461e05) (s^2 + 7.26s + 2.603e05)     
-                                                                                         
-        (s^2 + 2.313s + 3.116e05) (s^2 + 1.531s + 3.411e05) (s^2 + 0.2461s + 4.59e05)    
-                                                                                         
-        (s^2 + 2.071s + 6.364e05) (s^2 - 0.09275s + 8.54e05) (s^2 + 3.937s + 1.453e06)   
-                                                                                         
-        (s^2 + 7.479s + 2.046e06) (s^2 + 4.71s + 2.75e06) (s^2 + 5.537s + 3.755e06)      
-                                                                                         
-        (s^2 + 13.99s + 4.458e06) (s^2 - 0.5789s + 5.841e06) (s^2 + 31.94s + 6.874e06)   
-                                                                                         
-        (s^2 + 2.932s + 6.932e06) (s^2 + 157.8s + 7.132e06) (s^2 + 27.55s + 8.99e06)     
-                                                                                         
-        (s^2 - 7.008s + 1.158e07) (s^2 - 29.51s + 1.497e07) (s^2 + 217.5s + 1.755e07)    
-                                                                                         
-        (s^2 - 667.9s + 1.837e07) (s^2 + 8.855s + 1.888e07) (s^2 - 15.66s + 2.082e07)    
-                                                                                         
-                       (s^2 - 43.43s + 2.271e07) (s^2 - 32.93s + 2.429e07)               
-                                                                                         
------------------------------------------------------------------------------------------
+ 5.6674e-17 (s+1.476e04) (s-5698) (s-75.66) (s^2 + 3.47s + 1.06e05)                    
+                                                                                       
+         (s^2 - 1.197s + 1.168e05) (s^2 - 20.79s + 1.382e05) (s^2 + 4.63s + 1.708e05)  
+                                                                                       
+         (s^2 + 8.127s + 1.968e05) (s^2 + 2.768s + 2.231e05) (s^2 - 3.42s + 2.373e05)  
+                                                                                       
+         (s^2 + 27.67s + 2.495e05) (s^2 - 1.874s + 2.887e05) (s^2 + 5.919s + 3.377e05) 
+                                                                                       
+         (s^2 - 0.161s + 4.072e05) (s^2 + 3.503s + 4.854e05) (s^2 + 2.516s + 6.204e05) 
+                                                                                       
+         (s^2 + 3.798s + 8.469e05) (s^2 + 2.405s + 1.468e06) (s^2 + 31.57s + 1.846e06) 
+                                                                                       
+         (s^2 + 3.498s + 2.938e06) (s^2 + 9.917s + 3.485e06) (s^2 + 9.796s + 4.307e06) 
+                                                                                       
+         (s^2 - 2.11s + 5.581e06) (s^2 + 8.051s + 6.73e06) (s^2 + 10.33s + 6.901e06)   
+                                                                                       
+         (s^2 + 267.5s + 7.159e06) (s^2 + 4.064s + 8.953e06) (s^2 - 4.226s + 1.137e07) 
+                                                                                       
+         (s^2 + 8.965s + 1.472e07) (s^2 - 811.3s + 1.545e07) (s^2 + 58.09s + 1.693e07) 
+                                                                                       
+         (s^2 + 3.416s + 1.902e07) (s^2 - 14.73s + 2.19e07) (s^2 + 16.45s + 2.411e07)  
+                                                                                       
+----------------------------------------------------------------------------------------
+(s^2 + 7.538s + 1.018e05) (s^2 + 21.97s + 1.129e05) (s^2 + 5.117s + 1.17e05)            
                                                                                         
- (s^2 + 3.285s + 1.024e05) (s^2 + 4.559s + 1.159e05) (s^2 + 22.53s + 1.197e05)          
+        (s^2 + 2.233s + 1.514e05) (s^2 + 4.541s + 1.716e05) (s^2 + 7.062s + 1.978e05)   
                                                                                         
-         (s^2 + 8.75s + 1.532e05) (s^2 + 6.426s + 1.709e05) (s^2 + 6.147s + 1.989e05)   
+        (s^2 + 3.019s + 2.226e05) (s^2 + 1.318s + 2.366e05) (s^2 + 9.821s + 2.507e05)   
                                                                                         
-         (s^2 + 1.212s + 2.365e05) (s^2 + 11.1s + 2.495e05) (s^2 + 6.079s + 2.604e05)   
+        (s^2 + 0.9114s + 2.892e05) (s^2 + 5.999s + 3.375e05) (s^2 + 0.1712s + 4.056e05) 
                                                                                         
-         (s^2 + 1.79s + 3.126e05) (s^2 + 1.234s + 3.417e05) (s^2 + 0.7644s + 4.595e05)  
+        (s^2 + 2.648s + 4.854e05) (s^2 + 8.124s + 6.179e05) (s^2 + 11.93s + 8.461e05)   
                                                                                         
-         (s^2 + 2.928s + 6.356e05) (s^2 + 0.7576s + 8.552e05) (s^2 + 4.552s + 1.461e06) 
+        (s^2 + 2.575s + 1.47e06) (s^2 + 27.9s + 1.878e06) (s^2 + 2.47s + 2.936e06)      
                                                                                         
-         (s^2 + 4.58s + 2.047e06) (s^2 + 2.578s + 2.75e06) (s^2 + 3.771s + 3.748e06)    
+        (s^2 + 6.931s + 3.488e06) (s^2 + 13.88s + 4.316e06) (s^2 + 1.732s + 5.578e06)   
                                                                                         
-         (s^2 + 17.55s + 4.535e06) (s^2 + 2.01s + 5.838e06) (s^2 + 8.307s + 6.861e06)   
+        (s^2 + 6.836s + 6.722e06) (s^2 + 3.145s + 6.865e06) (s^2 + 8.65s + 6.905e06)    
                                                                                         
-         (s^2 + 9.632s + 6.872e06) (s^2 + 1.721s + 6.94e06) (s^2 + 0.01119s + 9.103e06) 
+        (s^2 + 0.2236s + 9.102e06) (s^2 + 0.007066s + 1.132e07)                         
                                                                                         
-         (s^2 + 4.744s + 1.155e07) (s^2 + 1.644s + 1.501e07) (s^2 + 13.76s + 1.743e07)  
+        (s^2 + 1.369s + 1.471e07) (s^2 + 4.063s + 1.727e07) (s^2 + 8.055s + 1.903e07)   
                                                                                         
-         (s^2 + 2.995s + 1.875e07) (s^2 + 1.289s + 1.907e07) (s^2 + 0.5357s + 2.085e07) 
+        (s^2 + 4.237s + 1.906e07) (s^2 + 0.161s + 2.2e07) (s^2 + 2.818s + 2.414e07)     
                                                                                         
-         (s^2 + 6.049s + 2.272e07) (s^2 + 6.527s + 2.438e07) (s^2 + 6.22e04s + 1.934e09)
+                                               (s^2 + 6.22e04s + 1.934e09)              
                                                                                         
  
  
 Zero/pole/gain:
  
+ 6.8732e-16 (s+121.5) (s^2 + 10.32s + 1.11e05) (s^2 + 2.744s + 1.167e05)               
                                                                                        
-8.8336e-16 (s-18.33) (s^2 - 1.426s + 1.157e05) (s^2 + 0.374s + 1.701e05)               
+         (s^2 + 1.229s + 1.731e05) (s^2 + 7.324s + 1.876e05) (s^2 - 1.524s + 2.025e05) 
                                                                                        
-        (s^2 + 3.826s + 1.794e05) (s^2 + 7.251s + 1.973e05) (s^2 - 1.199s + 2.043e05)  
+         (s^2 + 12.15s + 2.253e05) (s^2 + 9.658s + 2.428e05) (s^2 + 1.458s + 2.537e05) 
                                                                                        
-        (s^2 + 19.93s + 2.357e05) (s^2 + 11.03s + 2.419e05) (s^2 + 0.4166s + 2.548e05) 
+         (s^2 + 7.237s + 2.79e05) (s^2 + 0.9774s + 3.483e05) (s^2 - 1.866s + 3.936e05) 
                                                                                        
-        (s^2 + 4.308s + 2.826e05) (s^2 + 2.496s + 3.563e05) (s^2 - 1.661s + 3.934e05)  
+         (s^2 + 2.558s + 4.533e05) (s^2 + 3.38s + 5.225e05) (s^2 + 6.646s + 6.877e05)  
                                                                                        
-        (s^2 + 3.135s + 4.544e05) (s^2 + 1.116s + 5.344e05) (s^2 + 4.141s + 7.019e05)  
+         (s^2 + 0.8248s + 8.7e05) (s^2 + 2.852s + 1.04e06) (s^2 + 2.102s + 1.391e06)   
                                                                                        
-        (s^2 + 1.183s + 8.725e05) (s^2 + 3.423s + 1.04e06) (s^2 + 1.102s + 1.392e06)   
+         (s^2 + 4.064s + 1.56e06) (s^2 + 0.9419s + 1.978e06) (s^2 + 2.34s + 2.673e06)  
                                                                                        
-        (s^2 + 4.333s + 1.561e06) (s^2 + 3.388s + 1.918e06) (s^2 + 3.106s + 2.594e06)  
+         (s^2 + 2.897s + 3.421e06) (s^2 + 13.06s + 4.45e06) (s^2 - 5.041s + 6.874e06)  
                                                                                        
-        (s^2 + 1.83s + 3.373e06) (s^2 + 13.6s + 4.421e06) (s^2 + 3.557s + 6.876e06)    
+         (s^2 + 33.83s + 6.933e06) (s^2 - 23.58s + 6.976e06) (s^2 + 1.393s + 9.415e06) 
                                                                                        
-        (s^2 - 64.36s + 6.941e06) (s^2 + 7.925s + 9.048e06) (s^2 + 2.106s + 1.06e07)   
+         (s^2 + 4591s + 1.542e07) (s^2 + 1.808s + 1.289e07) (s^2 + 20.94s + 1.867e07)  
                                                                                        
-        (s^2 + 3393s + 1.472e07) (s^2 + 3.239s + 1.364e07) (s^2 + 15.46s + 1.868e07)   
+         (s^2 - 6.075s + 1.903e07) (s^2 + 69.38s + 1.923e07) (s^2 + 3.097s + 1.953e07) 
                                                                                        
-        (s^2 - 0.4673s + 1.903e07) (s^2 + 62.76s + 1.958e07) (s^2 + 2.984s + 2.039e07) 
-                                                                                       
----------------------------------------------------------------------------------------
-                                                                                       
-(s^2 + 156.6s + 6.619e04) (s^2 + 2.381s + 1.161e05) (s^2 + 1.865s + 1.692e05)          
-                                                                                       
-        (s^2 + 5.953s + 1.79e05) (s^2 + 2.876s + 1.971e05) (s^2 + 0.02043s + 2.043e05) 
-                                                                                       
-        (s^2 + 15.15s + 2.406e05) (s^2 + 4.243s + 2.452e05) (s^2 + 1.002s + 2.568e05)  
-                                                                                       
-        (s^2 + 8.291s + 2.842e05) (s^2 + 1.586s + 3.566e05) (s^2 + 0.5332s + 3.92e05)  
-                                                                                       
-        (s^2 + 2.566s + 4.556e05) (s^2 + 0.6521s + 5.338e05) (s^2 + 2.603s + 7.025e05) 
-                                                                                       
-        (s^2 + 2.246s + 8.733e05) (s^2 + 1.72s + 1.041e06) (s^2 + 0.3703s + 1.393e06)  
-                                                                                       
-        (s^2 + 2.007s + 1.559e06) (s^2 + 5.267s + 1.918e06) (s^2 + 2.408s + 2.592e06)  
-                                                                                       
-        (s^2 + 3.7s + 3.374e06) (s^2 + 14.39s + 4.394e06) (s^2 + 0.6601s + 6.865e06)   
-                                                                                       
-        (s^2 + 1.137s + 6.905e06) (s^2 + 2.845s + 9.066e06) (s^2 + 1.971s + 1.061e07)  
-                                                                                       
-        (s^2 + 1.353s + 1.364e07) (s^2 + 2.79s + 1.868e07) (s^2 + 4.421s + 1.905e07)   
-                                                                                       
-        (s^2 + 5.909s + 1.906e07) (s^2 + 5.215s + 2.042e07) (s^2 + 6.22e04s + 1.934e09)
-                                                                                       
+----------------------------------------------------------------------------------------
+(s^2 + 25.64s + 9.964e04) (s^2 + 1.462s + 1.144e05) (s^2 + 92.36s + 1.523e05)           
+                                                                                        
+        (s^2 + 3.668s + 1.74e05) (s^2 + 15.04s + 1.911e05) (s^2 + 2.486s + 2.03e05)     
+                                                                                        
+        (s^2 + 29.14s + 2.335e05) (s^2 + 4.227s + 2.449e05) (s^2 + 2.423s + 2.552e05)   
+                                                                                        
+        (s^2 + 21.04s + 2.777e05) (s^2 + 1.433s + 3.48e05) (s^2 + 0.2264s + 3.924e05)   
+                                                                                        
+        (s^2 + 2.889s + 4.547e05) (s^2 + 3.033s + 5.224e05) (s^2 + 5.473s + 6.896e05)   
+                                                                                        
+        (s^2 + 2.137s + 8.71e05) (s^2 + 0.7643s + 1.04e06) (s^2 + 0.7417s + 1.393e06)   
+                                                                                        
+        (s^2 + 0.3955s + 1.557e06) (s^2 + 0.6508s + 1.979e06) (s^2 + 2.917s + 2.672e06) 
+                                                                                        
+        (s^2 + 3.93s + 3.421e06) (s^2 + 15.83s + 4.409e06) (s^2 + 2.153s + 6.868e06)    
+                                                                                        
+        (s^2 + 1.78s + 6.874e06) (s^2 + 0.01538s + 6.949e06) (s^2 + 1.511s + 9.414e06)  
+                                                                                        
+        (s^2 + 2.419s + 1.29e07) (s^2 + 2.913s + 1.868e07) (s^2 + 1.792s + 1.904e07)    
+                                                                                        
+        (s^2 + 2.541s + 1.906e07) (s^2 + 0.0225s + 1.952e07) (s^2 + 6.22e04s + 1.934e09)
+                                                                                        
  
 RMS errors are displayed below
 
 ans =
 
-   7.2368e-19
+   7.2369e-19
 
 
 ans =
 
-   4.6699e-19
+   4.6709e-19
 
 Displaying lengths of Hoft.data, Hoft.data((jjStart+s+1):end), and Hoft.frameTail
      8388608
@@ -1149,171 +1164,163 @@ Amount of data to be written
    512
 
 Calculating pre- and post-filter PSD
-Elapsed time is 4.860901 seconds.
+Elapsed time is 4.486796 seconds.
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 700
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 749
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 713
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 762
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 714
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 763
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 718
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 767
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 731
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 732
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 753
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 765
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 766
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 768
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
-{Warning: This functionality is no longer supported under the -nojvm startup
-option. For more information, see "Changes to -nojvm Startup Option" in the
-MATLAB Release Notes. To view the release note in your system browser, run
-web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
-'-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
-  In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In HoftEditor>HoftEditor.frameWriter at 780
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
+  In print at 316
   In HoftEditor>HoftEditor.frameWriter at 781
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In HoftEditor>HoftEditor.frameWriter at 802
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 814
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 815
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In HoftEditor>HoftEditor.frameWriter at 817
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 829
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
+{Warning: This functionality is no longer supported under the -nojvm startup
+option. For more information, see "Changes to -nojvm Startup Option" in the
+MATLAB Release Notes. To view the release note in your system browser, run
+web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
+'-browser')} 
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
+  In graphics/private/render at 142
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 830
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 
 ans =
 
@@ -1331,9 +1338,9 @@ ans =
 
     'Pre-filter range was 12276.6861 kpc'
 
-    'Post-filter range is 12367.4049 kpc'
+    'Post-filter range is 12383.6167 kpc'
 
-    'Improvement factor is 1.0074'
+    'Improvement factor is 1.0087'
 
 
 ans =
@@ -1360,93 +1367,90 @@ option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 862
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 911
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 869
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 918
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 885
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 934
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 892
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 941
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In HoftEditor>HoftEditor.frameWriter at 894
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 943
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: Imaginary parts of complex X and/or Y arguments ignored} 
-> In HoftEditor>HoftEditor.frameWriter at 896
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 945
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: Imaginary parts of complex X and/or Y arguments ignored} 
-> In HoftEditor>HoftEditor.frameWriter at 896
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+> In HoftEditor>HoftEditor.frameWriter at 945
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 {Warning: This functionality is no longer supported under the -nojvm startup
 option. For more information, see "Changes to -nojvm Startup Option" in the
 MATLAB Release Notes. To view the release note in your system browser, run
 web('http://www.mathworks.com/access/helpdesk/help/techdoc/rn/bropbi9-1.html#brubkzc-1',
 '-browser')} 
-> In /ldcg/matlab_r2011a/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 22
+> In /ldcg/matlab_r2010b/toolbox/compiler/mcr/matlab/graphics/hardcopy.p>hardcopy at 21
   In graphics/private/render at 142
-  In print>LocalPrint at 271
-  In print at 228
-  In HoftEditor>HoftEditor.frameWriter at 902
-  In HoftEditor>HoftEditor.dataReviewer at 401
-  In HoftEditor>HoftEditor.loopPRC at 393
-  In eleutheria>windower at 70
-  In eleutheria>filterer at 94
-  In eleutheria at 104
+  In print at 316
+  In HoftEditor>HoftEditor.frameWriter at 951
+  In HoftEditor>HoftEditor.dataReviewer at 407
+  In HoftEditor>HoftEditor.loopPRC at 399
+  In eleutheria>windower at 71
+  In eleutheria>filterer at 95
+  In eleutheria at 105
 Comb limit for this window
 
 ans =
@@ -1457,46 +1461,46 @@ Values of combed points
 
 ans =
 
-    0.9728
-    0.9944
-    0.9806
-    0.9934
-    0.9870
-    0.9538
-    0.9778
-    1.0101
-    1.0050
-    0.9876
-    0.9603
-    0.9811
-    0.9846
-    0.9939
-    0.9959
-    0.9776
-    0.9962
-    0.9893
-    0.9912
-    0.9969
+    0.9735
+    0.9929
     0.9779
-    0.9999
-    0.9837
+    0.9939
+    0.9891
+    0.9544
+    0.9790
+    1.0104
+    1.0035
+    0.9878
+    0.9606
+    0.9773
+    0.9841
+    0.9930
+    0.9952
+    0.9751
+    0.9965
+    0.9888
+    0.9913
+    0.9978
+    0.9774
     0.9994
-    1.0000
-    1.0049
-    1.0019
-    1.0032
-    1.0000
-    1.0032
-    1.0031
-    1.0002
-    1.0007
-    1.0001
-    1.0018
-    0.9997
+    0.9857
     0.9995
+    1.0000
+    1.0056
+    1.0033
+    1.0035
+    0.9999
+    1.0028
+    1.0028
+    1.0002
+    1.0006
+    1.0000
+    1.0017
+    0.9997
+    0.9996
     0.9997
     0.9993
-    0.9999
+    1.0000
 
 Maximum should be Boolean
 
@@ -1526,7 +1530,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-932434944-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -1536,7 +1540,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-932434944-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -1546,7 +1550,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-932434944-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434816-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -1557,7 +1561,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-932435072-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -1567,7 +1571,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-932435072-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -1577,7 +1581,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-932435072-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932434944-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -1588,7 +1592,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-932435200-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -1598,7 +1602,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-932435200-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -1608,7 +1612,7 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-932435200-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435072-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 HoftSub.data is this long
@@ -1619,7 +1623,7 @@ ans =
 
 MKFRAME: Create new frame file
 MKFRAME: Add Channel H1:AMPS-STRAIN to new frame
-MKFRAME: Write out new frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-932435328-128.gwf
+MKFRAME: Write out new frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 stateVectorSub.data is this long
@@ -1629,7 +1633,7 @@ ans =
         2048
 
 MKFRAME: Append Channel H1:AMPS-SV_STATE_VECTOR to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-932435328-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 dqFlagSub.data is this long
@@ -1639,8 +1643,8 @@ ans =
    128
 
 MKFRAME: Append Channel H1:AMPS-DATA_QUALITY_FLAG to existing frame
-MKFRAME: Write out updated frame file /home/gmeadors/public_html/feedforward/data/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-932435328-128.gwf
+MKFRAME: Write out updated frame file /home/pulsar/public_html/feedforward/data/LHO/H-H1_AMPS_C02_L2-9324/H-H1_AMPS_C02_L2-932435200-128.gwf
 MKFRAME: Write EOF 
 MKFRAME: Complete frame file writing
 Science segment feedforward complete
-Elapsed time is 40.624288 seconds.
+Elapsed time is 53.851310 seconds.

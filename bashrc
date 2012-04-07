@@ -4,6 +4,7 @@
 alias matlab6='/ldcg/matlab_r13/bin/matlab -nosplash -nodesktop'
 alias matlab7='/ldcg/matlab_r14_sp3/bin/matlab -nosplash -nodesktop'
 alias matlab2007a='/ldcg/matlab_r2007a/bin/matlab -nosplash -nodesktop'
+alias matlab2010b='/ldcg/matlab_r2010b/bin/matlab -nosplash -nodesktop'
 alias matlab2011a='/ldcg/matlab_r2011a/bin/matlab -nosplash -nodesktop'
 alias ee='eog'
 alias gv='ggv'
@@ -18,16 +19,19 @@ alias cdS5o='cd /archive/home/gmeadors/sgwb/S5/output'
 alias cdS5m='cd /archive/home/gmeadors/sgwb/S5/matlab'
 
 # Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+#if [ -f /etc/bashrc ]; then
+#	. /etc/bashrc
+#fi
 
 EDITOR='emacs'
 export EDITOR
 export _CONDOR_DAGMAN_LOG_ON_NFS_IS_ERROR=FALSE
 
 #PATH=$PATH:/usr/local/sbin:/usr1/matlab_r13
-#export PATH
+PATH=/opt/lscsoft/gst/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/ligotools/bin:/ldcg/matlab_r2007a/bin:/opt/pegasus/3.1/bin:/home/pulsar/bin
+export PATH
+BASH_ENV=/home/gmeadors/.bashrc
+export BASH_ENV
 
 #LD_LIBRARY_PATH=/archive/home/vmandic/sgwb/S3/matlab/bin/glnx86:$LD_LIBRARY_PATH
 #export LD_LIBRARY_PATH
@@ -38,7 +42,7 @@ export _CONDOR_DAGMAN_LOG_ON_NFS_IS_ERROR=FALSE
 #      source ${LSC_DATAGRID_SERVER_LOCATION}/setup.sh
 #fi
 
-export MATLAB_ROOT=/ldcg/matlab_r2011a
+export MATLAB_ROOT=/ldcg/matlab_r2010b
 #export ARCH=glnx86
 export ARCH=glnxa64
 #

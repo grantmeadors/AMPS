@@ -20,7 +20,7 @@ set frameLengthNOISE 32;
 set condorSubmitFileName "EleutheriaSub.sub";
 set executablePathAndName "/archive/home/pulsar/feedforward/2012/04/06/AMPS/run_eleutheria-well.sh"
 #set analysisTime 60; # time per line of output
-set matlabPath "/ldcg/matlab_r2011a"
+set matlabPath "/ldcg/matlab_r2010b"
 set outputDirectory "/archive/home/pulsar/feedforward/2012/04/06/AMPS"
 #set stateVectorChan "H1:IFO-SV_STATE_VECTOR"
 #set channelList "H1:IO-1811_I,H1:IO-1811_Q,H1:IOO-MC_PWR_IN,H1:IOO-MC_TRANS_SUM,H1:PSL-ISS_OLMONPD_NW"
@@ -115,7 +115,7 @@ puts $fid "concurrency_limits = 40"
 
 #puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64/server:/ldcg/matlab_r2011a/sys/java/jre/glnxa64/jre/lib/amd64:/ldcg/matlab_r2011a/sys/opengl/lib/glnxa64:/ligotools/lib"
 
-puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2011a/runtime/glnxa64:/ldcg/matlab_r2011a/bin/glnxa64:/ldcg/matlab_r2011a/extern/lib/glnxa64:/ligotools/lib"
+puts $fid "environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib"
 
 # Write out the command lines for all the condor jobs:
 #set thisStartTime $startTime
