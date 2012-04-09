@@ -223,6 +223,7 @@ classdef HoftEditor < handle
             
             % Introduce the old, out-of-science data:
             if Hoft.frameHeadFlag == 1
+                disp('Moving frame heads into Hoft data array')
                 Hoft.data(1:Hoft.startOffset) = Hoft.frameHead(:);
                 clear Hoft.frameHead;
             end
@@ -302,9 +303,9 @@ classdef HoftEditor < handle
         end
         function loopMICH(Hoft, T, tSub, addenda, jj)
             disp('Lengths of passed DARM, MICH and PRC vrctors:')
-            disp(length(addenda.passDARM))
-            disp(length(addenda.passMICH))
-            disp(length(addenda.passPRC))
+            disp(length(Hoft.passDARM))
+            disp(length(Hoft.passMICH))
+            disp(length(Hoft.passPRC))
             
             Hoft.tStart = tSub.tStart(jj);
             Hoft.tEnd = tSub.tEnd(jj);
@@ -622,7 +623,9 @@ classdef HoftEditor < handle
             % the only thing we can do is not replace the data: write the
             % baseline instead
             if ((Hoft.vetoAlarm & Hoft.isFirstSubFlag ))== 1
-                Hoft.data = Hoft.baseline;
+                %  Replace only the specified indices; earlier ones,
+                %  from frameHead, are baseline anyway.
+                Hoft.data( (end-length(Hoft.baseline)+1):end) = Hoft.baseline(:);
                 disp('Filtering unable to improve data; writing baseline instead')
             end
             % For windowed segments, we have the option of writing the
@@ -1055,7 +1058,7 @@ classdef HoftEditor < handle
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
                     individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(Hoft.T.s), '.gwf');
-                    directoryDataFrameName = strcat('/home/pulsar/public_html/feedforward/data/', siteFull, '/', individualFrameName(1:21));
+                    directoryDataFrameName = strcat('/archive/frames/S6/pulsar/feedforward/data/', siteFull, '/', individualFrameName(1:21));
                     %directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', individualFrameName(1:21));
                     setenv('systemDirectoryDataFrameName', directoryDataFrameName);
                     setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
