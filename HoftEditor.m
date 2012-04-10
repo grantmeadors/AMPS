@@ -245,10 +245,8 @@ classdef HoftEditor < handle
                 clear Hoft.stateVectorLast
             end
             
-            
-            
+             
             Hoft.baseline(Hoft.nA:(Hoft.startOffset+Hoft.r)) =  firstHoft.baseline(:);
-            
             
             clear firstHoft
         end
@@ -625,7 +623,7 @@ classdef HoftEditor < handle
             if ((Hoft.vetoAlarm & Hoft.isFirstSubFlag ))== 1
                 %  Replace only the specified indices; earlier ones,
                 %  from frameHead, are baseline anyway.
-                Hoft.data( (end-length(Hoft.baseline)+1):end) = Hoft.baseline(:);
+                Hoft.data(Hoft.nA:(Hoft.startOffset+Hoft.r)) =  Hoft.baseline(:);
                 disp('Filtering unable to improve data; writing baseline instead')
             end
             % For windowed segments, we have the option of writing the
