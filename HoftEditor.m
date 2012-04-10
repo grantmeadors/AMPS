@@ -225,6 +225,7 @@ classdef HoftEditor < handle
             if Hoft.frameHeadFlag == 1
                 disp('Moving frame heads into Hoft data array')
                 Hoft.data(1:Hoft.startOffset) = Hoft.frameHead(:);
+                Hoft.baseline(1:Hoft.startOffset) = Hoft.frameHead(:);
                 clear Hoft.frameHead;
             end
             if Hoft.frameTailFlag == 1
@@ -233,6 +234,7 @@ classdef HoftEditor < handle
                 disp(size(Hoft.frameTail(:)))
                   
                 Hoft.data((Hoft.startOffset+Hoft.r+1):end) = Hoft.frameTail(:);
+                Hoft.baseline((Hoft.startOffset+Hoft.r+1):end) = Hoft.frameTail(:);
                 clear Hoft.frameTail
             end
             % Introduce the first filtered data;
@@ -541,6 +543,7 @@ classdef HoftEditor < handle
                 disp(length(Hoft.frameTail))
                 if length(Hoft.frameTail) > 0
                     Hoft.data((jjStart+s+1):end) = Hoft.frameTail;
+                    Hoft.baseline((jjStart+s+1):end) = Hoft.frameTail;
                 end
                 disp('Continuing to attach dangling frame after segment')
             end
@@ -621,9 +624,15 @@ classdef HoftEditor < handle
             % the only thing we can do is not replace the data: write the
             % baseline instead
             if ((Hoft.vetoAlarm & Hoft.isFirstSubFlag ))== 1
-                %  Replace only the specified indices; earlier ones,
-                %  from frameHead, are baseline anyway.
-                Hoft.data(Hoft.nA:(Hoft.startOffset+Hoft.r)) =  Hoft.baseline(:);
+                if length(Hoft.baseline) ~= length(Hoft.data)
+                    %  Replace only the specified indices; earlier ones,
+                    %  from frameHead, are baseline anyway.
+                    %  Note that we should not be in this modality
+                    disp('Baseline array is unusually short: possible problem')
+                    Hoft.data(Hoft.nA:(Hoft.startOffset+Hoft.r)) =  Hoft.baseline(:);
+                elseif length(Hoft.baseline) == length(Hoft.data)
+                    Hoft.data = Hoft.baseline;
+                end
                 disp('Filtering unable to improve data; writing baseline instead')
             end
             % For windowed segments, we have the option of writing the
