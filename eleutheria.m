@@ -19,7 +19,7 @@ function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
         
         
         % Initialize Hoft
-        Hoft = HoftEditor(T, tSub, inputFileDARM);
+        Hoft = HoftEditor(T, tSegment, tSub, inputFileDARM);
         
         
         % Create the addenda object as a messenger for data

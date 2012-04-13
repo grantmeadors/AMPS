@@ -64,6 +64,11 @@ classdef ScienceFinder < handle
             T.list = cell(2, 1);
             T.list{1} = unique(T.between(1, T.time, T.segments));
             T.list{2} = unique(T.between(2, T.time, T.segments));
+            % Only take first start and last end, to handle overlapping
+            % science "segments" that are in fact broken-up long science
+            % segments that would be too long to run in one piece.
+            T.list{1} = T.list{1}(1);
+            T.list{2} = T.list{2}(end);
             if T.compare(T.time(1), T.segments)
                 T.list{1} = unique([T.time(1); T.list{1}]);
             end
@@ -85,6 +90,7 @@ classdef ScienceFinder < handle
                     T.list{4}(ii) = 0;
                 end
             end
+            
             
             % If t0 wasn't in science, then all start times are between t0 & t1
             % If t1 wasn't in science, then all end times are between t0 & t1

@@ -18,10 +18,10 @@ set frameTypeNOISE "R";
 set frameLengthDARM 128;
 set frameLengthNOISE 32;
 set condorSubmitFileName "EleutheriaSub.sub";
-set executablePathAndName "/archive/home/pulsar/feedforward/2012/04/09/AMPS/run_eleutheria-well.sh"
+set executablePathAndName "/archive/home/pulsar/feedforward/2012/04/12/AMPS/run_eleutheria-well.sh"
 #set analysisTime 60; # time per line of output
 set matlabPath "/ldcg/matlab_r2010b"
-set outputDirectory "/archive/home/pulsar/feedforward/2012/04/09/AMPS"
+set outputDirectory "/archive/home/pulsar/feedforward/2012/04/12/AMPS"
 #set stateVectorChan "H1:IFO-SV_STATE_VECTOR"
 #set channelList "H1:IO-1811_I,H1:IO-1811_Q,H1:IOO-MC_PWR_IN,H1:IOO-MC_TRANS_SUM,H1:PSL-ISS_OLMONPD_NW"
 

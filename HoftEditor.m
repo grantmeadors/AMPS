@@ -7,6 +7,8 @@ classdef HoftEditor < handle
         tSub
         tScienceStart
         tScienceEnd
+        tIsPreceded
+        tIsFollowed
         offlineZPK
         rmserr
         frameHead
@@ -48,10 +50,12 @@ classdef HoftEditor < handle
     end
     
     methods
-        function Hoft = HoftEditor(T, tSub, inputFileDARM)
+        function Hoft = HoftEditor(T, tSegment, tSub, inputFileDARM)
             Hoft.tSub = tSub;
             Hoft.tScienceStart = tSub.tStart(1);
             Hoft.tScienceEnd = tSub.tEnd(end);
+            Hoft.tIsPreceded = tSegment.tIsPreceded;
+            Hoft.tIsFollowed = tSegment.tIsFollowed;
             Hoft.offlineZPK = [];
             Hoft.rmserr = [];
             Hoft.frameHead = [];
@@ -173,19 +177,22 @@ classdef HoftEditor < handle
             % Frames are 128 seconds long, so round up the science
             % segment length to the nearest multiple of 128 seconds,
             totalFrameDuration = T.s*ceil((tSub.tEnd(1) - Hoft.gpsStart)/T.s);
-            % If the GPS start or end time coincides with a frame boundary
+            % If the GPS start time coincides with a frame boundary
             % (i.e. is divisible by 128), then add 128 s more.            
             % (yet if it is part of a chopped-up science segment,
             % being preceded or followed by another part of the same segment,
             % then do not make this correction)
-            if tSub.tStart(1) == tSub.tStart(1) - mod(tSub.tStart(1), 128)...
+            if tSub.tStart(1) == tSub.tStart(1) - mod(tSub.tStart(1), T.s)...
                 & (tSegment.tIsFollowed == 0)
-                totalFrameDuration = totalFrameDuration + 128;
+                totalFrameDuration = totalFrameDuration + T.s;
             end
-            if tSub.tEnd(end) == tSub.tEnd(end) - mod(tSub.tEnd(end),128)...
-                & (tSegment.tIsPreceded == 0)
-                totalFrameDuration = totalFrameDuration + 128;
-            end
+            
+            % In testing, using a similar strategy with the end time
+            % merely produced a frame file with all ones. Do not do it.
+            %if tSub.tEnd(end) == tSub.tEnd(end) - mod(tSub.tEnd(end),T.s)...
+            %    & (tSegment.tIsPreceded == 0)
+            %    totalFrameDuration = totalFrameDuration + T.s;
+            %end
 
             % Find the different between the start of the science segment
             % and the start of the first frame, in number of samples
@@ -270,6 +277,8 @@ classdef HoftEditor < handle
                 jjStart = 1;
                 dataReviewer(Hoft, newHoft, jj, jjStart);
                 clear newHoft jj jjStart
+            else
+                disp('First half-window already written by earlier job')
             end
             
             % If we will continue, clear the first 512 seconds of frames
@@ -400,6 +409,7 @@ classdef HoftEditor < handle
                 dataReviewer(Hoft, newHoft, jj, jjStart);
             else
                 disp('Holding off writing in anticipation of sub-segment')
+                dataReviewer(Hoft, newHoft, jj, jjStart);
             end
             
             clear newHoft
@@ -407,7 +417,7 @@ classdef HoftEditor < handle
         function dataReviewer(Hoft, newHoft, jj, jjStart)
             frameWriter(Hoft);
             Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
-            if (Hoft.vetoAlarm & ~(Hoft.isFirstSubFlag)) == 1
+            if (Hoft.vetoAlarm & ~(Hoft.isFirstSubFlag) & ~(Hoft.tIsFollowed)) == 1
                 disp('Veto alarm raised in window; writing baseline instead of filtered data')
                 % First we have to back out bad data and renormalize the preceding window
                 windowRenormalize(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
@@ -539,7 +549,7 @@ classdef HoftEditor < handle
             if jj == length(tSub.tStart)
                 disp('Displaying lengths of Hoft.data, Hoft.data((jjStart+s+1):end), and Hoft.frameTail')
                 disp(length(Hoft.data))
-                disp(length(Hoft.data((jjStart+s+1))))
+                disp(length(Hoft.data((jjStart+s+1):end)))
                 disp(length(Hoft.frameTail))
                 if length(Hoft.frameTail) > 0
                     Hoft.data((jjStart+s+1):end) = Hoft.frameTail;
@@ -1044,15 +1054,21 @@ classdef HoftEditor < handle
             % Now, perform writing and range gain calculation for each frame
             % Or, if the Hoft veto has already been trigged,
             % then write anyway -- we have done all possible to preserve data.
-            if ((Hoft.successVector.range == 0) & (Hoft.successVector.comb == 0)) | (Hoft.vetoAlarm == 2)
+            goHoftSuccess =...
+                ((Hoft.successVector.range == 0) &...
+                (Hoft.successVector.comb == 0));
+            goVetoEffort = goHoftSuccessVector |...
+                (Hoft.vetoAlarm == 2);
+            goFinalCheck = goVetoSurrender &...
+                (Hoft.tIsFollowed == 0);
+            if goFinalCheck
                 for kk = 1:numberOfFrames
-                    
-                    
-                    
-                    
+                       
+                   
                     % Generate names
                     startName = strcat('-', num2str(Hoft.gpsStart + (kk-1)*Hoft.T.s) );
                     stopName = strcat('-', num2str(Hoft.gpsStart + (kk)*Hoft.T.s) );
+                    gpsStartFrame = Hoft.gpsStart + (kk-1)*Hoft.T.s;
                     
                     % Uncomment the mkframe commands below to write output
                     
@@ -1065,14 +1081,14 @@ classdef HoftEditor < handle
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
                     individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(Hoft.T.s), '.gwf');
-                    directoryDataFrameName = strcat('/archive/frames/S6/pulsar/feedforward/data/', siteFull, '/', individualFrameName(1:21));
+                    directoryDataFrameName = strcat('/archive/frames/S6/pulsar/feedforward/', siteFull, '/', individualFrameName(1:21));
                     %directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', individualFrameName(1:21));
                     setenv('systemDirectoryDataFrameName', directoryDataFrameName);
                     setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
                     system('mkdir -p $systemDirectoryDataFrameName');
                     system('mkdir -p $systemDirectoryDiagnosticsFrameName');
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
-                    mkframe(frameName, HoftSub, 'n', Hoft.T.s, Hoft.gpsStart);
+                    mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
                     
                     if Hoft.T.pipe == 1
                         % Write data quality and state vector
@@ -1083,7 +1099,7 @@ classdef HoftEditor < handle
                         stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
                         stateVectorSub.type = 'd';
                         stateVectorSub.mode = 'a';
-                        mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, Hoft.gpsStart);
+                        mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
                         clear stateVectorSub
                         dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
                         dqFlagSub.data = double(dqFlagSub.data);
@@ -1092,7 +1108,7 @@ classdef HoftEditor < handle
                         dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
                         dqFlagSub.type = 'd';
                         dqFlagSub.mode = 'a';
-                        mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, Hoft.gpsStart);
+                        mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
                         clear dqFlagSub
                     end
                     
@@ -1112,12 +1128,14 @@ classdef HoftEditor < handle
                     
                     
                 end
-            else
+            elseif (goHoftSuccess == 0)
                 disp('Window fails veto test.')
                 disp('Range veto (zero is good, one is bad)')
                 Hoft.successVector.range
                 disp('Comb veto (zero is good, one is bad)')
                 Hoft.successVector.comb
+            elseif ((goHoftSuccess == 1) & (goFinalCheck == 0))
+                disp('Successfully belayed final frames till next job.')
             end
             
             %successVector = 0;
