@@ -466,6 +466,9 @@ classdef HoftEditor < handle
                 if breakCounter == breakCutoff
                     % Set Hoft.vetoAlarm to a 'surrender' flag
                     Hoft.vetoAlarm = 2;
+                    disp('Final attempt to resolve veto-triggering data')
+                    windowFramer(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
+
                     frameWriter(Hoft);
                 end      
             elseif (Hoft.vetoAlarm & Hoft.isFirstSubFlag ) == 1
@@ -479,7 +482,7 @@ classdef HoftEditor < handle
                newSegmentFirst = ...
                     Hoft.qWindow(1:p) .*...
                     newHoft.data(1:p);
-               % Pass the existing, window Hoft
+               % Pass the existing, windowed Hoft
                oldSegmentLast = Hoft.data((jjStart+1):(jjStart+p)); 
                % Subtract off the bad filtered data from the section of Hoft
                Hoft.data((jjStart+1):(jjStart+p)) = ...
@@ -504,7 +507,24 @@ classdef HoftEditor < handle
         
         function windowFramer(Hoft, tSub, p, s, newHoft, jj, jjStart)
             % For the segment, perform the triangular windowing here
-            
+             
+            % For final efforts to cure veto-triggering windows:
+            if Hoft.vetoAlarm == 2
+                qWindowBackup = Hoft.qWindow;
+                % Make an extremely rapid triangular window. If we have
+                % reached this point, the polynomial scheme has failed,
+                % at a point where only 2.5 seconds of data were majority
+                % old. Here, we do better: make the data majority new
+                % after just 0.03125 s (i.e. 1/32 s) with no old after.
+                majorityTime = 512; % number of samples to majority
+                rapidTriangularWindow = triang(4*majorityTime);
+                Hoft.qWindow = [ones(Hoft.p, 1); zeros(Hoft.p, 1)];
+                Hoft.qWindow(1:(2*majorityTime)) =...
+                    rapidTriangularWindow(1:(2*majorityTime));
+                Hoft.qWindow((p+1):(p+2*majorityTime)) =...
+                    rapidTriangularWindow((2*majorityTime+1):4*majorityTime);
+            end            
+
             if p <= s
                 % Apply the rising edge of the triangle
                 % to the first half of a new subsection
@@ -590,7 +610,10 @@ classdef HoftEditor < handle
                     %clear oldBaselineLast
                 end
                 
-                
+                % Set things back to the way they were.
+                if Hoft.vetoAlarm == 2
+                    Hoft.qWindow = qWindowBackup;
+                end
             
         end
         function clearer(Hoft, T, tSub, jj)
