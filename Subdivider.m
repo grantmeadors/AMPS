@@ -34,7 +34,7 @@ classdef Subdivider < handle
             tSub.tEnd(tSub.tStart == -1) = [];
             tSub.tStart(tSub.tStart == -1) = [];
             
-            % Obliterate subsections with duration less that 32 s
+            % Obliterate subsections with duration less than 32 s
             tSub.tStart((tSub.tEnd - tSub.tStart) < 32) = -1;
             tSub.tEnd(tSub.tStart == -1) = [];
             tSub.tStart(tSub.tStart == -1) = [];

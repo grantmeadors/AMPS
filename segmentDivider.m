@@ -3,7 +3,7 @@ function Hoft = segmentDivider(time0, time1)
 % eleutheria
 % Grant Meadors
 % gmeadors@umich.edu
-% 2011-11-01
+% 2012-04-13
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % supplies science times to feedforward function
@@ -45,6 +45,8 @@ function Hoft = segmentDivider(time0, time1)
         % just use the science segments in between.
 
         T.list = cell(2, 1);
+
+
         T.list{1} = unique(T.between(1, T.time, T.segments));
         T.list{2} = unique(T.between(2, T.time, T.segments));
         if T.compare(T.time(1), T.segments)
@@ -90,6 +92,11 @@ function Hoft = segmentDivider(time0, time1)
         tEnd(tStart == -1) = [];
         tStart(tStart == -1) = [];
         
+        % Obliterate subsections with duration less than 32 s
+        tStart((tEnd - tStart) < 32) = -1;
+        tEnd(tStart == -1) = [];
+        tStart(tStart == -1) = [];
+
         % Set two column vectors to indicate whether this subsegment is
         % preceded or followed by another
         
@@ -114,13 +121,49 @@ function Hoft = segmentDivider(time0, time1)
         fullSeglist{4} = [];
 
         % by looking at an 'ii'th element of 't.startlist'
-        %for ii = 1:100
-           
-        for ii = 1:length(T.list{1})
+          
+        numberOfJobs = 200; 
+
+        for ii = 1:numberOfJobs
+        %for ii = 1:length(T.list{1})
             tSegment.tA = T.list{1}(ii);
             tSegment.tB = T.list{2}(ii);
-            tSub = subdivider(tSegment);
             
+            % Deal with segments that overlap in the same 128 s frame
+            lowerNow = 128*floor(T.list{1}(ii)/128);
+            upperNow = 128*ceil(T.list{2}(ii)/128);
+            intoNowPre = 128 - (T.list{1}(ii) - lowerNow);
+            intoNowPost = 128 - (upperNow - T.list{2}(ii));
+            if ii > 1 
+                upperPre = 128*ceil(T.list{2}(ii-1)/128);
+                intoPre = 128 - (upperPre - T.list{2}(ii-1));
+            else
+                upperPre = 0;
+                intoPre = 0;
+            end
+            if ii < numberOfJobs
+                lowerPost = 128*floor(T.list{1}(ii+1)/128);
+                intoPost = 128 - (T.list{1}(ii+1) - lowerPost);
+            else
+                lowerPost = T.list{1}(end) + 2^20; % Or any large number will do
+                intoPost = 0;
+            end
+            if lowerNow < upperPre
+                %disp('Overlap on start')
+               if intoPre >= intoNowPre
+                   tSegment.tA = lowerNow + 128;
+               end                
+            end
+            if lowerPost < upperNow
+                %disp('Overlap on stop')
+                if intoNowPost < intoPost
+                    tSegment.tB = upperNow - 128;
+                end
+            end
+         
+            
+            tSub = subdivider(tSegment);
+
             fullSeglist{1} = [fullSeglist{1}; tSub.tStart];
             fullSeglist{2} = [fullSeglist{2}; tSub.tEnd];
             fullSeglist{3} = [fullSeglist{3}; tSub.tIsPreceded];
@@ -133,7 +176,7 @@ function Hoft = segmentDivider(time0, time1)
         
         
         fullSeglistMat = cell2mat(fullSeglist);
-        dlmwrite('dividedSeglist.txt', fullSeglistMat, 'precision', 9);
+        dlmwrite('dividedSeglist.txt', fullSeglistMat, 'precision', 9, 'delimiter', ' ');
         
 
         
