@@ -182,8 +182,11 @@ classdef HoftEditor < handle
             % (yet if it is part of a chopped-up science segment,
             % being preceded or followed by another part of the same segment,
             % then do not make this correction)
+            % It seems that this is only necessary if there will be more
+            % than two windows, i.e. totalFrameDuration >= 1024
             if tSub.tStart(1) == tSub.tStart(1) - mod(tSub.tStart(1), T.s)...
-                & (tSegment.tIsFollowed == 0)
+                & (tSegment.tIsFollowed == 0)...
+                & (totalFrameDuration >= 1024)
                 totalFrameDuration = totalFrameDuration + T.s;
             end
             
@@ -509,21 +512,21 @@ classdef HoftEditor < handle
             % For the segment, perform the triangular windowing here
              
             % For final efforts to cure veto-triggering windows:
-            if Hoft.vetoAlarm == 2
-                qWindowBackup = Hoft.qWindow;
-                % Make an extremely rapid triangular window. If we have
-                % reached this point, the polynomial scheme has failed,
-                % at a point where only 2.5 seconds of data were majority
-                % old. Here, we do better: make the data majority new
-                % after just 0.03125 s (i.e. 1/32 s) with no old after.
-                majorityTime = 512; % number of samples to majority
-                rapidTriangularWindow = triang(4*majorityTime);
-                Hoft.qWindow = [ones(Hoft.p, 1); zeros(Hoft.p, 1)];
-                Hoft.qWindow(1:(2*majorityTime)) =...
-                    rapidTriangularWindow(1:(2*majorityTime));
-                Hoft.qWindow((p+1):(p+2*majorityTime)) =...
-                    rapidTriangularWindow((2*majorityTime+1):4*majorityTime);
-            end            
+            %if Hoft.vetoAlarm == 2
+            %    qWindowBackup = Hoft.qWindow;
+            %    % Make an extremely rapid triangular window. If we have
+            %    % reached this point, the polynomial scheme has failed,
+            %    % at a point where only 2.5 seconds of data were majority
+            %    % old. Here, we do better: make the data majority new
+            %    % after just 0.03125 s (i.e. 1/32 s) with no old after.
+            %    majorityTime = 512; % number of samples to majority
+            %    rapidTriangularWindow = triang(4*majorityTime);
+            %    Hoft.qWindow = [ones(Hoft.p, 1); zeros(Hoft.p, 1)];
+            %    Hoft.qWindow(1:(2*majorityTime)) =...
+            %        rapidTriangularWindow(1:(2*majorityTime));
+            %    Hoft.qWindow((p+1):(p+2*majorityTime)) =...
+            %        rapidTriangularWindow((2*majorityTime+1):4*majorityTime);
+            %end            
 
             if p <= s
                 % Apply the rising edge of the triangle
@@ -610,10 +613,10 @@ classdef HoftEditor < handle
                     %clear oldBaselineLast
                 end
                 
-                % Set things back to the way they were.
-                if Hoft.vetoAlarm == 2
-                    Hoft.qWindow = qWindowBackup;
-                end
+                %% Set things back to the way they were.
+                %if Hoft.vetoAlarm == 2
+                %    Hoft.qWindow = qWindowBackup;
+                %end
             
         end
         function clearer(Hoft, T, tSub, jj)
@@ -1111,8 +1114,16 @@ classdef HoftEditor < handle
                     system('mkdir -p $systemDirectoryDataFrameName');
                     system('mkdir -p $systemDirectoryDiagnosticsFrameName');
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
-                    mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
-                    
+                    try
+                        mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                    catch err
+                        if strcmp(err.identifier, 'mkframe:frameFail')
+                            disp('Trying to write frame file after one failure')
+                            mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                        else
+                            rethrow(err)
+                        end
+                    end
                     if Hoft.T.pipe == 1
                         % Write data quality and state vector
                         stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):(kk*Hoft.T.s*16) );
@@ -1122,7 +1133,16 @@ classdef HoftEditor < handle
                         stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
                         stateVectorSub.type = 'd';
                         stateVectorSub.mode = 'a';
-                        mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                        try
+                            mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                        catch err
+                            if strcmp(err.identifier, 'mkframe:frameFail')
+                                disp('Trying to write frame file after one failure')
+                                mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                            else
+                                rethrow(err)
+                            end
+                        end
                         clear stateVectorSub
                         dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
                         dqFlagSub.data = double(dqFlagSub.data);
@@ -1131,7 +1151,16 @@ classdef HoftEditor < handle
                         dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
                         dqFlagSub.type = 'd';
                         dqFlagSub.mode = 'a';
-                        mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                        try
+                            mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                        catch err
+                            if strcmp(err.identifier, 'mkframe:frameFail')
+                                disp('Trying to write frame file after one failure')
+                                mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                            else
+                                rethrow(err)
+                            end
+                        end
                         clear dqFlagSub
                     end
                     
