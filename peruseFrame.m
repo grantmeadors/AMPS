@@ -57,7 +57,7 @@ else
     disp(size(anyOneThere))
 end
 
-disp('Checking for repetititons')
+disp('Checking for repetitions')
 
 % Now fold the data to look for repeated tuples
 function differenceInLength = dataFold(data, n)
@@ -87,5 +87,8 @@ disp('...16-way folding')
 disp(dataFoldResult(5))
 disp('...32-way folding')
 disp(dataFoldResult(6))
+
+output = 0;
   
 end
+
