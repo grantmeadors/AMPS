@@ -11,6 +11,7 @@ function output = checkInjection(frame, varargin)
 
 % The varargin would be the frame data, if being so passed.
 
+
 frameString = char(frame);
 
 % Decide which site injection list to open based on the input frame
@@ -62,13 +63,13 @@ injectionInFrame = injectionList(gpsStartTime <= injectionList &...
 if length(injectionInFrame) > 0
     disp('Injection in frame: triggering search on this time --')
     disp(injectionInFrame)
-    [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, varargin);
-    frameSync(varargin, baseline, samplingFrequency, injectionInFrame)
 else
     disp('No injection in frame')
 end
+[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration);
+frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
 
-function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, frame)
+function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration)
     systemCommand = horzcat('ligo_data_find --observatory=', site,...
          ' --type=H1_LDAS_C02_L2 --gps-start-time=', num2str(gpsStartTime),...
          ' --gps-end-time=', num2str(gpsStartTime+128),...
@@ -80,9 +81,102 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     samplingFrequency = 2*(fsamp(end)+1/128);
 end
 
-function frameSync(frame, baseline, samplingFrequency, injectionInFrame)
-    disp('Hello world')
+function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
+    % Create a time coordinate
+    t = gpsStartTime + (0:(length(data)-1))/samplingFrequency;
+    % Bandpass filter the data to the bucket
+    [zb, pb, kb] = butter(16, 2*pi*[100 2000], 's');
+    dataFilt = filterZPKs(zb, pb, kb, samplingFrequency, data);
+    baselineFilt = filterZPKs(zb, pb, kb, samplingFrequency, baseline);
+    disp('Display statistics: max, mean, std (before), max, mean, std (after)')
+    disp(max(abs(baselineFilt)))
+    disp(mean(baselineFilt))
+    disp(std(baselineFilt))
+    disp(max(abs(dataFilt)))
+    disp(mean(dataFilt))
+    disp(std(dataFilt))
+    % Create the difference:
+    difference = dataFilt - baselineFilt;
+    disp('Display statistics: max, mean, std (difference)')
+    disp(max(abs(difference)))
+    disp(mean(difference))
+    disp(std(difference))
+
+    % Determine whether the maximum difference is usually large
+    if max(abs(difference)) > 1e-1*(std(baselineFilt))
+        disp('Maximum difference is larger than one tenth baseline standard deviation.')
+        locationOfMaximum = find(abs(difference) == max(abs(difference)));
+        disp('Maximum located at index')
+        disp(locationOfMaximum)
+        if locationOfMaximum < 16384
+            disp('Maximum within 1st second')
+        elseif locationOfMaximum < 2*16384
+            disp('Maximum within 2nd second')
+        end
+    end
+
+    % Ascertain whether anything unusual happens around the injection time
+    % Note: we only look at the first injection, if there are multiple ones:
+    if length(injectionInFrame) > 0
+        injectionGPStime = injectionInFrame(1);
+        injectionIndex = samplingFrequency*(injectionGPStime - gpsStartTime);
+        if injectionIndex > 11
+            subsetAround = difference((injectionIndex - 10):(injectionIndex + 1e5));
+            disp('Ten samples before and ten thousand after injection start:')
+        else
+            % Possible that the injection could occur at the beginning of the frame
+            subsetAround = difference(injectionIndex);
+            disp('Injection at the very beginning of the frame:')
+        end
+        disp(subsetAround(1:22))
+        disp('Normalized to baseline standard deviation:')
+        disp(subsetAround(1:22)/std(baselineFilt))
+        if max(abs(subsetAround)) > 1e-1*(std(baselineFilt))
+            disp('Point around injection is larger than one tenth baseline standard deviation.')
+            locationOfInjMax = find(abs(subsetAround) == max(abs(subsetAround)));
+            disp('Index in subset of samples around injection:')
+            disp(locationOfInjMax)
+        end
+        disp('Ratio of injection subset standard deviation to rest of difference')
+        disp(std(subsetAround)/std(difference))
+    end
+    
+
+
+    % Graph the difference
+    figure(1) 
+    
+    outputFileHead = strcat('~/public_html/feedforward/programs/syncInjections/',...
+        'L', site, 'O', '/',  num2str(floor(gpsStartTime/1e5)), '/');
+    system(horzcat('mkdir -p ', outputFileHead))
+    outputFile = strcat(outputFileHead, 'differenceGraph-', num2str(gpsStartTime));
+    if max(abs(difference)) > 0
+        subplot 211
+        plot(t, abs(difference)) 
+        xlabel('GPS time (s)')
+        ylabel('abs(difference): after-before filtering (strain)')
+        grid on
+        legend('abs(Difference)')
+        subplot 212
+        semilogy(t, abs(difference))
+        xlabel('GPS time (s)')
+        ylabel('abs(difference): after-before filtering (strain)')
+        grid on
+        legend('abs(Difference)')
+    else
+        plot(t, abs(difference))
+        xlabel('GPS time (s)')
+        ylabel('abs(difference): after-before filtering (strain)')
+        grid on
+        legend('abs(Difference)')
+    end
+    title('Plot of difference over time')
+    disp(outputFile)
+    print('-dpng', strcat(outputFile, '.png'))
+    close(1)
+
 end
+
 
 clear baseline
 output = 0;
