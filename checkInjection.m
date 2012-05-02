@@ -150,7 +150,7 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
     % Graph the difference
     figure(1) 
     
-    outputFileHead = strcat('~/public_html/feedforward/programs/syncInjections/',...
+    outputFileHead = strcat('/home/gmeadors/public_html/feedforward/programs/syncInjections/',...
         'L', site, 'O', '/',  num2str(floor(gpsStartTime/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     outputFile = strcat(outputFileHead, 'differenceGraph-', num2str(gpsStartTime));
