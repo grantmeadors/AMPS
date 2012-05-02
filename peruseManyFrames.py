@@ -21,7 +21,7 @@ def catter(n):
 #[catter(x) for x in range(200)]
 
 # Run peruseFrame on all the frame files in a given directory
-def peruser(n):
+def peruser(n, cache):
     headDirectory = '/archive/frames/S6/pulsar/feedforward/'
     siteFull = 'LHO/'
     dataDirectory = siteFull[1] + '-' +siteFull[1] + '1_AMPS_C02_L2-' + str(n)
@@ -30,10 +30,10 @@ def peruser(n):
     files = os.listdir(fullDirectory)
     analysisDate = '/archive/home/gmeadors/2012/05/01/AMPS/'
     runScript = analysisDate + 'run_peruseFrame-well.sh'
-    [os.system(runScript + ' ' + filename) for filename in files]
+    [os.system(runScript + ' ' + filename + ' ' + cache) for filename in files]
 
 directoryList = range(9310, 9327+1)
-peruser(sys.argv[1])
+peruser(sys.argv[1], sys.argv[2])
 
 
 

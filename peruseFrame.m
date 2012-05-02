@@ -1,4 +1,4 @@
-function output = peruseFrame(frame)
+function output = peruseFrame(frame, varargin)
 % Grant David Meadors
 % gmeadors@umich.edu
 % 02012-05-01
@@ -85,7 +85,9 @@ for jj = 2:maxFolding
 end
 
 % Now check for syncronization using injections:
-output = checkInjection(frameString, data);
+% varargin{1} should be the cache listing the frames
+cache = char(varargin{1});
+output = checkInjection(frameString, data, cache);
 
   
 end

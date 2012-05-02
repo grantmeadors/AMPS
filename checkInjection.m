@@ -10,9 +10,11 @@ function output = checkInjection(frame, varargin)
 % This should also detect any spurious timing shifts.
 
 % The varargin would be the frame data, if being so passed.
+% The second varargin should be a string containing the location of a cache.
 
 
 frameString = char(frame);
+cache = char(varargin{2});
 
 % Decide which site injection list to open based on the input frame
 if strcmp(class(frame), 'char')
@@ -66,19 +68,21 @@ if length(injectionInFrame) > 0
 else
     disp('No injection in frame')
 end
-[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration);
+[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
 
-function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration)
-    systemCommand = horzcat('ligo_data_find --observatory=', site,...
-         ' --type=H1_LDAS_C02_L2 --gps-start-time=', num2str(gpsStartTime),...
-         ' --gps-end-time=', num2str(gpsStartTime+128),...
-         ' --url-type=file --lal-cache');
-    [status, result] = system(systemCommand);
-    frameLocation = result(48:end);
+function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
+    %systemCommand = horzcat('ligo_data_find --observatory=', site,...
+    %     ' --type=H1_LDAS_C02_L2 --gps-start-time=', num2str(gpsStartTime),...
+    %     ' --gps-end-time=', num2str(gpsStartTime+128),...
+    %     ' --url-type=file --lal-cache');
+    %[status, result] = system(systemCommand);
+    %frameLocation = result(48:end);
     cname = strcat(site, '1:LDAS-STRAIN');
-    [baseline, tsamp, fsamp, gps0] = frgetvect(frameLocation, cname, gpsStartTime, duration);
-    samplingFrequency = 2*(fsamp(end)+1/128);
+    %[baseline, tsamp, fsamp, gps0] = frgetvect(frameLocation, cname, gpsStartTime, duration);
+    %samplingFrequency = 2*(fsamp(end)+1/128);
+    [baseline,lastIndex,errCode,samplingFrequency,times] =...
+         readFrames(cache,cname,gpsStartTime,duration);
 end
 
 function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
