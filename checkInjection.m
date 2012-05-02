@@ -19,6 +19,7 @@ if strcmp(class(frame), 'char')
     disp(frameString)
     site = frameString(1);
     siteFull = strcat('L', site, 'O');
+    duration = 128;
 else
     disp('Error: wrong input argument. Please specify a string frame name')
 end
@@ -54,7 +55,6 @@ injectionList(injectionList == 0) = [];
 
 
 gpsStartTime = str2num(timeParser(frameString));
-disp(gpsStartTime)
 
 injectionInFrame = injectionList(gpsStartTime <= injectionList &...
     injectionList < gpsStartTime + 128);
@@ -62,10 +62,29 @@ injectionInFrame = injectionList(gpsStartTime <= injectionList &...
 if length(injectionInFrame) > 0
     disp('Injection in frame: triggering search on this time --')
     disp(injectionInFrame)
-    disp(varargin)
+    [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, varargin);
+    frameSync(varargin, baseline, samplingFrequency, injectionInFrame)
 else
     disp('No injection in frame')
 end
 
+function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, frame)
+    systemCommand = horzcat('ligo_data_find --observatory=', site,...
+         ' --type=H1_LDAS_C02_L2 --gps-start-time=', num2str(gpsStartTime),...
+         ' --gps-end-time=', num2str(gpsStartTime+128),...
+         ' --url-type=file --lal-cache');
+    [status, result] = system(systemCommand);
+    frameLocation = result(48:end);
+    cname = strcat(site, '1:LDAS-STRAIN');
+    [baseline, tsamp, fsamp, gps0] = frgetvect(frameLocation, cname, gpsStartTime, duration);
+    samplingFrequency = 2*(fsamp(end)+1/128);
+end
+
+function frameSync(frame, baseline, samplingFrequency, injectionInFrame)
+    disp('Hello world')
+end
+
+clear baseline
 output = 0;
+
 end

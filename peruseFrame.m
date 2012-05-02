@@ -1,7 +1,7 @@
 function output = peruseFrame(frame)
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-04-19
+% 02012-05-01
 % peruseFrame.m
 
 % peruseFrame examines a specified frame file for
@@ -16,7 +16,9 @@ function output = peruseFrame(frame)
 frameString = char(frame);
 frameNameHead = '/archive/frames/S6/pulsar/feedforward/';
 % The following is only compatible for nine-digit GPS times
-gpsStart = str2num(frameString(18:26)); 
+% gpsStart = str2num(frameString(18:26)); 
+% The following is more broadly compatible
+gpsStart = str2num(timeParser(frameString));
 site = frameString(1);
 siteFull = strcat('L', site, 'O');
 frameDirectoryMiddle = frameString(1:21);
@@ -71,24 +73,20 @@ end
 % Organize the results into an array
 maxFolding = 6;
 dataFoldResult = zeros(maxFolding, 1);
-for jj = 1:maxFolding
-    dataFoldResult(jj) = dataFold(data,jj);
-end
-
+dataFoldResult(1) = dataFold(data, 1);
 disp('This many repeated elements found with no folding')
 disp(dataFoldResult(1))
-disp('...pairwise folding')
-disp(dataFoldResult(2))
-disp('...4-way folding')
-disp(dataFoldResult(3))
-disp('...8-way folding')
-disp(dataFoldResult(4))
-disp('...16-way folding')
-disp(dataFoldResult(5))
-disp('...32-way folding')
-disp(dataFoldResult(6))
+for jj = 2:maxFolding
+    if dataFoldResult(jj-1) > 0 
+        dataFoldResult(jj) = dataFold(data,jj);
+        disp(horzcat('... ', str(jj), '-way folding'));
+        disp(dataFoldResult(jj))
+    end
+end
 
-output = 0;
+% Now check for syncronization using injections:
+output = checkInjection(frameString, data);
+
   
 end
 

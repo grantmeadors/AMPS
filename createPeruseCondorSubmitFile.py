@@ -5,7 +5,7 @@ import os, commands, shutil, sys, re
 def h(text):
     result = fileObject.write(text + '\n')
     return result
-analysisDate = "2012/04/24"
+analysisDate = "2012/05/01"
 
 fileObject = open("/archive/home/gmeadors/" + analysisDate + "/AMPS/PeruseSub.sub", "w")
 
