@@ -79,7 +79,7 @@ disp(dataFoldResult(1))
 for jj = 2:maxFolding
     if dataFoldResult(jj-1) > 0 
         dataFoldResult(jj) = dataFold(data,jj);
-        disp(horzcat('... ', str(jj), '-way folding'));
+        disp(horzcat('... ', num2str(jj), '-way folding'));
         disp(dataFoldResult(jj))
     end
 end
