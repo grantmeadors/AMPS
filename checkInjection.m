@@ -72,17 +72,13 @@ end
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
-    %systemCommand = horzcat('ligo_data_find --observatory=', site,...
-    %     ' --type=H1_LDAS_C02_L2 --gps-start-time=', num2str(gpsStartTime),...
-    %     ' --gps-end-time=', num2str(gpsStartTime+128),...
-    %     ' --url-type=file --lal-cache');
-    %[status, result] = system(systemCommand);
-    %frameLocation = result(48:end);
     cname = strcat(site, '1:LDAS-STRAIN');
-    %[baseline, tsamp, fsamp, gps0] = frgetvect(frameLocation, cname, gpsStartTime, duration);
-    %samplingFrequency = 2*(fsamp(end)+1/128);
     [baseline,lastIndex,errCode,samplingFrequency,times] =...
          readFrames(cache,cname,gpsStartTime,duration);
+    % Can read subsequent frame for a sanity check
+    %[baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
+    %     readFrames(cache, cname, gpsStartTime+128, duration);
+    %baseline = [baseline; baseline1];
 end
 
 function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
@@ -157,12 +153,14 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
     if max(abs(difference)) > 0
         subplot 211
         plot(t, abs(difference)) 
+        xlim([t(1) t(end)])
         xlabel('GPS time (s)')
         ylabel('abs(difference): after-before filtering (strain)')
         grid on
         legend('abs(Difference)')
         subplot 212
         semilogy(t, abs(difference))
+        xlim([t(1) t(end)])
         xlabel('GPS time (s)')
         ylabel('abs(difference): after-before filtering (strain)')
         grid on
@@ -174,7 +172,8 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
         grid on
         legend('abs(Difference)')
     end
-    title('Plot of difference over time')
+    titleString = horzcat('Difference vs time, starting GPS time ', num2str(gpsStartTime))
+    title(titleString)
     disp(outputFile)
     print('-dpng', strcat(outputFile, '.png'))
     close(1)
