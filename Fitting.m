@@ -243,7 +243,7 @@ classdef Fitting < handle
             filtering.pa = paAll{1};
 
             filtering.z = z;
-            fitlering.z0 = z0;
+            filtering.z0 = z0;
         end
     end
 end
