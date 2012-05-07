@@ -1115,7 +1115,7 @@ classdef HoftEditor < handle
                     system('mkdir -p $systemDirectoryDiagnosticsFrameName');
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
                     try
-                        mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                        %mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
                     catch err
                         if strcmp(err.identifier, 'mkframe:frameFail')
                             disp('Trying to write frame file after one failure')
@@ -1134,7 +1134,7 @@ classdef HoftEditor < handle
                         stateVectorSub.type = 'd';
                         stateVectorSub.mode = 'a';
                         try
-                            mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                            %mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')
@@ -1152,7 +1152,7 @@ classdef HoftEditor < handle
                         dqFlagSub.type = 'd';
                         dqFlagSub.mode = 'a';
                         try
-                            mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                            %mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')

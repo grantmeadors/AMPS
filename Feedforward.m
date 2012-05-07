@@ -50,6 +50,9 @@ classdef Feedforward < handle
             za = filtering.za;
             pa = filtering.pa;
             ka = filtering.ka;
+            % The following are actually transfer function data.
+            z = filtering.z;
+            z0 = filtering.zo;
             
             
             
@@ -101,7 +104,7 @@ classdef Feedforward < handle
             clear filtering
 
             % newNOISE = filtering.newNOISE;
-            save(offlinezpks, 'saveNewNOISE', 'za', 'pa', 'ka');
+            save(offlinezpks, 'saveNewNOISE', 'za', 'pa', 'ka', 'z', 'z0');
             %quack3(newMICHD, 16384)
             
             % Assign to output

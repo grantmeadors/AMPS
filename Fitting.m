@@ -8,6 +8,8 @@ classdef Fitting < handle
         za
         pa
         ka
+        z
+        z0
         Fs
         currentTF
         rmserr
@@ -31,6 +33,9 @@ classdef Fitting < handle
             n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
+
+            % Keep a copy of the raw transfer function for diagnostics
+            z0 = z;
             % This is the subtraction TF (e.g. DARM_ERR/MICH_CTRL)
             % Do not use subNOISE_DARM' as it takes the complex conjugate.
             f = f(n)';
@@ -199,6 +204,7 @@ classdef Fitting < handle
             setenv('systemDirectoryDiagnosticsFrameName', directoryDiagnosticsFrameName);
             system('mkdir -p $systemDirectoryDiagnosticsFrameName');
             graphName = strcat(directoryDiagnosticsFrameName, '/', 'EleutheriaFilter-', num2str(frequencies.t(1)),'-', noiseNameString);
+         
             % print -dpng newMICHDfilter.png
             print('-dpdf', strcat(graphName, '.pdf'));
             print('-dpng', strcat(graphName, '.png'));
@@ -235,6 +241,9 @@ classdef Fitting < handle
             % and return values to output
             filtering.za = zaAll{1};
             filtering.pa = paAll{1};
+
+            filtering.z = z;
+            fitlering.z0 = z0;
         end
     end
 end
