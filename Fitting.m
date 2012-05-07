@@ -54,11 +54,17 @@ classdef Fitting < handle
                 zOut = zMagnitudeSmooth .* exp(1i .* zAngleSmooth);
             end
             
+            % Experimental medfilt
+            z = medfilt1(z, 10);
             % Apply the averaging; try a smoothing of 1-1e-2
             z = logAverager(z, 1-1e-2);
+            % Additional median filtering
+            z = medfilt1(z, 10);
+            % Try moving average filter
+            windowSize = 10;
+            movF = ones(1, windowSize)/windowSize;
+            z = filter(movF, 1, z);
 
-            % Experimental medfilt
-            z = medfilt1(z, 50);
             
             
             weight = ones(size(f));
@@ -179,18 +185,18 @@ classdef Fitting < handle
             subplot 211
             % loglog(f, abs(z), ff, abs(squeeze(freqresp(zpk(ourfit), 2*pi*ff))), ff, ones(size(ff))*currentTF, ...
             %   ff, abs(squeeze(freqresp(newMICHD, 2*pi*ff))));
-            loglog(f, abs(z), ff, abs(squeeze(freqresp(filtering.newNOISE, 2*pi*ff))));
+            loglog(f, abs(z0), f, abs(z), ff, abs(squeeze(freqresp(filtering.newNOISE, 2*pi*ff))));
             grid on
             xlim([min(ff) max(ff)]);
             ylabel('abs')
-            legend('current residual', 'new filter')
+            legend('current residual', 'pre-processed residual', 'new filter')
             % legend('current residual', 'fit', 'current MICHD filter', 'new MICHD = red - green', 'Location', 'NorthWest');
             title('Auxiliary channel noise in DARM ERR')
             % title('MICH_\CTRL in DARM\_ERR, in terms of MICHD\_IN')
             subplot 212
             % semilogx(f, angle(z)*180/pi, ff, angle(squeeze(freqresp(zpk(ourfit), 2*pi*ff)))*180/pi, ...
             %   ff, zeros(size(ff)), ff, angle(squeeze(freqresp(newMICHD, 2*pi*ff)))*180/pi);
-            semilogx(f, angle(z)*180/pi, ff, angle(squeeze(freqresp(filtering.newNOISE, 2*pi*ff)))*180/pi);
+            semilogx(f, angle(z0)*180/pi, f, angle(z)*180/pi, ff, angle(squeeze(freqresp(filtering.newNOISE, 2*pi*ff)))*180/pi);
             grid on
             ylabel('degree')
             xlabel('Hz')
