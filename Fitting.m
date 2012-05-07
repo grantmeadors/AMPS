@@ -56,6 +56,9 @@ classdef Fitting < handle
             
             % Apply the averaging; try a smoothing of 1-1e-2
             z = logAverager(z, 1-1e-2);
+
+            % Experimental medfilt
+            z = medfilt1(z, 50);
             
             
             weight = ones(size(f));
