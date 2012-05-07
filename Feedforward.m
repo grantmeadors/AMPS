@@ -52,7 +52,7 @@ classdef Feedforward < handle
             ka = filtering.ka;
             % The following are actually transfer function data.
             z = filtering.z;
-            z0 = filtering.zo;
+            z0 = filtering.z0;
             
             
             
