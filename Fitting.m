@@ -9,6 +9,7 @@ classdef Fitting < handle
         pa
         ka
         z
+        f
         z0
         Fs
         currentTF
@@ -242,6 +243,7 @@ classdef Fitting < handle
             filtering.za = zaAll{1};
             filtering.pa = paAll{1};
 
+            filtering.f = f;
             filtering.z = z;
             filtering.z0 = z0;
         end
