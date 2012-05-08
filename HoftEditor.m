@@ -626,9 +626,25 @@ classdef HoftEditor < handle
                     Hoft.stateVector(1:(16*512)) = [];
                 end
                 Hoft.gpsStart = Hoft.gpsStart + 512;
-                % And append if they are enough segments ahead that it will be needed.
+                % And append if there are enough segments ahead that it will be needed.
                 if jj < (length(tSub.tStart)-1)
-                    nextSubWhitespace = 128*floor(min([512, (tSub.tEnd(jj+1)-128*floor(tSub.tStart(jj+1)/128)-512)])/128);
+                    % The amount of data we need for the next window is a complicated question.
+                    % First, compute the stop time, minus one -- it is an end, hence the minus one,
+                    % which is necessary in the edge case where the window ends on mod(128).
+                    insideEnd = tSub.tEnd(jj+1)-1;
+                    % Then compute the start of the first window of the next frame:
+                    insideStart = T.s*floor(tSub.tStart(jj+1)/T.s);
+                    % We need at least that much, but not more than 512 seconds.
+                    % Since, at jj=end-2, we just took off 512 seconds (but not more),
+                    % the maximum length the next frame could occupy is 
+                    insideDifference = insideEnd - insideStart - 512;
+                    % Yet we never want more than 512 seconds in our buffer;
+                    % we need the min of 512 and the insideDifference for the middle of a long loop,
+                    % when the latter is larger. This statement keeps out buffer the same size.
+                    minForBuffer = min([512, insideDifference]);
+                    % Finally, round to a multiple of the frame length
+                    nextSubWhitespace = T.s*floor(minForBuffer/T.s);
+
                     Hoft.data = [Hoft.data; ones(16384*nextSubWhitespace, 1)];
                     Hoft.baseline = [Hoft.baseline; ones(16384*nextSubWhitespace, 1)];
                     if T.pipe == 1
@@ -1100,6 +1116,11 @@ classdef HoftEditor < handle
                     HoftSub.data = double(HoftSub.data);
                     disp('HoftSub.data is this long')
                     length(HoftSub.data)
+                    % Make a final catch to prevent writing an empty frame of all ones
+                    containsNonEmptyData = (length(HoftSub.data) == length(HoftSub.data(HoftSub.data ~= 1)));
+                    if containsNonEmptyData == 0
+                        disp('Empty data (array of ones) detected in frame. Aborting writing that frame.')
+                    end
                     HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
@@ -1112,11 +1133,15 @@ classdef HoftEditor < handle
                     system('mkdir -p $systemDirectoryDiagnosticsFrameName');
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
                     try
-                        %mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                        if containsNonEmptyData
+                            %mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                        end
                     catch err
                         if strcmp(err.identifier, 'mkframe:frameFail')
                             disp('Trying to write frame file after one failure')
-                            mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                            if containsNonEmptyData
+                                mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                            end
                         else
                             rethrow(err)
                         end
@@ -1131,11 +1156,15 @@ classdef HoftEditor < handle
                         stateVectorSub.type = 'd';
                         stateVectorSub.mode = 'a';
                         try
-                            %mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                            if containsNonEmptyData
+                                %mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                            end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')
-                                mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                                if containsNonEmptyData
+                                    mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                                end
                             else
                                 rethrow(err)
                             end
@@ -1149,11 +1178,15 @@ classdef HoftEditor < handle
                         dqFlagSub.type = 'd';
                         dqFlagSub.mode = 'a';
                         try
-                            %mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                            if containsNonEmptyData
+                                %mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                            end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')
-                                mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                                if containsNonEmptyData
+                                    mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                                end
                             else
                                 rethrow(err)
                             end
