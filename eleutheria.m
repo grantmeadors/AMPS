@@ -3,7 +3,7 @@ function complete = eleutheria(time0, time1, inputFileDARM, inputFileNOISE)
 % eleutheria
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-04-03
+% 02012-05-08
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % supplies science times to feedforward function
