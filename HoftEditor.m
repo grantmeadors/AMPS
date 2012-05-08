@@ -214,11 +214,11 @@ classdef HoftEditor < handle
             % 16384*1024
             Hoft.r = length(firstHoft.data);
             
-            % We want to build triangular ramps,
+            % We want to build Hann ramps,
             % up and down each being 16384*512 samples long
             Hoft.p = 16384*512;
             % Build a triangular window in that shape:
-            Hoft.qWindow = triang(2*Hoft.p);
+            Hoft.qWindow = EvenHann(2*Hoft.p);
             
             % Construct the vectors where our data will be placed:
             Hoft.constructVector(totalFrameDuration);
@@ -440,11 +440,11 @@ classdef HoftEditor < handle
                     %  of the 'old' half of the window
                     % until we are in 'clean', raw data. 
                     breakCounter = breakCounter + 1;
-                    % This stage reapplies the triangular window
+                    % This stage reapplies the Hann window
                     % with the inputs being the already-windowed Hoft (oldSegment)
                     % and the carried-along raw Hoft (newSegment).
                     % Re-windowing results in the exponentiation of the
-                    % triangular windowing shape, so the already-windowed Hoft
+                    % Hann windowing shape, so the already-windowed Hoft
                     % decays faster: first quadratically, then cubically,
                     % et cetera. If the already-windowed Hoft is adversely
                     % affecting the data due to noise non-stationarity,
@@ -462,10 +462,7 @@ classdef HoftEditor < handle
                 % for each level of the while loop,
                 % every element in the latter half of the Hoft array
                 % takes less than 1 part in 2^(8) of its value from
-                % oldSegment, and the latter (1/2)^(1/8) = 92 percent
-                % of the segment will be majority newSegment 
-                % After four loops, these will respectively be
-                % 1 part in 2^(32) and (1/2)^(1/32) = 98 percent.
+                % oldSegment.
                 if breakCounter == breakCutoff
                     % Set Hoft.vetoAlarm to a 'surrender' flag
                     Hoft.vetoAlarm = 2;
