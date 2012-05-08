@@ -57,7 +57,7 @@ classdef AddendaEditor < handle
             % Short is any single window. Single windows are naturally
             % up to 512 seconds long, but we aggregate any second windows
             % less than 32 seconds long into them, so "short" means
-            % less than or equal to 512+32 seconds long.
+            % less than or equal to 512+32 seconds long
             if (tSub.tEnd(1) - tSub.tStart(1)) > (512+32)
                 addenda.frameTailFlag = 0;
             elseif tSub.tEnd(1) == tau2
