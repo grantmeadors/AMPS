@@ -373,13 +373,11 @@ classdef Data < handle
         function preFilter(channels)
             % pre-filter the noise by low-passing it
             [zpre, ppre, kpre] = butter(2, 2*pi*700, 's');
-            channels.noise = filterZPKs(...
-                zpre, ppre, kpre, channels.Fs, channels.noise);
+            channels.noise = filterZPKs(...zpre, ppre, kpre, channels.Fs, channels.noise);
         end
         function feedforwardFilter(channels, za, pa, ka)
             % now apply the TF-fit feedforward filter to the noise
-            channels.noise = filterZPKs(...
-                za, pa, ka, channels.Fs, channels.noise);
+            channels.noise = filterZPKs(za, pa, ka, channels.Fs, channels.noise);
         end
         function destroyer(channels, fieldName)
             if strcmp(fieldName, 'darm')

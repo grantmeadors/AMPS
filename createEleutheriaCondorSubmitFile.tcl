@@ -82,14 +82,14 @@ set thisEndTime $j
   #set thisStartTimeMinusframeLengthNOISE [expr $thisStartTime - $frameLengthNOISE];
   set thisEndTimePlusframeLengthDARM [expr $thisEndTime + $frameLengthDARM];
   set thisEndTimePlusframeLengthNOISE [expr $thisEndTime + $frameLengthNOISE];
-#  set cmd "exec ligo_data_find --observatory=$Observatory --type=$frameTypeDARM --gps-start-time=$thisStartTime --gps-end-time=$thisEndTimePlusframeLengthDARM --url-type=file --lal-cache > $thisdataFindOutputDARM";
-#  if {[catch {eval $cmd } result]}  {
-#     puts "Error running $cmd";
-#  }
-#  set cmd "exec ligo_data_find --observatory=$Observatory --type=$frameTypeNOISE --gps-start-time=$thisStartTime --gps-end-time=$thisEndTimePlusframeLengthNOISE --url-type=file --lal-cache > $thisdataFindOutputNOISE";
-#  if {[catch {eval $cmd } result]}  {
-#     puts "Error running $cmd";
-#  }
+  set cmd "exec ligo_data_find --observatory=$Observatory --type=$frameTypeDARM --gps-start-time=$thisStartTime --gps-end-time=$thisEndTimePlusframeLengthDARM --url-type=file --lal-cache > $thisdataFindOutputDARM";
+  if {[catch {eval $cmd } result]}  {
+     puts "Error running $cmd";
+  }
+  set cmd "exec ligo_data_find --observatory=$Observatory --type=$frameTypeNOISE --gps-start-time=$thisStartTime --gps-end-time=$thisEndTimePlusframeLengthNOISE --url-type=file --lal-cache > $thisdataFindOutputNOISE";
+  if {[catch {eval $cmd } result]}  {
+     puts "Error running $cmd";
+  }
 
 }
   # update thisStartTime for next job

@@ -675,11 +675,8 @@ classdef HoftEditor < handle
                         ones(16384*Hoft.nextSubWhitespace, 1)];
                     if T.pipe == 1
                         Hoft.dqFlag =...
-                            [Hoft.dqFlag;...
-                            ones(1*Hoft.nextSubWhitespace, 1)];
-                        Hoft.stateVector =...
-                            [Hoft.stateVector;...
-                            ones(16*nextSubWhitespace, 1)];
+                            [Hoft.dqFlag; ones(1*nextSubWhitespace, 1)];
+                        Hoft.stateVector = [Hoft.stateVector; ones(16*nextSubWhitespace, 1)];
                     end
                 end
             end
