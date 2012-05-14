@@ -68,7 +68,7 @@ function dataOut = combineFrames(metadata)
     dataOut = firstFrame(metadata);
     % Now scan enough frames to have 4096 s. We already have one.
     % Yet that one is not all science data. So grab one more.
-    numberOfFrames = (128)/128;
+    numberOfFrames = (3*4096)/128;
     for ii = 1:numberOfFrames
         disp('Reading frame number:') 
         disp(ii+1)
@@ -79,9 +79,6 @@ function dataOut = combineFrames(metadata)
         floor(length(dataOut)/(128*metadata.fs));
     dataOut = dataOut(1:lengthOfData);
 end
-dataOut = combineFrames(metadata);
-disp('Total data obtained:')
-disp(length(dataOut))
 
 function metadata = onlyScience(metadata)
     % Use science segment data to ensure that we take only science data.
@@ -94,5 +91,41 @@ function metadata = onlyScience(metadata)
     disp(metadata.scienceOffset)
     metadata.offsetSample = metadata.fs * metadata.scienceOffset;
 end
+
+function spectra = spectrumMaker(metadata)
+    dataOut = combineFrames(metadata);
+    disp('Total data obtained:')
+    disp(length(dataOut))
+    % Decide on a resolution of 4096 Hz
+    nfft = 4096*metadata.fs;
+    [pdarm, spectra.fx] = pwelch(...
+        dataOut, hanning(nfft), nfft/2, nfft, metadata.fs);
+    % Take the amplitude spectral density:
+    spectra.adarm = sqrt(pdarm);
+end
+
+
+function graphing = grapher(spectra, metadata)
+    % Graph the data available
+    figure(1) 
+    
+    outputFileHead = strcat('/home/gmeadors/public_html/feedforward/programs/spectralScan/',...
+        'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
+    system(horzcat('mkdir -p ', outputFileHead))
+    outputFile = strcat(outputFileHead, 'spectralScan-', num2str(metadata.gpsStart));
+    semilogy(spectra.fx, spectra.adarm)
+    grid on
+    xlim([390 400])
+    xlabel('Frequency (Hz)')
+    ylabel('Amplitude spectral density (\surdHz)')
+    titleString = horzcat('Post-filtering spectrum, starting GPS time ', num2str(metadata.gpsStart))
+    title(titleString)
+    disp(outputFile)
+    print('-dpng', strcat(outputFile, '.png'))
+    print('-dpdf', strcat(outputFile, '.pdf'))
+    close(1)
+end
+
+grapher(spectrumMaker(metadata), metadata);
 
 end
