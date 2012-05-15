@@ -13,7 +13,12 @@ function metadata = frameMetadata(frame)
     % Here we assemble the strings that reference the
     % frame file
     metadata.frameString = char(frame);
+    metadata.refString = strcat(metadata.frameString(1:5), 'LDAS',...
+        metadata.frameString(10:end));
     metadata.frameNameHead = '/archive/frames/S6/pulsar/feedforward/';
+    % Note that this reference frame head is only valid for the GPS time
+    % 931178496 to 931190912:
+    metadata.refNameHead = '/data/node232/frames/S6/LDAShoftC02/';
     % The following is only compatible for nine-digit GPS times
     % gpsStart = str2num(metadata.frameString(18:26)); 
     % The following is more broadly compatible
@@ -21,9 +26,14 @@ function metadata = frameMetadata(frame)
     metadata.site = metadata.frameString(1);
     metadata.siteFull = strcat('L', metadata.site, 'O');
     metadata.frameDirectoryMiddle = metadata.frameString(1:21);
+    metadata.refDirectoryMiddle = strcat(metadata.frameDirectoryMiddle(1:5),...
+        'LDAS',metadata.frameDirectoryMiddle(10:end));
     metadata.fname = strcat(metadata.frameNameHead, metadata.siteFull, '/',...
         metadata.frameDirectoryMiddle, '/',...
         metadata.frameString);
+    metadata.fnameRef = strcat(metadata.refNameHead, metadata.siteFull, '/',...
+        metadata.refDirectoryMiddle, '/',...
+        metadata.refString);
     disp('Perusing the following file:')
     disp(metadata.fname)
 
@@ -31,37 +41,63 @@ function metadata = frameMetadata(frame)
     % the Auxiliary MICH-PRC subtraction version of Hoft,
     % directly analogous to LDAS-STRAIN.
     metadata.cname = strcat(metadata.site, '1:AMPS-STRAIN');
+    % And the name for the reference:
+    metadata.cnameRef = strcat(metadata.site, '1:LDAS-STRAIN');
 
     % Assume a sampling frequency of 16384 Hz
     metadata.fs = 16384;
 
     % Find out which times are in science:
     metadata = onlyScience(metadata);
+    % Initially, look at reference data, 0.
+    metadata.refOrFilterFlag = 0;
 end
 
 metadata = frameMetadata(frame);
 
 function dataOut = firstFrame(metadata);
     % Retrieve the frame using frgetvect
-    [dataOut, tsamp, fsamp, gps0] =...
-        frgetvect(metadata.fname, metadata.cname,...
-        metadata.gpsStart + metadata.scienceOffset,...
-        128 - metadata.scienceOffset);
+    if metadata.refOrFilterFlag == 0
+        [dataOut, tsamp, fsamp, gps0] =...
+            frgetvect(metadata.fnameRef, metadata.cnameRef,...
+            metadata.gpsStart + metadata.scienceOffset,...
+            128 - metadata.scienceOffset);
+    elseif metadata.refOrFilterFlag == 1
+        [dataOut, tsamp, fsamp, gps0] =...
+            frgetvect(metadata.fname, metadata.cname,...
+            metadata.gpsStart + metadata.scienceOffset,...
+            128 - metadata.scienceOffset);
+    end
 end
 function dataOut = adjacentFrames(data, metadata, beyondTimes)
     % Can test adjacent frames for sanity check:
     newStart = metadata.gpsStart + 128*beyondTimes;
-    frameString1 =...
-        strcat(metadata.frameString(1:17),...
-            num2str(newStart),...
-            metadata.frameString(27:end));
-    fname1 =...
-        strcat(metadata.frameNameHead,...
-            metadata.siteFull, '/',...
-            metadata.frameDirectoryMiddle, '/',...
-            frameString1);
-    [data1, tsamp1, fsamp1, gps1] =...
-        frgetvect(fname1, metadata.cname, newStart, 128);
+
+    if metadata.refOrFilterFlag == 0
+        frameString1 =...
+            strcat(metadata.refString(1:17),...
+                num2str(newStart),...
+                metadata.refString(27:end));
+        fname1 =...
+            strcat(metadata.refNameHead,...
+                metadata.siteFull, '/',...
+                metadata.refDirectoryMiddle, '/',...
+                frameString1);
+        [data1, tsamp1, fsamp1, gps1] =...
+            frgetvect(fname1, metadata.cnameRef, newStart, 128); 
+    elseif metadata.refOrFilterFlag == 1
+        frameString1 =...
+            strcat(metadata.frameString(1:17),...
+                num2str(newStart),...
+                metadata.frameString(27:end));
+        fname1 =...
+            strcat(metadata.frameNameHead,...
+                metadata.siteFull, '/',...
+                metadata.frameDirectoryMiddle, '/',...
+                frameString1);
+        [data1, tsamp1, fsamp1, gps1] =...
+            frgetvect(fname1, metadata.cname, newStart, 128);
+    end
     dataOut = [data; data1];
 end
 function dataOut = combineFrames(metadata)
@@ -101,9 +137,19 @@ function spectra = spectrumMaker(metadata)
     [pdarm, spectra.fx] = pwelch(...
         dataOut, hanning(nfft), nfft/2, nfft, metadata.fs);
     % Take the amplitude spectral density:
-    spectra.adarm = sqrt(pdarm);
+    if metadata.refOrFilterFlag == 0
+        spectra.adarmRef = sqrt(pdarm)
+    elseif metadata.refOrFilterFlag == 1
+        spectra.adarmFilter = sqrt(pdarm);
+    end
 end
 
+function spectra = spectraCompare(metadata)
+    spectra = spectrumMaker(metadata);
+    metadata.refOrFilterFlag = 1;
+    spectrum = spectrumMaker(metadata);
+    spectra.adarmFilter = spectrum.adarmFilter;
+end
 
 function graphing = grapher(spectra, metadata)
     % Graph the data available
@@ -113,11 +159,12 @@ function graphing = grapher(spectra, metadata)
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     outputFile = strcat(outputFileHead, 'spectralScan-', num2str(metadata.gpsStart));
-    semilogy(spectra.fx, spectra.adarm)
+    semilogy(spectra.fx, spectra.adarmRef, spectra.fx, spectra.adarmFilter)
     grid on
-    xlim([390 400])
+    xlim([393.0 393.2])
     xlabel('Frequency (Hz)')
     ylabel('Amplitude spectral density (\surdHz)')
+    legend('Before feedforward', 'After feedforward')
     titleString = horzcat('Post-filtering spectrum, starting GPS time ', num2str(metadata.gpsStart))
     title(titleString)
     disp(outputFile)
@@ -126,6 +173,6 @@ function graphing = grapher(spectra, metadata)
     close(1)
 end
 
-grapher(spectrumMaker(metadata), metadata);
+grapher(spectraCompare(metadata), metadata);
 
 end
