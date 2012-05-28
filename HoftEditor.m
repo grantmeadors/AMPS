@@ -42,6 +42,7 @@ classdef HoftEditor < handle
         vetoAlarm
         anticipateFlag
         isFirstSubFlag
+        isLastSubFlag
         stateVector
         dqFlag
         successVector
@@ -102,6 +103,7 @@ classdef HoftEditor < handle
             Hoft.startOffsetSV = [];
             Hoft.vetoAlarm = 0;
             Hoft.isFirstSubFlag = 1;
+            Hoft.isLastSubFlag = 0;
             Hoft.successVector = [];
         end
         function constructVector(Hoft, totalFrameDuration)
@@ -446,9 +448,11 @@ classdef HoftEditor < handle
             if jj < (length(tSub.tStart))
                 dataReviewer(Hoft, newHoft, jj, jjStart);
             elseif tSegment.tIsFollowed ~= 1
+                Hoft.isLastSubFlag = 1;
                 dataReviewer(Hoft, newHoft, jj, jjStart);
             else
                 disp('Holding off writing in anticipation of sub-segment')
+                Hoft.isLastSubFlag = 1;
                 dataReviewer(Hoft, newHoft, jj, jjStart);
             end
             
@@ -1129,7 +1133,7 @@ classdef HoftEditor < handle
             goVetoEffort = goHoftSuccess |...
                 (Hoft.vetoAlarm == 2);
             goFinalCheck = goVetoEffort &...
-                (Hoft.tIsFollowed == 0);
+                ((Hoft.tIsFollowed == 0) | (Hoft.isLastSubFlag == 0));
             if goFinalCheck
                 for kk = 1:numberOfFrames
                        

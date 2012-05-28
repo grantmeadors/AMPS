@@ -371,10 +371,14 @@ classdef Data < handle
             disp(size(channels.noise))
         end
         function preFilter(channels)
-            % pre-filter the noise by low-passing it
-            [zpre, ppre, kpre] = butter(2, 2*pi*700, 's');
-            channels.noise = filterZPKs(...
-                zpre, ppre, kpre, channels.Fs, channels.noise);
+            % pre-filter the noise by low-passing it and 
+            % high passing it.
+            [zpreL, ppreL, kpreL] = butter(2, 2*pi*700, 's');
+            [zpreH, ppreH, kpreH] = butter(2, 2*pi*30, 'high', 's');
+            channels.noise = filterZPKS(...
+                zpreH, zpreH, zpreH, channels.Fs,...
+                filterZPKs(...
+                zpreL, ppreL, kpreL, channels.Fs, channels.noise));
         end
         function feedforwardFilter(channels, za, pa, ka)
             % now apply the TF-fit feedforward filter to the noise
