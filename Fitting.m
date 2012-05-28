@@ -81,7 +81,7 @@ classdef Fitting < handle
                 (abs(f-240)<3) | (abs(f-300) < 3) | (abs(f-360) < 3));
             vv = find( (abs(f-46.7) < 3) |...
                 (abs(f-391.3) < 3) | (abs(f-1144.3) < 3)| ...
-                (abs(f - 346) < 8) | (abs(f-400.2) < 3));
+                (abs(f - 346) < 20) | (abs(f-400.2) < 3));
             vvv = find(f>800);
             
             weight([v vv vvv]) = 0;
