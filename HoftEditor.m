@@ -134,8 +134,8 @@ classdef HoftEditor < handle
             aFirstHoft = aletheia(tSub.tStart(1), tSub.tEnd(1), addenda);
             
             % Extract related data
-            Hoft.offlineZPK.MICH(1) = aFirstHoft.offlineZPK.MICH;
-            Hoft.rmserr.MICH(1) = aFirstHoft.rmserr.MICH;
+            Hoft.offlineZPK.MICH{1} = aFirstHoft.offlineZPK.MICH;
+            Hoft.rmserr.MICH{1} = aFirstHoft.rmserr.MICH;
             if addenda.frameHeadFlag == 1;
                 disp('Sizes of frame heads being written')
                 disp(size(aFirstHoft.frameHead))
@@ -180,8 +180,8 @@ classdef HoftEditor < handle
             % Actually filter for PRC
             firstHoft = aletheia(tSub.tStart(1), tSub.tEnd(1), addenda);
             
-            Hoft.offlineZPK.PRC(1) = firstHoft.offlineZPK.PRC;
-            Hoft.rmserr.PRC(1) = firstHoft.rmserr.PRC;
+            Hoft.offlineZPK.PRC{1} = firstHoft.offlineZPK.PRC;
+            Hoft.rmserr.PRC{1} = firstHoft.rmserr.PRC;
             % Cleanup
             clear addenda
             if length(tSub.tStart) > 1
@@ -344,11 +344,11 @@ classdef HoftEditor < handle
             end
             
             disp('Offline ZPKs displayed below')
-            Hoft.offlineZPK.MICH(1)
-            Hoft.offlineZPK.PRC(1)
+            Hoft.offlineZPK.MICH{1}
+            Hoft.offlineZPK.PRC{1}
             disp('RMS errors displayered below')
-            Hoft.rmserr.MICH(1)
-            Hoft.rmserr.PRC(1)
+            Hoft.rmserr.MICH{1}
+            Hoft.rmserr.PRC{1}
         end
         function loopMICH(Hoft, T, tSub, addenda, jj)
             disp('Lengths of passed DARM, MICH and PRC vrctors:')
@@ -366,8 +366,8 @@ classdef HoftEditor < handle
             % Actual MICH filtering
             aNewHoft = aletheia(tSub.tStart(jj), tSub.tEnd(jj), addenda);
             
-            Hoft.offlineZPK.MICH(jj) = aNewHoft.offlineZPK.MICH;
-            Hoft.rmserr.MICH(jj) = aNewHoft.rmserr.MICH;
+            Hoft.offlineZPK.MICH{jj} = aNewHoft.offlineZPK.MICH;
+            Hoft.rmserr.MICH{jj} = aNewHoft.rmserr.MICH;
             addenda.destroyer('passMICH');
             addenda.destroyer('passDARM');
             if jj ~= length(tSub.tStart)
@@ -396,16 +396,16 @@ classdef HoftEditor < handle
                 Hoft.passDARM = newHoft.baseline((Hoft.p+1):end);
                 Hoft.passPRC = newHoft.prc;
             end
-            Hoft.offlineZPK.PRC(jj) = newHoft.offlineZPK.PRC;
-            Hoft.rmserr.PRC(jj) = newHoft.rmserr.PRC;
+            Hoft.offlineZPK.PRC{jj} = newHoft.offlineZPK.PRC;
+            Hoft.rmserr.PRC{jj} = newHoft.rmserr.PRC;
             clear newHoft.prc
             
             disp('Offline ZPKs displayed below')
-            Hoft.offlineZPK.MICH(jj)
-            Hoft.offlineZPK.PRC(jj)
+            Hoft.offlineZPK.MICH{jj}
+            Hoft.offlineZPK.PRC{jj}
             disp('RMS errors are displayed below')
-            Hoft.rmserr.MICH(jj)
-            Hoft.rmserr.PRC(jj)
+            Hoft.rmserr.MICH{jj}
+            Hoft.rmserr.PRC{jj}
             
             % Check how long the segment is, which will be very
             % important for the last subsection --
@@ -879,8 +879,8 @@ classdef HoftEditor < handle
                 fitPhasePRC = fitMagMICH;
                 
                 for gg = 1:length(Hoft.offlineZPK.MICH)
-                    respMICH = squeeze(freqresp(Hoft.offlineZPK.MICH(gg), 2*pi*f));
-                    respPRC = squeeze(freqresp(Hoft.offlineZPK.PRC(gg), 2*pi*f));
+                    respMICH = squeeze(freqresp(Hoft.offlineZPK.MICH{gg}, 2*pi*f));
+                    respPRC = squeeze(freqresp(Hoft.offlineZPK.PRC{gg}, 2*pi*f));
                     fitMagMICH(:, gg) = abs(respMICH);
                     fitMagPRC(:, gg) = abs(respPRC);
                     fitPhaseMICH(:, gg) = angle(respMICH)*180/pi;
@@ -962,7 +962,7 @@ classdef HoftEditor < handle
                 fprintf(fidFit, '\n');
                 for qq = 1:length(Hoft.rmserr.MICH)
                     clear rmserrString
-                    rmserrString = strcat(num2str(qq), 32, num2str(Hoft.rmserr.MICH(qq)), 32, num2str(Hoft.rmserr.PRC(qq)) );
+                    rmserrString = strcat(num2str(qq), 32, num2str(Hoft.rmserr.MICH{qq}), 32, num2str(Hoft.rmserr.PRC{qq}) );
                     fprintf(fidFit, '%s', rmserrString);
                     clear rmserrString
                     fprintf(fidFit, '\n');
