@@ -1,7 +1,7 @@
-function results = spectralScan(frame)
+function results = correlateInjection(frame)
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-05-14 
+% 02012-05-29 
 %
 % correlateInjection
 % 
@@ -99,7 +99,7 @@ function graphing = grapher(plots, metadata)
     outputFileHead = strcat('/home/gmeadors/public_html/feedforward/programs/spectralScan/',...
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
-    xlimits = metadata.gpsStart + [55 55.125];
+    xlimits = metadata.gpsStart + [0 128];
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter)
     xlimitsIndex = metadata.fs*xlimits;
@@ -108,10 +108,10 @@ function graphing = grapher(plots, metadata)
     %ymean = mean(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
     %ylimits = [(ymean-ystdLimit) (ymean+ystdLimit)];
     %ylim(ylimits)
-    ylim([-2e-22 2e-22])
+    %ylim([-2e-22 2e-22])
     grid on
     xlabel('Time (s)')
-    ylabel('Amplitude spectral density (\surdHz)')
+    ylabel('Amplitude (strain)')
     legend('Before feedforward', 'After feedforward')
     titleString = horzcat('Post-filtering injection, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleString)
