@@ -130,7 +130,7 @@ function graphing = grapher(plots, metadata)
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
     plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain)
-    xlimitsIndex = metadata.fs*xlimits;
+    xlimitsIndex = metadata.fs*(xlimits - metadata.gpsStart);
     xlim(xlimits)
     %ystdLimit = 5*std(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
     %ymean = mean(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
@@ -150,17 +150,18 @@ function graphing = grapher(plots, metadata)
     close(1)
 
     figure(2)
-    nLags = 512;
+    nLags = 32;
     smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
     smallDarmFilter = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
     smallStrain = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
     [XCFref,lagsRef] = xcorr(smallDarmRef, smallStrain, nLags);   
     [XCFfilter,lagsFilter] = xcorr(smallDarmFilter, smallStrain, nLags);   
     [XCFrefFilter,lagsRefFilter] = xcorr(smallDarmRef, smallDarmFilter, nLags);   
-    plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
+    plot(lagsRef, XCFref, lagsFilter, XCFfilter-1e-41, lagsRefFilter, XCFrefFilter-2e-41)
+    %plot(lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
-    legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after')
+    legend('Before-feedforward-to-injection, no offset', 'After-feedforward-to-injection minus 1e-41', 'Before-feedforward-to-after minus 2e-41', 'Location', 'South')
     titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleStringCrossCorr)
     disp(outputFileCrossCorr)
