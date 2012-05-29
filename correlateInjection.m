@@ -151,12 +151,12 @@ function graphing = grapher(plots, metadata)
 
     figure(2)
     nLags = 512;
-    [XCFref,lagsRef,boundsRef] = crosscorr(plots.darmRef, plots.strain, nLags);   
-    [XCFfilter,lagsFilter,boundsFilter] = crosscorr(plots.darmFilter, plots.strain, nLags);   
-    [XCFrefFilter,lagsRefFilter,boundsRefFilter] = crosscorr(plots.darmRef, plots.darmFilter, nLags);   
+    [XCFref,lagsRef] = xcorr(plots.darmRef, plots.strain, nLags);   
+    [XCFfilter,lagsFilter] = xcorr(plots.darmFilter, plots.strain, nLags);   
+    [XCFrefFilter,lagsRefFilter] = xcorr(plots.darmRef, plots.darmFilter, nLags);   
     plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
-    ylabel('Cross-correlation XCF')
+    ylabel('Cross-correlation')
     legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after')
     titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleStringCrossCorr)
