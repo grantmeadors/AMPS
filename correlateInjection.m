@@ -49,8 +49,10 @@ function metadata = frameMetadata(frame)
     % Construct a time index:
     metadata.t = metadata.gpsStart + (0:(128*metadata.fs-1))/metadata.fs;
     % Construct a filter:
-    %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
-    [metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[390 396], 's');
+    % For burst injection
+    [metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
+    % For calibration line
+    %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[390 396], 's');
 
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
@@ -123,17 +125,19 @@ function graphing = grapher(plots, metadata)
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     % xlimits starting at 89 is appropriate for the injection at 931130713.
-    xlimits = metadata.gpsStart + [90.75 90.875];
+    xlimits = metadata.gpsStart + [90.5 90.625];
+    ylimits  = [-3e-21 3e-21];
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
+    outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
     plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain)
     xlimitsIndex = metadata.fs*xlimits;
     xlim(xlimits)
     %ystdLimit = 5*std(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
     %ymean = mean(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
     %ylimits = [(ymean-ystdLimit) (ymean+ystdLimit)];
-    %ylim(ylimits)
+    ylim(ylimits)
     %ylim([-3e-21 3e-21])
-    ylim([-2e-22 2e-22])
+    %ylim([-2e-22 2e-22])
     grid on
     xlabel('Time (s)')
     ylabel('Amplitude (strain)')
@@ -144,6 +148,22 @@ function graphing = grapher(plots, metadata)
     print('-dpng', strcat(outputFile, '.png'))
     print('-dpdf', strcat(outputFile, '.pdf'))
     close(1)
+
+    figure(2)
+    nLags = 512;
+    [XCFref,lagsRef,boundsRef] = crosscorr(plots.darmRef, plots.strain, nLags);   
+    [XCFfilter,lagsFilter,boundsFilter] = crosscorr(plots.darmFilter, plots.strain, nLags);   
+    [XCFrefFilter,lagsRefFilter,boundsRefFilter] = crosscorr(plots.darmRef, plots.darmFilter, nLags);   
+    plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
+    xlabel('Time lag (1/16384 s)')
+    ylabel('Cross-correlation XCF')
+    legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after')
+    titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
+    title(titleStringCrossCorr)
+    disp(outputFileCrossCorr)
+    print('-dpng', strcat(outputFileCrossCorr, '.png'))
+    print('-dpdf', strcat(outputFileCrossCorr, '.pdf')) 
+    close(2)
 end
 
 grapher(plotCompare(metadata), metadata);
