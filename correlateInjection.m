@@ -151,9 +151,12 @@ function graphing = grapher(plots, metadata)
 
     figure(2)
     nLags = 512;
-    [XCFref,lagsRef] = xcorr(plots.darmRef, plots.strain, nLags);   
-    [XCFfilter,lagsFilter] = xcorr(plots.darmFilter, plots.strain, nLags);   
-    [XCFrefFilter,lagsRefFilter] = xcorr(plots.darmRef, plots.darmFilter, nLags);   
+    smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
+    smallDarmFilter = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
+    smallStrain = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
+    [XCFref,lagsRef] = xcorr(smallDarmRef, smallStrain, nLags);   
+    [XCFfilter,lagsFilter] = xcorr(smallDarmFilter, smallStrain, nLags);   
+    [XCFrefFilter,lagsRefFilter] = xcorr(smallDarmRef, smallDarmFilter, nLags);   
     plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
