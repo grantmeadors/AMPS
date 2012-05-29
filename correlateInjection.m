@@ -49,7 +49,7 @@ function metadata = frameMetadata(frame)
     % Construct a time index:
     metadata.t = metadata.gpsStart + (0:(128*metadata.fs-1))/metadata.fs;
     % Construct a filter:
-    [metadata.zb, metadata.pb, metadata.kb] = butter(16, 2*pi*[100 110], 's');
+    [metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
 
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
@@ -122,7 +122,7 @@ function graphing = grapher(plots, metadata)
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     % xlimits starting at 89 is appropriate for the injection at 931130713.
-    xlimits = metadata.gpsStart + [90.375 90.5];
+    xlimits = metadata.gpsStart + [90.5 90.625];
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain)
     xlimitsIndex = metadata.fs*xlimits;
