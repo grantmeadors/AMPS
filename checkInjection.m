@@ -69,7 +69,7 @@ else
     disp('No injection in frame')
 end
 [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
-frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
+frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
     cname = strcat(site, '1:LDAS-STRAIN');
@@ -81,7 +81,7 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     %baseline = [baseline; baseline1];
 end
 
-function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site)
+function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site, frame)
     % Create a time coordinate
     t = gpsStartTime + (0:(length(data)-1))/samplingFrequency;
     % Bandpass filter the data to the bucket
@@ -139,6 +139,10 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
         end
         disp('Ratio of injection subset standard deviation to rest of difference')
         disp(std(subsetAround)/std(difference))
+
+        % Check the cross-correlation
+        disp('Checking injection cross-correlation')
+        correlateInjection(frame, baseline, data);
     end
     
 

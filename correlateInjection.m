@@ -1,13 +1,23 @@
-function results = correlateInjection(frame)
+function results = correlateInjection(frame, varargin)
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-05-29 
+% 02012-06-04 
 %
 % correlateInjection
 % 
 % Compares a single injection before and after feedforward.
 
-function metadata = frameMetadata(frame)
+frameObject.frame = frame;
+frameObject.numberArgs = nargin;
+if nargin > 1
+    frameObject.ref = varargin{1};
+end
+if nargin > 2
+    frameObject.filter = varargin{2};
+end
+
+function metadata = frameMetadata(frameObject)
+    frame = frameObject.frame;
     % Here we assemble the strings that reference the
     % frame file
     metadata.frameString = char(frame);
@@ -56,22 +66,40 @@ function metadata = frameMetadata(frame)
 
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
+    % But if nargin > 1, take passed data
+    if frameObject.numberArgs == 3;
+        metadata.passedDataFlag = 1;
+        metadata.ref = frameObject.ref;
+        metadata.filter = frameObject.filter;
+    else
+        metadata.passedDataFlag = 0;
+    end
 end
 
-metadata = frameMetadata(frame);
+metadata = frameMetadata(frameObject);
 
 function dataOut = firstFrame(metadata);
-    % Retrieve the frame using frgetvect
-    if metadata.refOrFilterFlag == 0
-        [dataOut, tsamp, fsamp, gps0] =...
-            frgetvect(metadata.fnameRef, metadata.cnameRef,...
-            metadata.gpsStart,...
-            128);
-    elseif metadata.refOrFilterFlag == 1
-        [dataOut, tsamp, fsamp, gps0] =...
-            frgetvect(metadata.fname, metadata.cname,...
-            metadata.gpsStart,...
-            128);
+    if metadata.passedDataFlag == 0
+        % Retrieve the frame using frgetvect
+        if metadata.refOrFilterFlag == 0
+            [dataOut, tsamp, fsamp, gps0] =...
+                frgetvect(metadata.fnameRef, metadata.cnameRef,...
+                metadata.gpsStart,...
+                128);
+        elseif metadata.refOrFilterFlag == 1
+            [dataOut, tsamp, fsamp, gps0] =...
+                frgetvect(metadata.fname, metadata.cname,...
+                metadata.gpsStart,...
+                128);
+        end
+    elseif metadata.passedDataFlag == 1
+        if metadata.refOrFilterFlag == 0
+            dataOut = metadata.ref;
+            clear metadata.ref;
+        elseif metadata.refOrFilterFlag == 1
+            dataOut = metadata.filter;
+            clear metadata.filter;
+        end
     end
 end
 
@@ -150,23 +178,44 @@ function graphing = grapher(plots, metadata)
     close(1)
 
     figure(2)
-    nLags = 32;
+    nLags = 512;
     smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
-    smallDarmFilter = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
-    smallStrain = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
+    smallDarmFilter = plots.darmFilter(xlimitsIndex(1):xlimitsIndex(end));
+    smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
     [XCFref,lagsRef] = xcorr(smallDarmRef, smallStrain, nLags);   
     [XCFfilter,lagsFilter] = xcorr(smallDarmFilter, smallStrain, nLags);   
     [XCFrefFilter,lagsRefFilter] = xcorr(smallDarmRef, smallDarmFilter, nLags);   
-    plot(lagsRef, XCFref, lagsFilter, XCFfilter-1e-41, lagsRefFilter, XCFrefFilter-2e-41)
+    plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
     %plot(lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
-    legend('Before-feedforward-to-injection, no offset', 'After-feedforward-to-injection minus 1e-41', 'Before-feedforward-to-after minus 2e-41', 'Location', 'South')
     titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleStringCrossCorr)
-    disp(outputFileCrossCorr)
+
+    % Display maxima of the lag plots:
+    maxDarmRef = find(XCFref == max(XCFref));
+    maxDarmFilter = find(XCFfilter == max(XCFfilter));
+    maxStrain = find(XCFrefFilter == max(XCFrefFilter));
+    disp('Position (lag in samples) of max cross-correlation:')
+    disp('Before-feedforward-to-injection')
+    lagsMaxRef = lagsRef(maxDarmRef);
+    disp(lagsMaxRef)
+    disp('After-feedforward-to-injection')
+    lagsMaxFilter = lagsFilter(maxDarmFilter);
+    disp(lagsMaxFilter)
+    disp('Before-feedforward-to-after')
+    lagsMaxRefFilter = lagsRefFilter(maxStrain);
+    disp(lagsMaxRefFilter)
+
+    legendRef = horzcat('Before-feedforward-to-injection, max lag index: ', num2str(lagsMaxRef));
+    legendFilter = horzcat('After-feedforward-to-injection, max lag index: ', num2str(lagsMaxFilter));
+    legendRefFilter = horzcat('Before-feedforward-to-after, max lag index: ', num2str(lagsMaxRefFilter));
+
+    legend(legendRef, legendFilter, legendRefFilter, 'Location', 'SouthEast') 
+    %legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after', 'Location', 'South')
     print('-dpng', strcat(outputFileCrossCorr, '.png'))
     print('-dpdf', strcat(outputFileCrossCorr, '.pdf')) 
+    disp(outputFileCrossCorr)
     close(2)
 end
 
