@@ -223,6 +223,9 @@ function graphing = grapher(plots, metadata)
     if lagsMaxRefFilter ~= 0
         disp('Alert! Cross-correlation is shifted from before-to-after')
     end
+    if lagsMaxRef ~= lagsMaxFilter
+        disp('Alert! Before and after are shifted with respect to each other and injection')
+    end
 
     legendRef = horzcat('Before-feedforward-to-injection, max lag index: ', num2str(lagsMaxRef));
     legendFilter = horzcat('After-feedforward-to-injection, max lag index: ', num2str(lagsMaxFilter));

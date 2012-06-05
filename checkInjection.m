@@ -36,7 +36,8 @@ fclose(injectionFileID);
 % This is the detailed file that lists parameters.
 parameterFile = 'burst_hwinj_params.txt';
 parameterFileID = fopen(parameterFile, 'r');
-%cellParameterFile = textscan;
+cellParameterFile = textscan(parameterFileID,...
+     'filestart=%d burstgps=%f %s rmsSNR=%f %s %*[^\n]');
 fclose(parameterFileID);
 
 % Now we have read in the injection list. If an injection went through,
@@ -51,7 +52,7 @@ parfor ii=1:length(cellInjectionFile{4})
         injectionList(ii) = cellInjectionFile{1}(ii);
     end
 end
-% Trim unsuccesful injections
+% Trim unsuccesful and non-burst injections
 injectionList(injectionList == 0) = [];
 
 % Determine whether an injection would be in the range of this frame file,
@@ -71,6 +72,20 @@ injectionInFrame = injectionList(gpsStartTime <= injectionList &...
     injectionList < gpsStartTime + 128);
 
 if length(injectionInFrame) > 0
+    % Determine type of injection
+    frequencyList = zeros(size(cellParameterFile{5}));
+    parfor ii=1:length(injectionList)
+        checkSinegaussian = strcmp(cellParameterFile{3}(ii), 'typesinegaussian=1');
+        checkTime = (injectionInFrame(1) == cellParameterFile{1}(ii));
+        if (checkSinegaussian & checkTime)
+            rawFreqColumn = cellParameterFile{5}(ii) 
+            frequencyList(ii) = str2num(rawFreqColumn{1}(6:end)); 
+        end
+    end
+    frequencyList(frequencyList == 0) = [];
+    frequencyList
+    
+    
     disp('Injection in frame: triggering search on this time --')
     disp(injectionInFrame)
 else
