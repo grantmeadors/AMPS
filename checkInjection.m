@@ -88,6 +88,7 @@ if length(injectionInFrame) > 0
     disp(injectionInFrame)
 else
     disp('No injection in frame')
+    frequencyList = [];
 end
 [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
