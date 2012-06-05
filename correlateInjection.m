@@ -180,7 +180,11 @@ function graphing = grapher(plots, metadata)
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     % xlimits starting at 89 is appropriate for the injection at 931130713.
-    xlimits = metadata.gpsStart + [90.5 90.625];
+    % xlimits = metadata.gpsStart + [90.5 90.625];
+    % Or one can try to be automated by looking from 0.1 to 2 seconds of the injection
+    % The slight delay tries to evade the problem of filter-turn on distorting the estimated
+    % strain file
+    xlimits = metadata.injGPSstart + [0.1 2];
     ylimits  = [-3e-21 3e-21];
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
