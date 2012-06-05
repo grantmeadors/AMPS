@@ -18,6 +18,9 @@ end
 if nargin > 3
     frameObject.injGPSstart = varargin{3};
 end
+if nargin > 4
+    frameObject.frequencyList = varargin{4};
+end
 
 function metadata = frameMetadata(frameObject)
     frame = frameObject.frame;
@@ -37,7 +40,9 @@ function metadata = frameMetadata(frameObject)
         '/home/gmeadors/public_html/feedforward/programs/injectionStrain/www.gravity.physics.umd.edu/gw/hwinj/s6vsr2/S6VSR2a/';
     %metadata.injFileName = 'inj_931130713_LHO_strain.txt';
     % A duplicate entry, injStartGPS, may appear later
-    metadata.injGPSstart = frameObject.injGPSstart;
+    if frameObject.numberArgs >= 4
+        metadata.injGPSstart = frameObject.injGPSstart;
+    end
     metadata.gpsStart = str2num(timeParser(metadata.frameString));
     metadata.site = metadata.frameString(1);
     metadata.siteFull = strcat('L', metadata.site, 'O');
@@ -68,18 +73,27 @@ function metadata = frameMetadata(frameObject)
     % Assume a sampling frequency of 16384 Hz
     metadata.fs = 16384;
 
+    % Choose a center frequency for the injection:
+    if frameObject.numberArgs >= 5
+        metadata.centerFrequency = frameObject.frequencyList(1);
+        metadata.frequencyWindow = metadata.centerFrequency + [2 12];
+    end
+
     % Construct a time index:
     metadata.t = metadata.gpsStart + (0:(128*metadata.fs-1))/metadata.fs;
     % Construct a filter:
+    % Based on read center frequency for burst injection:
+    [metadata.zb, metadata.pb, metadata.kb] = butter(8,...
+        2*pi*metadata.frequencyWindow, 's');
     % For burst injection
-    [metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
+    %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
     % For calibration line
     %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[390 396], 's');
 
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
     % But if nargin > 1, take passed data
-    if frameObject.numberArgs >= 3;
+    if frameObject.numberArgs >= 3
         metadata.passedDataFlag = 1;
         metadata.ref = frameObject.ref;
         metadata.filter = frameObject.filter;

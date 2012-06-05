@@ -83,8 +83,6 @@ if length(injectionInFrame) > 0
         end
     end
     frequencyList(frequencyList == 0) = [];
-    frequencyList
-    
     
     disp('Injection in frame: triggering search on this time --')
     disp(injectionInFrame)
@@ -92,7 +90,7 @@ else
     disp('No injection in frame')
 end
 [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
-frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site, frame)
+frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
     cname = strcat(site, '1:LDAS-STRAIN');
@@ -104,7 +102,7 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     %baseline = [baseline; baseline1];
 end
 
-function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStartTime, site, frame)
+function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
     % Create a time coordinate
     t = gpsStartTime + (0:(length(data)-1))/samplingFrequency;
     % Bandpass filter the data to the bucket
@@ -164,8 +162,10 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
         disp(std(subsetAround)/std(difference))
 
         % Check the cross-correlation
-        disp('Checking injection cross-correlation')
-        correlateInjection(frame, baseline, data, injectionGPStime);
+        if length(frequencyList) > 0
+            disp('Checking injection cross-correlation')
+            correlateInjection(frame, baseline, data, injectionGPStime, frequencyList);
+        end
     end
     
 
