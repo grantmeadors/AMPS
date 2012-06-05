@@ -27,19 +27,27 @@ else
     disp('Error: wrong input argument. Please specify a string frame name')
 end
 
+% This is the basic file that details whether injections were successful.
 injectionFile = strcat(site, '1biinjlist.txt');
 injectionFileID = fopen(injectionFile, 'r');
-
 cellInjectionFile = textscan(injectionFileID, '%d %s %f %s %*[^\n]');
-
 fclose(injectionFileID);
+
+% This is the detailed file that lists parameters.
+parameterFile = 'burst_hwinj_params.txt';
+parameterFileID = fopen(parameterFile, 'r');
+%cellParameterFile = textscan;
+fclose(parameterFileID);
 
 % Now we have read in the injection list. If an injection went through,
 % then the fourth column will say 'Successful'
 injectionList = zeros(size(cellInjectionFile{4}));
 
 parfor ii=1:length(cellInjectionFile{4})
-    if strcmp(cellInjectionFile{4}(ii), 'Successful')
+    checkSuccessful = strcmp(cellInjectionFile{4}(ii), 'Successful');
+    % Verify that is burst injection; note the tilde for logical NOT
+    checkType = ~isempty(strfind(cellInjectionFile{2}(ii), 'inj_')); 
+    if (checkSuccessful & checkType)
         injectionList(ii) = cellInjectionFile{1}(ii);
     end
 end
