@@ -15,6 +15,9 @@ end
 if nargin > 2
     frameObject.filter = varargin{2};
 end
+if nargin > 3
+    frameObject.injGPSstart = varargin{3};
+end
 
 function metadata = frameMetadata(frameObject)
     frame = frameObject.frame;
@@ -30,10 +33,15 @@ function metadata = frameMetadata(frameObject)
     % The following is only compatible for nine-digit GPS times
     % gpsStart = str2num(metadata.frameString(18:26)); 
     % The following is more broadly compatible
-    metadata.injFileName = 'inj_931130713_LHO_strain.txt';
+    metadata.injectionDirectory =... 
+        '/home/gmeadors/public_html/feedforward/programs/injectionStrain/www.gravity.physics.umd.edu/gw/hwinj/s6vsr2/S6VSR2a/';
+    %metadata.injFileName = 'inj_931130713_LHO_strain.txt';
+    % A duplicate entry, injStartGPS, may appear later
+    metadata.injGPSstart = frameObject.injGPSstart;
     metadata.gpsStart = str2num(timeParser(metadata.frameString));
     metadata.site = metadata.frameString(1);
     metadata.siteFull = strcat('L', metadata.site, 'O');
+    % The following set where the feedforward data resides
     metadata.frameDirectoryMiddle = metadata.frameString(1:21);
     metadata.refDirectoryMiddle = strcat(metadata.frameDirectoryMiddle(1:5),...
         'LDAS',metadata.frameDirectoryMiddle(10:end));
@@ -45,6 +53,10 @@ function metadata = frameMetadata(frameObject)
         metadata.refString);
     disp('Perusing the following file:')
     disp(metadata.fname)
+    % Establish the name of the injection estimated strain file:
+    metadata.injFileName = strcat(metadata.injectionDirectory, 'inj_',...
+        num2str(metadata.injGPSstart), '_', metadata.siteFull, '_',...
+        'strain.txt');
 
     % The channel name is the AMPS strain channel,
     % the Auxiliary MICH-PRC subtraction version of Hoft,
@@ -67,7 +79,7 @@ function metadata = frameMetadata(frameObject)
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
     % But if nargin > 1, take passed data
-    if frameObject.numberArgs == 3;
+    if frameObject.numberArgs >= 3;
         metadata.passedDataFlag = 1;
         metadata.ref = frameObject.ref;
         metadata.filter = frameObject.filter;
@@ -126,7 +138,8 @@ end
 function strain = injectionFile(plots, metadata)
     strain = zeros(plots.dataLength, 1);
     strainInj = load(metadata.injFileName);
-    metadata.injStartGPS = str2num(metadata.injFileName(5:13));
+    %metadata.injStartGPS = str2num(metadata.injFileName(5:13));
+    metadata.injStartGPS = metadata.injGPSstart;
     diffGPS = metadata.injStartGPS - metadata.gpsStart;
     diffSamp = metadata.fs * diffGPS;
     % Presumably, the GWF files are indexed from zero, as are injections.
@@ -206,6 +219,10 @@ function graphing = grapher(plots, metadata)
     disp('Before-feedforward-to-after')
     lagsMaxRefFilter = lagsRefFilter(maxStrain);
     disp(lagsMaxRefFilter)
+    % Sound an alarm if there is a shift from before to after:
+    if lagsMaxRefFilter ~= 0
+        disp('Alert! Cross-correlation is shifted from before-to-after')
+    end
 
     legendRef = horzcat('Before-feedforward-to-injection, max lag index: ', num2str(lagsMaxRef));
     legendFilter = horzcat('After-feedforward-to-injection, max lag index: ', num2str(lagsMaxFilter));

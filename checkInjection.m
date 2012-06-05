@@ -142,7 +142,7 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, gpsStart
 
         % Check the cross-correlation
         disp('Checking injection cross-correlation')
-        correlateInjection(frame, baseline, data);
+        correlateInjection(frame, baseline, data, injectionGPStime);
     end
     
 
