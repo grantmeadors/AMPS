@@ -223,20 +223,39 @@ function graphing = grapher(plots, metadata)
     titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleStringCrossCorr)
 
-    % Display maxima of the lag plots:
+    % Display maxima and minima of the lag plots:
     maxDarmRef = find(XCFref == max(XCFref));
+    minDarmRef = find(XCFref == min(XCFref));
     maxDarmFilter = find(XCFfilter == max(XCFfilter));
+    minDarmFilter = find(XCFfilter == min(XCFfilter));
     maxStrain = find(XCFrefFilter == max(XCFrefFilter));
-    disp('Position (lag in samples) of max cross-correlation:')
+    minStrain = find(XCFrefFilter == min(XCFrefFilter));
+    disp('Position (lag in samples) of max and min cross-correlation:')
     disp('Before-feedforward-to-injection')
     lagsMaxRef = lagsRef(maxDarmRef);
+    lagsMinRef = lagsRef(minDarmRef);
     disp(lagsMaxRef)
+    disp(lagsMinRef)
     disp('After-feedforward-to-injection')
     lagsMaxFilter = lagsFilter(maxDarmFilter);
+    lagsMinFilter = lagsFilter(minDarmFilter);
     disp(lagsMaxFilter)
+    disp(lagsMinFilter)
     disp('Before-feedforward-to-after')
     lagsMaxRefFilter = lagsRefFilter(maxStrain);
+    lagsMinRefFilter = lagsRefFilter(minStrain);
     disp(lagsMaxRefFilter)
+    disp(lagsMinRefFilter)
+    disp('Value (strain squared) of max and min cross-correlation:')
+    disp('Before-feedforward-to-injection') 
+    disp(max(XCFref))
+    disp(min(XCFref))
+    disp('After-feedforward-to-injection')
+    disp(max(XCFfilter))
+    disp(min(XCFfilter))
+    disp('Before-feedforward-to-after')
+    disp(max(XCFrefFilter))
+    disp(min(XCFrefFilter))
     % Sound an alarm if there is a shift from before to after:
     if lagsMaxRefFilter ~= 0
         disp('Alert! Cross-correlation is shifted from before-to-after')
@@ -245,9 +264,9 @@ function graphing = grapher(plots, metadata)
         disp('Alert! Before and after are shifted with respect to each other and injection')
     end
 
-    legendRef = horzcat('Before-feedforward-to-injection, max lag index: ', num2str(lagsMaxRef));
-    legendFilter = horzcat('After-feedforward-to-injection, max lag index: ', num2str(lagsMaxFilter));
-    legendRefFilter = horzcat('Before-feedforward-to-after, max lag index: ', num2str(lagsMaxRefFilter));
+    legendRef = horzcat('Before-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxRef), ', ', num2str(lagsMinRef));
+    legendFilter = horzcat('After-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxFilter), ', ', num2str(lagsMinFilter));
+    legendRefFilter = horzcat('Before-feedforward-to-after, max, min lag index: ', num2str(lagsMaxRefFilter), ', ', num2str(lagsMaxRefFilter));
 
     legend(legendRef, legendFilter, legendRefFilter, 'Location', 'SouthEast') 
     %legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after', 'Location', 'South')

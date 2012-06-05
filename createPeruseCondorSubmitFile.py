@@ -5,7 +5,7 @@ import os, commands, shutil, sys, re
 def h(text):
     result = fileObject.write(text + '\n')
     return result
-analysisDate = "2012/06/04"
+analysisDate = "2012/06/05"
 
 # Make a directory for the output logs
 os.system('mkdir -p peruseLogs')
