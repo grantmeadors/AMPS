@@ -266,7 +266,7 @@ function graphing = grapher(plots, metadata)
 
     legendRef = horzcat('Before-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxRef), ', ', num2str(lagsMinRef));
     legendFilter = horzcat('After-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxFilter), ', ', num2str(lagsMinFilter));
-    legendRefFilter = horzcat('Before-feedforward-to-after, max, min lag index: ', num2str(lagsMaxRefFilter), ', ', num2str(lagsMaxRefFilter));
+    legendRefFilter = horzcat('Before-feedforward-to-after, max, min lag index: ', num2str(lagsMaxRefFilter), ', ', num2str(lagsMinRefFilter));
 
     legend(legendRef, legendFilter, legendRefFilter, 'Location', 'SouthEast') 
     %legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after', 'Location', 'South')
