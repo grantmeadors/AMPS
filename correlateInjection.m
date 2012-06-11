@@ -38,8 +38,12 @@ function metadata = frameMetadata(frameObject)
     % The following is more broadly compatible
     metadata.injectionDirectory =... 
         '/home/gmeadors/public_html/feedforward/programs/injectionStrain/www.gravity.physics.umd.edu/gw/hwinj/s6vsr2/S6VSR2a/';
+    metadata.ETMXinjectionDirectory = ...
+        '/home/gmeadors/public_html/feedforward/programs/injectionETMX/www.gravity.physics.umd.edu/gw/hwinj/s6vsr2/S6VSR2a/';
     %metadata.injFileName = 'inj_931130713_LHO_strain.txt';
     % A duplicate entry, injStartGPS, may appear later
+    % Default to injection GPS start of 931130713 for testing purposes:
+    metadata.injGPSstart = 931130713;
     if frameObject.numberArgs >= 4
         metadata.injGPSstart = frameObject.injGPSstart;
     end
@@ -62,6 +66,10 @@ function metadata = frameMetadata(frameObject)
     metadata.injFileName = strcat(metadata.injectionDirectory, 'inj_',...
         num2str(metadata.injGPSstart), '_', metadata.siteFull, '_',...
         'strain.txt');
+    % Establish the name of injection ETMX actuation file:
+    metadata.actFileName = strcat(metadata.ETMXinjectionDirectory, 'inj_',...
+        num2str(metadata.injGPSstart), '_ETMX_',...
+        metadata.site, '1.dat');
 
     % The channel name is the AMPS strain channel,
     % the Auxiliary MICH-PRC subtraction version of Hoft,
@@ -74,10 +82,12 @@ function metadata = frameMetadata(frameObject)
     metadata.fs = 16384;
 
     % Choose a center frequency for the injection:
+    % (First set defaults for testing time of 931130713)
+    metadata.centerFrequency = 153;
     if frameObject.numberArgs >= 5
         metadata.centerFrequency = frameObject.frequencyList(1);
-        metadata.frequencyWindow = metadata.centerFrequency + [2 12];
     end
+    metadata.frequencyWindow = metadata.centerFrequency + [2 12];
 
     % Construct a time index:
     metadata.t = metadata.gpsStart + (0:(128*metadata.fs-1))/metadata.fs;
@@ -146,6 +156,9 @@ function plots = plotMaker(metadata)
     elseif metadata.refOrFilterFlag == 2
         plots.strain = filterZPKs(...
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.strain);
+    elseif metadata.refOrFilterFlag == 3
+        plots.ETMX = filterZPKS(...
+            metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.ETMX);
     end
 end
 
@@ -160,16 +173,34 @@ function strain = injectionFile(plots, metadata)
     strain(diffSamp+1:diffSamp+length(strainInj)) = strainInj;
 end
 
+function ETMX = actuationFile(plots, metadata)
+    ETMX = zeros(plots.dataLength, 1);
+    ETMXinj = load(metadata.actFileName);
+    metadata.injStartGPS = metadata.injGPSstart;
+    diffGPS = metadata.injStartGPS - metadata.gpsStart;
+    diffSamp = metadata.fs * diffGPS;
+    ETMX(diffSamp+1:diffSamp+length(ETMXinj)) = ETMXinj;
+end
+
 function plots = plotCompare(metadata)
     plots = plotMaker(metadata);
     metadata.refOrFilterFlag = 1;
     plotting = plotMaker(metadata);
-    metadata.refOrFilterFlag = 2;
     plots.darmFilter = plotting.darmFilter;
+    clear plotting;
+    metadata.refOrFilterFlag = 2;
     strain = injectionFile(plots, metadata);
     metadata.strain = strain; 
+    clear strain
+    ETMX = actuationFile(plots, metadata);
+    metadata.ETMX = ETMX;
+    clear ETMX
     plotting = plotMaker(metadata);
     plots.strain = plotting.strain;
+    clear plotting
+    metadata.refOrFilterFlag = 3;
+    plotting = plotMaker(metadata);
+    plots.ETMX = plotting.ETMX
 end
 
 function graphing = grapher(plots, metadata)
@@ -179,7 +210,6 @@ function graphing = grapher(plots, metadata)
     outputFileHead = strcat('/home/gmeadors/public_html/feedforward/programs/spectralScan/',...
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
-    % xlimits starting at 89 is appropriate for the injection at 931130713.
     % xlimits = metadata.gpsStart + [90.5 90.625];
     % Or one can try to be automated by looking from 0.1 to 2 seconds of the injection
     % The slight delay tries to evade the problem of filter-turn on distorting the estimated
@@ -188,19 +218,14 @@ function graphing = grapher(plots, metadata)
     ylimits  = [-3e-21 3e-21];
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
-    plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain)
+    plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain, metadata.t, 1e-18*plots.ETMX)
     xlimitsIndex = metadata.fs*(xlimits - metadata.gpsStart);
     xlim(xlimits)
-    %ystdLimit = 5*std(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
-    %ymean = mean(plots.darmRef(xlimitsIndex(1):xlimitsIndex(end)));
-    %ylimits = [(ymean-ystdLimit) (ymean+ystdLimit)];
     ylim(ylimits)
-    %ylim([-3e-21 3e-21])
-    %ylim([-2e-22 2e-22])
     grid on
     xlabel('Time (s)')
     ylabel('Amplitude (strain)')
-    legend('Before feedforward', 'After feedforward', 'Injection estimated strain')
+    legend('Before feedforward', 'After feedforward', 'Injection estimated strain', 'Injection actuation * 1e-18')
     titleString = horzcat('Post-filtering injection, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleString)
     disp(outputFile)
