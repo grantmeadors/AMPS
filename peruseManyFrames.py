@@ -28,7 +28,7 @@ def peruser(n, cache):
     fullDirectory = headDirectory + siteFull + dataDirectory
     print(fullDirectory)
     files = os.listdir(fullDirectory)
-    analysisDate = '/archive/home/gmeadors/2012/06/05/AMPS/'
+    analysisDate = '/archive/home/gmeadors/2012/06/11/AMPS/'
     runScript = analysisDate + 'run_peruseFrame-well.sh'
     [os.system(runScript + ' ' + filename + ' ' + cache) for filename in files]
 
