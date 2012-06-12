@@ -180,6 +180,10 @@ function ETMX = actuationFile(plots, metadata)
     diffGPS = metadata.injStartGPS - metadata.gpsStart;
     diffSamp = metadata.fs * diffGPS;
     ETMX(diffSamp+1:diffSamp+length(ETMXinj)) = ETMXinj;
+    % Constrain the length, if excessive
+    if length(ETMX) > length(plots.dataLength)
+        ETMX(length(plots.dataLength)+1:end) + 1:end) = [];
+    end
 end
 
 function plots = plotCompare(metadata)
