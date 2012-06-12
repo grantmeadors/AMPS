@@ -157,7 +157,7 @@ function plots = plotMaker(metadata)
         plots.strain = filterZPKs(...
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.strain);
     elseif metadata.refOrFilterFlag == 3
-        plots.ETMX = filterZPKS(...
+        plots.ETMX = filterZPKs(...
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.ETMX);
     end
 end
@@ -200,7 +200,7 @@ function plots = plotCompare(metadata)
     clear plotting
     metadata.refOrFilterFlag = 3;
     plotting = plotMaker(metadata);
-    plots.ETMX = plotting.ETMX
+    plots.ETMX = plotting.ETMX;
 end
 
 function graphing = grapher(plots, metadata)
@@ -245,8 +245,9 @@ function graphing = grapher(plots, metadata)
     %plot(lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
-    titleStringCrossCorr = horzcat('Post-filtering injection cross-correlation, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
-    title(titleStringCrossCorr)
+    titleStringCrossCorrTop = 'Feedforward (FF) cross-correlations: injection (inj), before(B), after(A)';
+    titleStringCrossCorrBottom = horzcat('GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
+    title({titleStringCrossCorrTop; titleStringCrossCorrBottom})
 
     % Display maxima and minima of the lag plots:
     maxDarmRef = find(XCFref == max(XCFref));
@@ -283,15 +284,65 @@ function graphing = grapher(plots, metadata)
     disp(min(XCFrefFilter))
     % Sound an alarm if there is a shift from before to after:
     if lagsMaxRefFilter ~= 0
-        disp('Alert! Cross-correlation is shifted from before-to-after')
+        disp(horzcat('Alert! Cross-correlation is shifted from before-to-after by ', num2str(lagsMaxRefFilter)))
     end
     if lagsMaxRef ~= lagsMaxFilter
-        disp('Alert! Before and after are shifted with respect to each other and injection')
+        disp(horzcat('Alert! After-to-injection is shifted with respect to before-to-injection by ', num2str(lagsMaxFilter - lagsMaxRef)))
     end
 
-    legendRef = horzcat('Before-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxRef), ', ', num2str(lagsMinRef));
-    legendFilter = horzcat('After-feedforward-to-injection, max, min lag index: ', num2str(lagsMaxFilter), ', ', num2str(lagsMinFilter));
-    legendRefFilter = horzcat('Before-feedforward-to-after, max, min lag index: ', num2str(lagsMaxRefFilter), ', ', num2str(lagsMinRefFilter));
+    % Now find zero-crossings for each
+    % Note that the cross-correlation arrays are of odd-length
+    % Here we split them into left (L) and right (R), giving the
+    % middle to R
+    XCFrefL = XCFref(1:(length(XCFref)-1)/2);
+    XCFrefR = XCFref((length(XCFref)+1)/2:end);
+    XCFfilterL = XCFfilter(1:(length(XCFfilter)-1)/2);
+    XCFfilterR = XCFfilter((length(XCFfilter)+1)/2:end);
+    XCFrefFilterL = XCFrefFilter(1:(length(XCFrefFilter)-1)/2);
+    XCFrefFilterR = XCFrefFilter((length(XCFrefFilter)+1)/2:end);
+    % For ref and filter, find the last greater than zero as one approaches
+    % the central minimum; for refFilter, find the last less than zero as one
+    % approaches the central maximum.
+    % But note: we add the length of L to any R-side value,
+    % to respect the index value of the original cross-correlation
+    zXrefL = find(XCFrefL >= 0, 1, 'last');
+    zXrefR = find(XCFrefR >= 0, 1, 'first') + length(XCFrefL);
+    zXfilterL = find(XCFfilterL >= 0, 1, 'last');
+    zXfilterR = find(XCFfilterR >= 0, 1, 'first') + length(XCFfilterL);
+    zXrefFilterL = find(XCFrefFilterL <= 0, 1, 'last');
+    zXrefFilterR = find(XCFrefFilterR <= 0, 1, 'first') + length(XCFrefFilterL);
+    % Associate these with a given lag index:
+    lagsZrefL = lagsRef(zXrefL);
+    lagsZrefR = lagsRef(zXrefR);
+    lagsZfilterL = lagsFilter(zXrefL);
+    lagsZfilterR = lagsFilter(zXrefR);
+    lagsZrefFilterL = lagsRefFilter(zXrefFilterL);
+    lagsZrefFilterR = lagsRefFilter(zXrefFilterR);
+    % Display these values:
+    disp('Zero-crossing indices: before-feedforward-to-injection cross-correlation, left, right of central minumum')
+    disp(lagsZrefL)
+    disp(lagsZrefR)
+    disp('Zero-crossing indices: after-feedforward-to-injection cross-correlation, left, right of central minumum')
+    disp(lagsZfilterL)
+    disp(lagsZfilterR)
+    disp('Zero-crossing indices: before-feedforward-to-after cross-correlation, left, right of central maximum')
+    disp(lagsZrefFilterL)
+    disp(lagsZrefFilterR)
+
+
+    legendRef = horzcat('B-FF-to-inj, max, min lag index: ',...
+         num2str(lagsMaxRef), ', ', num2str(lagsMinRef),...
+         ' 1st L, R 0-crossings: ',...
+         num2str(lagsZrefL), ', ', num2str(lagsZrefR));
+    legendFilter = horzcat('A-FF-to-inj, max, min lag index: ',...
+          num2str(lagsMaxFilter), ', ', num2str(lagsMinFilter),...
+          ' 1st L, R 0-crossings: ',...
+          num2str(lagsZfilterL), ', ', num2str(lagsZfilterR));
+    legendRefFilter = horzcat('B-FF-to-A-FF, max, min lag index: ',...
+          num2str(lagsMaxRefFilter), ', ', num2str(lagsMinRefFilter),...
+          ' 1st L, R 0-crossings: ',...
+          num2str(lagsZrefFilterL), ', ', num2str(lagsZrefFilterR));
+
 
     legend(legendRef, legendFilter, legendRefFilter, 'Location', 'SouthEast') 
     %legend('Before-feedforward-to-injection', 'After-feedforward-to-injection', 'Before-feedforward-to-after', 'Location', 'South')
