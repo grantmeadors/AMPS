@@ -181,8 +181,8 @@ function ETMX = actuationFile(plots, metadata)
     diffSamp = metadata.fs * diffGPS;
     ETMX(diffSamp+1:diffSamp+length(ETMXinj)) = ETMXinj;
     % Constrain the length, if excessive
-    if length(ETMX) > length(plots.dataLength)
-        ETMX(length(plots.dataLength)+1:end) + 1:end) = [];
+    if length(ETMX) > plots.dataLength
+        ETMX(plots.dataLength+1:end) = [];
     end
 end
 
