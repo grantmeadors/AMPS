@@ -35,9 +35,9 @@ maximum_imagesize = max(imagesize);
 disp(maximum_imagesize)
 
 % Make file of range estimates files
-system('ls ~/public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_rangelist_LHO.txt');
+system('ls /home/pulsar//public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_rangelist_LHO.txt');
 % Make file of range estimates
-system('tail -q -n 1 ~/public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_range_LHO.txt');
+system('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_range_LHO.txt');
 % Load into Matlab
 rangematrix = load('logs/whole_range_LHO.txt');
 

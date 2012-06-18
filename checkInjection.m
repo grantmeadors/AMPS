@@ -97,10 +97,13 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     cname = strcat(site, '1:LDAS-STRAIN');
     [baseline,lastIndex,errCode,samplingFrequency,times] =...
          readFrames(cache,cname,gpsStartTime,duration);
-    % Can read subsequent frame for a sanity check
-    %[baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
-    %     readFrames(cache, cname, gpsStartTime+128, duration);
-    %baseline = [baseline; baseline1];
+    testBit = 0
+    if testBit == 1
+        % Can read subsequent frame for a sanity check
+        [baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
+             readFrames(cache, cname, gpsStartTime+128, duration);
+        baseline = [baseline; baseline1];
+    end
 end
 
 function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)

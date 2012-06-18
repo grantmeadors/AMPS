@@ -34,12 +34,15 @@ cname = strcat(site, '1:AMPS-STRAIN');
 
 % Retrieve the frame using frgetvect
 [data, tsamp, fsamp, gps0] = frgetvect(fname, cname, gpsStart, 128);
-% Can test adjacent frame for sanity check:
-%frameString1 = strcat(frameString(1:17), num2str(gpsStart+128), frameString(27:end));
-%fname1 = strcat(frameNameHead, siteFull, '/', frameDirectoryMiddle, '/',...
-%    frameString1);
-%[data1, tsamp1, fsamp1, gps1] = frgetvect(fname1, cname, gpsStart+128, 128);
-%data = [data; data1];
+testBit = 0;
+if testBit == 1
+    % Can test adjacent frame for sanity check:
+    frameString1 = strcat(frameString(1:17), num2str(gpsStart+128), frameString(27:end));
+    fname1 = strcat(frameNameHead, siteFull, '/', frameDirectoryMiddle, '/',...
+        frameString1);
+    [data1, tsamp1, fsamp1, gps1] = frgetvect(fname1, cname, gpsStart+128, 128);
+    data = [data; data1];
+end
 
 % Display basic diagnostic figures
 disp('Data is this many samples long:')

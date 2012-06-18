@@ -95,10 +95,6 @@ function metadata = frameMetadata(frameObject)
     % Based on read center frequency for burst injection:
     [metadata.zb, metadata.pb, metadata.kb] = butter(8,...
         2*pi*metadata.frequencyWindow, 's');
-    % For burst injection
-    %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[155 165], 's');
-    % For calibration line
-    %[metadata.zb, metadata.pb, metadata.kb] = butter(8, 2*pi*[390 396], 's');
 
     % Initially, look at reference data, 0.
     metadata.refOrFilterFlag = 0;
