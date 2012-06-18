@@ -14,7 +14,7 @@ function output = checkInjection(frame, varargin)
 
 
 frameString = char(frame);
-cache = char(varargin{2});
+cache = varargin{2};
 
 % Decide which site injection list to open based on the input frame
 if strcmp(class(frame), 'char')
@@ -90,16 +90,27 @@ else
     disp('No injection in frame')
     frequencyList = [];
 end
-[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
+[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);]
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
+    % First pull DARM_ERR
+    % Note duration is hard-coded as 32 seconds.
+    cname = strcat(site, '1:LSC-DARM_ERR');
+    [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
+         readFrames(cache.DARM,cname,gpsStartTime, 32);
+    baseline.DARM = rawBaseline;
+    clear rawBaseline
+    % Then pull Hoft 
+    % Duration is a variable based on the name of the filtered frame.
     cname = strcat(site, '1:LDAS-STRAIN');
-    [baseline,lastIndex,errCode,samplingFrequency,times] =...
-         readFrames(cache,cname,gpsStartTime,duration);
+    [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
+         readFrames(cache.Hoft,cname,gpsStartTime,duration);
+    baseline.Hoft = rawBaseline;
+    clear rawBaseline
     testBit = 0
     if testBit == 1
-        % Can read subsequent frame for a sanity check
+        % Can read subsequent frame Hoft  for a sanity check
         [baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
              readFrames(cache, cname, gpsStartTime+128, duration);
         baseline = [baseline; baseline1];
@@ -112,23 +123,24 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequenc
     % Bandpass filter the data to the bucket
     [zb, pb, kb] = butter(16, 2*pi*[100 2000], 's');
     dataFilt = filterZPKs(zb, pb, kb, samplingFrequency, data);
-    baselineFilt = filterZPKs(zb, pb, kb, samplingFrequency, baseline);
+    baselineFilt.DARM = filterZPKs(zb, pb, kb, samplingFrequency, baseline.DARM);
+    baselineFilt.Hoft = filterZPKs(zb, pb, kb, samplingFrequency, baseline.Hoft);
     disp('Display statistics: max, mean, std (before), max, mean, std (after)')
-    disp(max(abs(baselineFilt)))
-    disp(mean(baselineFilt))
-    disp(std(baselineFilt))
-    disp(max(abs(dataFilt)))
-    disp(mean(dataFilt))
-    disp(std(dataFilt))
+    disp(max(abs(baselineFilt.Hoft)))
+    disp(mean(baselineFilt.Hoft))
+    disp(std(baselineFilt.Hoft))
+    disp(max(abs(dataFilt.Hoft)))
+    disp(mean(dataFilt.Hoft))
+    disp(std(dataFilt.Hoft))
     % Create the difference:
-    difference = dataFilt - baselineFilt;
+    difference = dataFilt - baselineFilt.Hoft;
     disp('Display statistics: max, mean, std (difference)')
     disp(max(abs(difference)))
     disp(mean(difference))
     disp(std(difference))
 
     % Determine whether the maximum difference is usually large
-    if max(abs(difference)) > 1e-1*(std(baselineFilt))
+    if max(abs(difference)) > 1e-1*(std(baselineFilt.Hoft))
         disp('Maximum difference is larger than one tenth baseline standard deviation.')
         locationOfMaximum = find(abs(difference) == max(abs(difference)));
         disp('Maximum located at index')
@@ -155,8 +167,8 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequenc
         end
         disp(subsetAround(1:22))
         disp('Normalized to baseline standard deviation:')
-        disp(subsetAround(1:22)/std(baselineFilt))
-        if max(abs(subsetAround)) > 1e-1*(std(baselineFilt))
+        disp(subsetAround(1:22)/std(baselineFilt.Hoft))
+        if max(abs(subsetAround)) > 1e-1*(std(baselineFilt.Hoft))
             disp('Point around injection is larger than one tenth baseline standard deviation.')
             locationOfInjMax = find(abs(subsetAround) == max(abs(subsetAround)));
             disp('Index in subset of samples around injection:')

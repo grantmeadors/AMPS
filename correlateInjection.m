@@ -77,6 +77,8 @@ function metadata = frameMetadata(frameObject)
     metadata.cname = strcat(metadata.site, '1:AMPS-STRAIN');
     % And the name for the reference:
     metadata.cnameRef = strcat(metadata.site, '1:LDAS-STRAIN');
+    % And the name for DARM
+    metadata.cnameDARM = strcat(metadata.site, '1:LSC-DARM_ERR');
 
     % Assume a sampling frequency of 16384 Hz
     metadata.fs = 16384;
@@ -123,20 +125,42 @@ function dataOut = firstFrame(metadata);
                 frgetvect(metadata.fname, metadata.cname,...
                 metadata.gpsStart,...
                 128);
+        elseif metadata.refOrFilterFlag == 4
+            setenv('STARTTIME', num2str(metadata.gpsStart));
+            setenv('ENDTIME', num2str(metadata.gpsStart+128));          
+            [status.darm, result.darm] = system(...
+                'ligo_data_find --observatory=H --type=R --gps-start-time=$STARTTIME --gps-end-time=$ENDTIME --url-type=file --lal-cache');
+            % Find the number of lines in the result by counting the 'gwf's
+            numberOfLines = length(strfind(result.darm, 'gwf'));
+            % Create a cell structure to house the names of DARM frames
+            listing.darm = cell(numberOfLines, 1);
+            % Delimit the boundaries of the file names
+            startString = strfind(result.darm, 'file');
+            endString = strfind(result.darm, '.gwf');
+            % Populate the cell array with the locations of files:
+            for jj = 1:numberOfLines
+                listing.darm{jj} = result.darm(startString(jj):endString(jj)+length('.gwf'));
+            end
+            [dataOut,lastIndex,errCode,sRate,times] =...
+                readFrames(listing.darm, metadata.cnameDARM, metadata.gpsStart, 128, 1);
         end
     elseif metadata.passedDataFlag == 1
         if metadata.refOrFilterFlag == 0
             dataOut = metadata.ref;
             clear metadata.ref;
         elseif metadata.refOrFilterFlag == 1
-            dataOut = metadata.filter;
-            clear metadata.filter;
+            dataOut = metadata.filter.Hoft;
+            clear metadata.filter.Hoft;
+        elseif metadata.refOrFilterFlag == 4
+            dataOut = metadata.filter.DARM
+            clear metadata.filter.DARM
         end
     end
 end
 
 function plots = plotMaker(metadata)
-    if (metadata.refOrFilterFlag == 0) | (metadata.refOrFilterFlag == 1)
+    if (metadata.refOrFilterFlag == 0) | (metadata.refOrFilterFlag == 1) |...
+        (metadata.refOrFilterFlag == 4)
         dataOut = firstFrame(metadata);
         disp('Total data obtained:')
         disp(length(dataOut))
@@ -155,6 +179,9 @@ function plots = plotMaker(metadata)
     elseif metadata.refOrFilterFlag == 3
         plots.ETMX = filterZPKs(...
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.ETMX);
+    elseif metadata.refOrFilterFlag == 4
+        plots.DARM = filterZPKs(...
+            metadata.zb, metadata.pb, metadata.kb, metadata.fs, dataOut);
     end
 end
 
@@ -201,6 +228,11 @@ function plots = plotCompare(metadata)
     metadata.refOrFilterFlag = 3;
     plotting = plotMaker(metadata);
     plots.ETMX = plotting.ETMX;
+    clear plotting
+    metadata.refOrFilterFlag = 4;
+    plotting = plotMaker(metadata);
+    plots.DARM = plotting.DARM;
+    clear plotting
 end
 
 function graphing = grapher(plots, metadata)
@@ -211,21 +243,37 @@ function graphing = grapher(plots, metadata)
         'L', metadata.site, 'O', '/',  num2str(floor(metadata.gpsStart/1e5)), '/');
     system(horzcat('mkdir -p ', outputFileHead))
     % xlimits = metadata.gpsStart + [90.5 90.625];
-    % Or one can try to be automated by looking from 0.1 to 2 seconds of the injection
+    % Or one can try to be automated by looking from 1/16 to 2 seconds of the injection
     % The slight delay tries to evade the problem of filter-turn on distorting the estimated
     % strain file
-    xlimits = metadata.injGPSstart + [0.1 2];
-    ylimits  = [-3e-21 3e-21];
+    xlimits = metadata.injGPSstart + [1/16 2];
+    xlimitsIndex = metadata.fs*(xlimits - metadata.gpsStart);
+    %ylimits  = [-3e-21 3e-21];
+    % Create subsets of the data that correspond only to what is graphed
+    smallT = metadata.t(xlimitsIndex(1):xlimitsIndex(end));
+    smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
+    smallDarmFilter = plots.darmFilter(xlimitsIndex(1):xlimitsIndex(end));
+    smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
+    smallETMX = plots.ETMX(xlimitsIndex(1):xlimitsIndex(end));
+    smallDARM = plots.DARM(xlimitsIndex(1):xlimitsIndex(end));
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
-    plot(metadata.t, plots.darmRef, metadata.t, plots.darmFilter, metadata.t, plots.strain, metadata.t, 1e-18*plots.ETMX)
-    xlimitsIndex = metadata.fs*(xlimits - metadata.gpsStart);
+    % Scaling factors based on standard deviation, with some margin for visibility.
+    scale.ETMX = 0.3*std(smallDarmRef)/std(smallETMX);
+    scale.DARM = 0.2*std(smallDarmRef)/std(smallDARM);
+    % Ideally, they would vary in proportion to the DARM-to-Hoft calibration, lest
+    % ETMX and DARM occlude Hoft at some frequencies and be overshadowed by it at others.
+    plot(smallT, smallDarmRef, smallT, smallDarmFilter,...
+         smallT, smallStrain, smallT, scale.ETMX*smallETMX,...
+         smallT, scale.DARM*smallDARM)
     xlim(xlimits)
-    ylim(ylimits)
+    %ylim(ylimits)
     grid on
-    xlabel('Time (s)')
+    xlabel(horzcat('Time (s) + ', metadata.injGPSstart))
     ylabel('Amplitude (strain)')
-    legend('Before feedforward', 'After feedforward', 'Injection estimated strain', 'Injection actuation * 1e-18')
+    legend('Before feedforward', 'After feedforward', 'Injection estimated strain',...
+        horzcat('Injection actuation *', num2str(scale.ETMX)),...
+        horzcat('DARM *', num2str(scale.DARM)))
     titleString = horzcat('Post-filtering injection, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
     title(titleString)
     disp(outputFile)
@@ -235,14 +283,10 @@ function graphing = grapher(plots, metadata)
 
     figure(2)
     nLags = 512;
-    smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
-    smallDarmFilter = plots.darmFilter(xlimitsIndex(1):xlimitsIndex(end));
-    smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
     [XCFref,lagsRef] = xcorr(smallDarmRef, smallStrain, nLags);   
     [XCFfilter,lagsFilter] = xcorr(smallDarmFilter, smallStrain, nLags);   
     [XCFrefFilter,lagsRefFilter] = xcorr(smallDarmRef, smallDarmFilter, nLags);   
     plot(lagsRef, XCFref, lagsFilter, XCFfilter, lagsRefFilter, XCFrefFilter)
-    %plot(lagsRefFilter, XCFrefFilter)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
     titleStringCrossCorrTop = 'Feedforward (FF) cross-correlations: injection (inj), before(B), after(A)';

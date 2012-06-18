@@ -12,18 +12,26 @@ os.system('mkdir -p peruseLogs')
 os.system('mkdir -p cache')
 
 # Make a cache file for the data
-def cacher(n):
-    Observatory = 'H'
-    frameTypeDARM = Observatory + '1_LDAS_C02_L2' 
+def cacher(n, Observatory, frameType):
     thisStartTime = str(int(n*1e5))
     thisEndTime = str(int((n+1)*1e5))
-    thisDataFindOutput = 'cache/' +\
-    'injectionCache' +\
-    '-' + thisStartTime + '-' + thisEndTime + '.txt'
+    if frameType == '1LDAS_C02_L2':
+        frameTypeHoft = Observatory + '1_LDAS_C02_L2' 
+        thisDataFindOutput = 'cache/' +\
+        'injectionCache' + '-Hoft' +\
+        '-' + thisStartTime + '-' + thisEndTime + '.txt'
+    elif frameType == 'R'
+        frameTypeHoft = 'R'
+        thisDataFindOutput = 'cache/' +\
+        'injectionCache' + '-DARM' +\
+         '-' + thisStartTime + '-' + thisEndTime + '.txt'
+    else:
+        print 'Unknown frame type: please use R or (site)1LDAS_C02_L2'
+   
     dataFindCommand = 'ligo_data_find --observatory='+\
     Observatory +\
     ' --type=' +\
-    frameTypeDARM +\
+    frameTypeHoft +\
     ' --gps-start-time='+\
     thisStartTime +\
     ' --gps-end-time=' +\
@@ -45,8 +53,9 @@ h("requirements = Memory >= 3999")
 h("")
 
 def queuer(n):
-    thisDataFindOutput = cacher(n)
-    h("arguments = " + str(n) + ' ' + thisDataFindOutput)
+    thisDataFindOutputHoft = cacher(n, 'H', '1LDAS_C02_L2')
+    thisDataFindOutputDARM = cacher(n, 'H', 'R')
+    h("arguments = " + str(n) + ' ' + thisDataFindOutputHoft + ' ' + thisDataFindOutputDARM)
     h("queue")
     h("")
 
