@@ -90,15 +90,15 @@ else
     disp('No injection in frame')
     frequencyList = [];
 end
-[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);]
+[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
     % First pull DARM_ERR
-    % Note duration is hard-coded as 32 seconds.
+    % Note duration is a variable.
     cname = strcat(site, '1:LSC-DARM_ERR');
     [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
-         readFrames(cache.DARM,cname,gpsStartTime, 32);
+         readFrames(cache.DARM,cname,gpsStartTime, 128);
     baseline.DARM = rawBaseline;
     clear rawBaseline
     % Then pull Hoft 
@@ -108,7 +108,7 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
          readFrames(cache.Hoft,cname,gpsStartTime,duration);
     baseline.Hoft = rawBaseline;
     clear rawBaseline
-    testBit = 0
+    testBit = 0;
     if testBit == 1
         % Can read subsequent frame Hoft  for a sanity check
         [baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
@@ -129,9 +129,9 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequenc
     disp(max(abs(baselineFilt.Hoft)))
     disp(mean(baselineFilt.Hoft))
     disp(std(baselineFilt.Hoft))
-    disp(max(abs(dataFilt.Hoft)))
-    disp(mean(dataFilt.Hoft))
-    disp(std(dataFilt.Hoft))
+    disp(max(abs(dataFilt)))
+    disp(mean(dataFilt))
+    disp(std(dataFilt))
     % Create the difference:
     difference = dataFilt - baselineFilt.Hoft;
     disp('Display statistics: max, mean, std (difference)')

@@ -146,14 +146,15 @@ function dataOut = firstFrame(metadata);
         end
     elseif metadata.passedDataFlag == 1
         if metadata.refOrFilterFlag == 0
-            dataOut = metadata.ref;
+        disp('Obtaining passed reference data')
+            dataOut = metadata.ref.Hoft;
             clear metadata.ref;
         elseif metadata.refOrFilterFlag == 1
-            dataOut = metadata.filter.Hoft;
-            clear metadata.filter.Hoft;
+            dataOut = metadata.filter;
+            clear metadata.filter;
         elseif metadata.refOrFilterFlag == 4
-            dataOut = metadata.filter.DARM
-            clear metadata.filter.DARM
+            dataOut = metadata.ref.DARM;
+            clear metadata.ref.DARM
         end
     end
 end
