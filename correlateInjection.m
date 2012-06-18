@@ -246,18 +246,22 @@ function graphing = grapher(plots, metadata)
     % Or one can try to be automated by looking from 1/16 to 2 seconds of the injection
     % The slight delay tries to evade the problem of filter-turn on distorting the estimated
     % strain file
-    xlimits = metadata.injGPSstart + [1/16 2];
-    xlimitsIndex = metadata.fs*(xlimits - metadata.gpsStart);
+    xlimits = [1/16 2];
+    xlimitsGPS = metadata.injGPSstart + xlimits;
+    xlimitsOffset = xlimitsGPS - metadata.gpsStart;
+    xlimitsIndex = metadata.fs*xlimitsOffset;
     %ylimits  = [-3e-21 3e-21];
     % Create subsets of the data that correspond only to what is graphed
-    smallT = metadata.t(xlimitsIndex(1):xlimitsIndex(end));
+    % Subtract off the GPS start time from the x-axis to make better x-axis
+    % labels -- the xlabel will note this offset.
+    smallT = metadata.t(xlimitsIndex(1):xlimitsIndex(end)) - metadata.injGPSstart;
     smallDarmRef = plots.darmRef(xlimitsIndex(1):xlimitsIndex(end));
     smallDarmFilter = plots.darmFilter(xlimitsIndex(1):xlimitsIndex(end));
     smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
     smallETMX = plots.ETMX(xlimitsIndex(1):xlimitsIndex(end));
     smallDARM = plots.DARM(xlimitsIndex(1):xlimitsIndex(end));
-    outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimits(1)));
-    outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimits(1)));
+    outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimitsGPS(1)));
+    outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimitsGPS(1)));
     % Scaling factors based on standard deviation, with some margin for visibility.
     scale.ETMX = 0.3*std(smallDarmRef)/std(smallETMX);
     scale.DARM = 0.2*std(smallDarmRef)/std(smallDARM);
@@ -269,13 +273,15 @@ function graphing = grapher(plots, metadata)
     xlim(xlimits)
     %ylim(ylimits)
     grid on
-    xlabel(horzcat('Time (s) + ', metadata.injGPSstart))
+    xlabel(horzcat('Time (s) - ', num2str(metadata.injGPSstart)))
     ylabel('Amplitude (strain)')
     legend('Before feedforward', 'After feedforward', 'Injection estimated strain',...
-        horzcat('Injection actuation *', num2str(scale.ETMX)),...
-        horzcat('DARM *', num2str(scale.DARM)))
-    titleString = horzcat('Post-filtering injection, GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
-    title(titleString)
+        horzcat('ETMX actuation *', num2str(scale.ETMX)),...
+        horzcat('DARM_ERR *', num2str(scale.DARM)))
+    titleStringTimeTop = horzcat('Post-filtering injection, GPS s ', num2str(xlimitsGPS(1)),...
+        ' to ', num2str(xlimitsGPS(end)));
+    titleStringTimeBottom = '(ETMX, DARM not calibrated; for timing comparison only)';
+    title({titleStringTimeTop; titleStringTimeBottom})
     disp(outputFile)
     print('-dpng', strcat(outputFile, '.png'))
     print('-dpdf', strcat(outputFile, '.pdf'))
@@ -290,7 +296,7 @@ function graphing = grapher(plots, metadata)
     xlabel('Time lag (1/16384 s)')
     ylabel('Cross-correlation')
     titleStringCrossCorrTop = 'Feedforward (FF) cross-correlations: injection (inj), before(B), after(A)';
-    titleStringCrossCorrBottom = horzcat('GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)))
+    titleStringCrossCorrBottom = horzcat('GPS s ', num2str(xlimits(1)), ' to ', num2str(xlimits(end)));
     title({titleStringCrossCorrTop; titleStringCrossCorrBottom})
 
     % Display maxima and minima of the lag plots:
