@@ -20,7 +20,7 @@ def cacher(n, Observatory, frameType):
         thisDataFindOutput = 'cache/' +\
         'injectionCache' + '-Hoft' +\
         '-' + thisStartTime + '-' + thisEndTime + '.txt'
-    elif frameType == 'R'
+    elif frameType == 'R':
         frameTypeHoft = 'R'
         thisDataFindOutput = 'cache/' +\
         'injectionCache' + '-DARM' +\
