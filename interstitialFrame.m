@@ -1,4 +1,4 @@
-function output = peruseFrame(frame, varargin)
+function output = interstitialFrame(frame, cache, observatory, duration)
 % Grant David Meadors
 % gmeadors@umich.edu
 % 02012-06-18
@@ -12,6 +12,11 @@ function output = peruseFrame(frame, varargin)
 %
 % Example of a frame file name:
 % H-H1_AMPS_C02_L2-931052672-128.gwf
+% Example of input arguments:
+% frame = 931052672
+% cache = cache/interstitialCache-Hoft-931000000-932000000.txt
+% observatory = H
+% duration = 128
 
 % Here we assemble the strings that reference the
 % frame file
@@ -60,47 +65,7 @@ disp('Frequency of sampling:')
 disp(samplingFrequency)
 disp('Starting GPS time:')
 disp(gps0)
-
-disp('Checking for anomalous ones, i.e. unwritten array fragments')
-anyOneThere = find(data == 1);
-if length(anyOneThere) == 0
-    disp('No anomalous ones detected')
-else
-    disp('Anomalous ones detected -- matrix of this many found')
-    disp(size(anyOneThere))
-end
-
-disp('Checking for repetitions')
-
-% Now fold the data to look for repeated tuples
-function differenceInLength = dataFold(data, n)
-        dataFolded = zeros(size(downsample(data, 2^(n-1), 0)));
-    for ii = 0:(2^(n-1)-1)
-        dataFolded = dataFolded + downsample(data, 2^(n-1), ii);
-    end
-    differenceInLength = length(dataFolded) - length(unique(dataFolded));
-end
-
-% Organize the results into an array
-maxFolding = 6;
-dataFoldResult = zeros(maxFolding, 1);
-dataFoldResult(1) = dataFold(data, 1);
-disp('This many repeated elements found with no folding')
-disp(dataFoldResult(1))
-for jj = 2:maxFolding
-    if dataFoldResult(jj-1) > 0 
-        dataFoldResult(jj) = dataFold(data,jj);
-        disp(horzcat('... ', num2str(jj), '-way folding'));
-        disp(dataFoldResult(jj))
-    end
-end
-
-% Now check for syncronization using injections:
-% varargin{1} should be the cache listing the frames
-cache.Hoft = char(varargin{1});
-cache.DARM = char(varargin{2});
-output = checkInjection(frameString, data, cache);
-
+   
   
 end
 

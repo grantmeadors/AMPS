@@ -1,12 +1,12 @@
 #!/usr/bin/python
-import os, sys
+import os, sys, re
 
 # Grant David Meadors
 # 02012-06-18
 # gmeadors@umich.edu
 
 # Run  on all the frame files in a given directory
-def interstate(n, cacheHoft):
+def interstate(n, cacheHoft, observatory, duration):
     def archiveString(headDirectory, siteFull, frameType):
         headDirectory = '/archive/frames/S6/pulsar/feedforward/'
         dataDirectory = siteFull[1] + '-' +siteFull[1] + '1_' + frameType + '_C02_L2-' + str(n)
@@ -14,28 +14,37 @@ def interstate(n, cacheHoft):
         print(fullDirectory)
         files = os.listdir(fullDirectory)
         return files
-    filesFilter = archiveString('/archive/frames/S6/pulsar/feedforward/', 'LHO/', 'AMPS')
-    analysisDate = '/archive/home/gmeadors/2012/06/18-1/AMPS/'
+    fileFilter = archiveString('/archive/frames/S6/pulsar/feedforward/', \
+    'L' + observatory + 'O/', 'AMPS')
+    analysisDate = '/archive/home/gmeadors/2012/06/19/AMPS/'
 
 
     # The idea will be to do a comparison between cacheHoft and filesFilter and run
     # the interstitialFrame function on the difference.
-    for filename in filesFilter:
-        print filename
-     
-    fileObject = open(cacheHoft, "r")
-    for line in fileObject:
-        frameLine = str(line)
-        frameLine.find()
-    fileObject.close
-    #runScript = analysisDate + 'run_interstitialFrame-well.sh'
-    #[os.system(runScript + ' ' + filename + ' ' + cacheHoft) for filename in files]
+    filterList = []
+    refFrameList = []
+    refList = []
+    for filterLine in fileFilter:
+        filterFrame = str(filterLine)
+        # Search for the time of a filtered frame file.
+        regexpFilter = re.search('-(?P<GPS>\d+)-(\d+)\.', filterFrame)
+        # Create a list of filtered Hoft frame times.
+        filterList.append(regexpFilter.group(1)) 
+    fileRef = open(cacheHoft, "r")
+    for refLine in fileRef:
+        refFrame = str(refLine)
+        # Search for the reference file
+        regexpRef = re.search('-(?P<GPS>\d+)-(\d+)\.', refFrame)
+        # Create the list of reference, baseline Hoft frame times.
+        refList.append(regexpRef.group(1)) 
+    fileRef.close
+    diffList = filter(lambda x:x not in filterList, refList)
+    runScript = analysisDate + 'run_interstitialFrame-well.sh'
+    [os.system(runScript + ' ' + frame + ' ' + cacheHoft + ' ' + observatory + ' ' + duration) for frame in diffList]
 
-#directoryList = range(9310, 9327+1)
-#interstate(sys.argv[1], sys.argv[2])
-
-# For testing only
-interstate(9310, '../../18/AMPS/cache/injectionCache-Hoft-931000000-931100000.txt')
+interstate(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+# For testing below:
+#interstate(9310, '../../18/AMPS/cache/injectionCache-Hoft-931000000-931100000.txt', 'H', 128)
 
 
 

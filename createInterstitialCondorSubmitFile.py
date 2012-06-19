@@ -47,13 +47,13 @@ h("log = peruseLogs/peruseManyFrames.log.$(process)")
 h("requirements = Memory >= 3999")
 h("")
 
-def queuer(n):
-    thisDataFindOutputHoft = cacher(n, 'H', '1LDAS_C02_L2')
-    h("arguments = " + str(n) + ' ' + thisDataFindOutputHoft)
+def queuer(n, observatory, duration):
+    thisDataFindOutputHoft = cacher(n, observatory, '1LDAS_C02_L2')
+    h("arguments = " + str(n) + ' ' + thisDataFindOutputHoft + ' ' + observatory + ' ' + duration)
     h("queue")
     h("")
 
-[queuer(n) for n in range(9310, 9327+1)]
+[queuer(n, 'H', 128) for n in range(9310, 9327+1)]
 
 
 fileObject.close
