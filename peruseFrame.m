@@ -96,7 +96,7 @@ end
 % Now check for syncronization using injections:
 % varargin{1} should be the cache listing the frames
 cache.Hoft = char(varargin{1});
-cache.DARM = char(varargin{2})
+cache.DARM = char(varargin{2});
 output = checkInjection(frameString, data, cache);
 
   

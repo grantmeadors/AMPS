@@ -33,7 +33,7 @@ def peruser(n, cacheHoft, cacheDARM):
     files = os.listdir(fullDirectory)
     analysisDate = '/archive/home/gmeadors/2012/06/18/AMPS/'
     runScript = analysisDate + 'run_peruseFrame-well.sh'
-    [os.system(runScript + ' ' + filename + ' ' + cacheHoft + cacheDARM) for filename in files]
+    [os.system(runScript + ' ' + filename + ' ' + cacheHoft + ' ' + cacheDARM) for filename in files]
 
 directoryList = range(9310, 9327+1)
 peruser(sys.argv[1], sys.argv[2], sys.argv[3])
