@@ -22,38 +22,73 @@ function output = interstitialFrame(frame, cache, observatory, duration)
 % Along with the state vector and data quality flag
 
 function data = framePull(frame, cache, observatory, duration)
-    cname = strcat(observatory, '1:LDAS-STRAIN');
-    [baseline,lastIndex,errCode,samplingFrequency,times] =...
-        readFrames(cache, cname, frame, duration);
+    cname =...
+        {strcat(observatory, '1:LDAS-STRAIN')...
+         strcat(observatory, '1:IFO-SV_STATE_VECTOR')...
+         strcat(observatory, '1:LSC-DATA_QUALITY_VECTOR')};
+    [Hoft.baseline,lastIndex,errCode,samplingFrequency.baseline,times] =...
+        readFrames(cache, cname{1}, frame, duration); 
+    [Hoft.stateVector ,lastIndex,errCode,samplingFrequency.stateVector,times] =...
+        readFrames(cache, cname{2}, frame, duration);
+    [Hoft.dqFlag, lastIndex,errCode,samplingFrequency.dqFlag,times] =...
+        readFrames(cache, cname{3}, frame, duration);
+    disp('Retrieved the following number of samples for Hoft, state vector and DQ flag')
+    disp(length(Hoft.baseline))
+    disp(length(Hoft.stateVector))
+    disp(length(Hoft.dqFlag))
+    data.Hoft = Hoft;
+    data.samplingFrequency = samplingFrequency;
+end
+function finale = framePush(frame, cache, observatory, duration)
+    data = framePull(frame, cache, observatory, duration);
+    startName = strcat('-', num2str(frame));
+    site = observatory;
+    siteFull = strcat('L', observatory, 'O');
+    individualFrameName = strcat(site, '-',...
+        site, '1_AMPS_C02_L2',...
+        startName, '-', num2str(duration), '.gwf');
+    directoryDataFrameName = strcat('/archive/frames/S6/pulsar/feedforward/', siteFull, '/', individualFrameName(1:21));
+    frameName = strcat(directoryDataFrameName, '/', individualFrameName);
+    % We can absolutely sure that we are not over-writing a file:
+    [status, result] = system(horzcat('ls ', frameName));
+    if length(strfind(result, 'No such file or directory'))
+        disp('Frame file does not yet exist')
+        safeGuardBit = 0;
+    else 
+        disp('Frame file already exists')
+        safeGuardBit = 1;
+    end
+    % However, for testing purposes we may overwrite frequencly, so
+    safeGuardBit = 0;
+
+    if safeGuardBit == 0
+        disp('Writing this frame:')
+        disp(frameName)
+        % Start a new frame and write Hoft into it.
+        HoftSub.data = data.Hoft.baseline;
+        HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
+        HoftSub.type = 'd';
+        HoftSub.mode = 'a';
+        mkframe(frameName, HoftSub, 'n', duration, frame);
+        % Append the frame with state vector information.
+        stateVectorSub.data = data.Hoft.stateVector;
+        stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
+        stateVectorSub.type = 'd';
+        stateVectorSub.mode = 'a';
+        mkframe(frameName, stateVectorSub, 'a', duration, frame);
+        % Append the frame with DQ flag information
+        dqFlagSub.data = data.Hoft.dqFlag;
+        dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
+        dqFlagSub.type = 'd';
+        dqFlagSub.mode = 'a';
+        mkframe(frameName, dqFlagSub, 'a', duration, frame);
+    end
+    % We are done.
+    finale = 'Interstitial frame appears successfully written.';
 end
 
+output = framePush(frame, cache, observatory, duration);
 
-% Here we assemble the strings that will reference the
-% frame file when we output it to disk
-%frameString = char(frame);
-%frameNameHead = '/archive/frames/S6/pulsar/feedforward/';
-% The following is more broadly compatible
-%gpsStart = str2num(timeParser(frameString));
-%site = frameString(1);
-%siteFull = strcat('L', site, 'O');
-%frameDirectoryMiddle = frameString(1:21);
-%fname = strcat(frameNameHead, siteFull, '/', frameDirectoryMiddle, '/',...
-%    frameString);
-%disp(fname)
-
-% The channel name is the AMPS strain channel,
-% the Auxiliary MICH-PRC subtraction version of Hoft,
-% directly analogous to LDAS-STRAIN.
-cname = strcat(site, '1:AMPS-STRAIN');
-
-
-samplingFrequency = 2*(fsamp(end)+1/128);
-disp(length(data)/samplingFrequency)
-disp('Frequency of sampling:')
-disp(samplingFrequency)
-disp('Starting GPS time:')
-disp(gps0)
-   
   
 end
 

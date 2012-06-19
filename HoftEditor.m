@@ -1168,7 +1168,7 @@ classdef HoftEditor < handle
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
                     try
                         if containsNonEmptyData
-                            %mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                            mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
                         end
                     catch err
                         if strcmp(err.identifier, 'mkframe:frameFail')
@@ -1191,7 +1191,7 @@ classdef HoftEditor < handle
                         stateVectorSub.mode = 'a';
                         try
                             if containsNonEmptyData
-                                %mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                                mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
                             end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
@@ -1213,7 +1213,7 @@ classdef HoftEditor < handle
                         dqFlagSub.mode = 'a';
                         try
                             if containsNonEmptyData
-                                %mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                                mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
                             end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
