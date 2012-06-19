@@ -100,21 +100,21 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     % Note duration is a variable.
     cname = strcat(site, '1:LSC-DARM_ERR');
     [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
-         readFrames(cache.DARM,cname,gpsStartTime, 128);
+         readFrames(cache.DARM, cname, gpsStartTime, 128);
     baseline.DARM = rawBaseline;
     clear rawBaseline
     % Then pull Hoft 
     % Duration is a variable based on the name of the filtered frame.
     cname = strcat(site, '1:LDAS-STRAIN');
     [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
-         readFrames(cache.Hoft,cname,gpsStartTime,duration);
+         readFrames(cache.Hoft, cname, gpsStartTime, duration);
     baseline.Hoft = rawBaseline;
     clear rawBaseline
     testBit = 0;
     if testBit == 1
         % Can read subsequent frame Hoft  for a sanity check
         [baseline1, lastIndex1, errCode1, samplingFrequency1, times1] =...
-             readFrames(cache, cname, gpsStartTime+128, duration);
+             readFrames(cache.Hoft, cname, gpsStartTime+128, duration);
         baseline = [baseline; baseline1];
     end
 end

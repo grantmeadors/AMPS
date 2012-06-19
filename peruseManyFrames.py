@@ -19,7 +19,7 @@ def catter(n):
 
 # Run, but only if needed. May need to adjust range to number of jobs
 testBit = 0
-if testBit == 0:
+if testBit == 1:
     [catter(x) for x in range(200)]
 
 
