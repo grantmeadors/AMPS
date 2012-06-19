@@ -46,9 +46,8 @@ def interstate(n, cacheHoft, observatory, duration, analysisDate):
     fileRef.close
     # Take the difference between the lists
     diffList = filter(lambda x:x not in filterList, refList)
-    #runScript = analysisDate + 'run_interstitialFrame-well.sh'
-    #[os.system(runScript + ' ' + frame + ' ' + cacheHoft + ' ' + observatory + ' ' + duration) for frame in diffList]
-    print diffList
+    runScript = analysisDate + 'run_interstitialFrame-well.sh'
+    [os.system(runScript + ' ' + frame + ' ' + cacheHoft + ' ' + observatory + ' ' + duration) for frame in diffList]
 
 interstate(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 # For testing below:
