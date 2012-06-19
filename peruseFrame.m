@@ -1,7 +1,7 @@
 function output = peruseFrame(frame, varargin)
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-05-01
+% 02012-06-18
 % peruseFrame.m
 
 % peruseFrame examines a specified frame file for
