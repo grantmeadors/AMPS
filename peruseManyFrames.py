@@ -10,7 +10,7 @@ import os, sys
 def catter(n):
     print n
     headDirectory = '~pulsar/feedforward/'
-    particularRun = '2012/04/14'
+    particularRun = '2012/06/19'
     tailDirectory = '/AMPS/logs/'
     logName = 'eleutheria.out.'
     stringFile = headDirectory + particularRun + tailDirectory + logName
@@ -24,19 +24,19 @@ if testBit == 1:
 
 
 # Run peruseFrame on all the frame files in a given directory
-def peruser(n, cacheHoft, cacheDARM):
+def peruser(n, cacheHoft, cacheDARM, analysisDate):
     headDirectory = '/archive/frames/S6/pulsar/feedforward/'
     siteFull = 'LHO/'
     dataDirectory = siteFull[1] + '-' +siteFull[1] + '1_AMPS_C02_L2-' + str(n)
     fullDirectory = headDirectory + siteFull + dataDirectory
     print(fullDirectory)
     files = os.listdir(fullDirectory)
-    analysisDate = '/archive/home/gmeadors/2012/06/18/AMPS/'
+    #analysisDate = '/archive/home/gmeadors/2012/06/18/AMPS/'
     runScript = analysisDate + 'run_peruseFrame-well.sh'
     [os.system(runScript + ' ' + filename + ' ' + cacheHoft + ' ' + cacheDARM) for filename in files]
 
 directoryList = range(9310, 9327+1)
-peruser(sys.argv[1], sys.argv[2], sys.argv[3])
+peruser(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
 
 

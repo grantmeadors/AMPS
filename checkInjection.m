@@ -90,10 +90,8 @@ else
     disp('No injection in frame')
     frequencyList = [];
 end
-if length(frequencyList) > 0
-    [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
-    frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
-end
+[baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache);
+frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
     % First pull DARM_ERR

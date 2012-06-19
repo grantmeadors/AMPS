@@ -5,7 +5,7 @@ import os, commands, shutil, sys, re
 def h(text):
     result = fileObject.write(text + '\n')
     return result
-analysisDate = "2012/06/18"
+analysisDate = "2012/06/19"
 
 # Make a directory for the output logs
 os.system('mkdir -p peruseLogs')
@@ -52,14 +52,17 @@ h("log = peruseLogs/peruseManyFrames.log.$(process)")
 h("requirements = Memory >= 3999")
 h("")
 
-def queuer(n):
+def queuer(n, analysisDate):
     thisDataFindOutputHoft = cacher(n, 'H', '1LDAS_C02_L2')
     thisDataFindOutputDARM = cacher(n, 'H', 'R')
-    h("arguments = " + str(n) + ' ' + thisDataFindOutputHoft + ' ' + thisDataFindOutputDARM)
+    argumentString = str(n) + ' ' + thisDataFindOutputHoft + ' ' +\
+    thisDataFindOutputDARM + ' ' +'/archive/home/gmeadors/' +\
+    analysisDate + '/AMPS/'
+    h("arguments = " + argumentString)
     h("queue")
     h("")
 
-[queuer(n) for n in range(9310, 9327+1)]
+[queuer(n, analysisDate) for n in range(9310, 9327+1)]
 
 
 fileObject.close
