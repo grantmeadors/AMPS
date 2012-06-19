@@ -24,6 +24,10 @@ def interstate(n, cacheHoft):
         print filename
      
     fileObject = open(cacheHoft, "r")
+    for line in fileObject:
+        frameLine = str(line)
+        frameLine.find()
+    fileObject.close
     #runScript = analysisDate + 'run_interstitialFrame-well.sh'
     #[os.system(runScript + ' ' + filename + ' ' + cacheHoft) for filename in files]
 
@@ -31,7 +35,7 @@ def interstate(n, cacheHoft):
 #interstate(sys.argv[1], sys.argv[2])
 
 # For testing only
-interstate(9310, 'injectionCache-Hoft-931000000-931100000.txt')
+interstate(9310, '../../18/AMPS/cache/injectionCache-Hoft-931000000-931100000.txt')
 
 
 
