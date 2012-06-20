@@ -69,7 +69,7 @@ function finale = framePush(frame, cache, observatory, duration)
         safeGuardBit = 1;
     end
     % However, for testing purposes we may overwrite frequencly, so
-    safeGuardBit = 0;
+    % safeGuardBit = 0;
 
     if safeGuardBit == 0
         disp('Writing this frame:')
