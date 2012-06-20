@@ -40,6 +40,16 @@ function data = framePull(frame, cache, observatory, duration)
     data.samplingFrequency = samplingFrequency;
 end
 function finale = framePush(frame, cache, observatory, duration)
+    if ~isnumeric(frame)
+        frame = str2double(frame);
+    end
+    size(frame)
+    frame
+    if ~isnumeric(duration)
+        duration = str2double(duration);
+    end
+    size(duration)
+    duration
     data = framePull(frame, cache, observatory, duration);
     startName = strcat('-', num2str(frame));
     site = observatory;
@@ -65,19 +75,19 @@ function finale = framePush(frame, cache, observatory, duration)
         disp('Writing this frame:')
         disp(frameName)
         % Start a new frame and write Hoft into it.
-        HoftSub.data = data.Hoft.baseline;
+        HoftSub.data = double(data.Hoft.baseline);
         HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
         HoftSub.type = 'd';
         HoftSub.mode = 'a';
         mkframe(frameName, HoftSub, 'n', duration, frame);
         % Append the frame with state vector information.
-        stateVectorSub.data = data.Hoft.stateVector;
+        stateVectorSub.data = double(data.Hoft.stateVector);
         stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
         stateVectorSub.type = 'd';
         stateVectorSub.mode = 'a';
         mkframe(frameName, stateVectorSub, 'a', duration, frame);
         % Append the frame with DQ flag information
-        dqFlagSub.data = data.Hoft.dqFlag;
+        dqFlagSub.data = double(data.Hoft.dqFlag);
         dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
         dqFlagSub.type = 'd';
         dqFlagSub.mode = 'a';

@@ -8,7 +8,7 @@ def h(text):
 analysisDate = "2012/06/19"
 
 # Make a directory for the output logs
-os.system('mkdir -p interstialLogs')
+os.system('mkdir -p interstitialLogs')
 os.system('mkdir -p cache')
 
 # Make a cache file for the data
@@ -36,14 +36,14 @@ def cacher(n, Observatory, frameType):
     os.system(dataFindCommand)
     return thisDataFindOutput
 
-fileObject = open("/archive/home/gmeadors/" + analysisDate + "/AMPS/InterstitialSub.sub", "w")
+fileObject = open("/home/pulsar/feedforward/" + analysisDate + "/AMPS/InterstitialSub.sub", "w")
 
 # Write the contents of the file
 h("universe = vanilla")
-h("executable = /archive/home/gmeadors/" + analysisDate + "/AMPS/peruseManyFrames.py")
-h("output = /archive/home/gmeadors/" + analysisDate + "/AMPS/peruseLogs/peruseManyFrames.out.$(process)")
-h("error = peruseLogs/peruseManyFrames.err.$(process)")
-h("log = peruseLogs/peruseManyFrames.log.$(process)")
+h("executable = /home/pulsar/feedforward/" + analysisDate + "/AMPS/interstitial.py")
+h("output = /home/pulsar/feedforward/" + analysisDate + "/AMPS/interstitialLogs/interstitial.out.$(process)")
+h("error = interstitialLogs/interstitial.err.$(process)")
+h("log = interstitialLogs/interstitial.log.$(process)")
 h("requirements = Memory >= 3999")
 h("")
 
@@ -51,7 +51,7 @@ def queuer(n, observatory, duration, analysisDate):
     thisDataFindOutputHoft = cacher(n, observatory, '1LDAS_C02_L2')
     argumentString = str(n) + \
     ' ' + thisDataFindOutputHoft + ' ' + observatory + ' ' +\
-    str(duration) + ' ' + '/archive/home/gmeadors/' + \
+    str(duration) + ' ' + '/home/pulsar/feedforward/' + \
     str(analysisDate) + '/AMPS/'
     h("arguments = " + argumentString)
     h("queue")
