@@ -15,17 +15,17 @@ def interstate(n, cacheHoft, observatory, duration, analysisDate):
         try:
             files = os.listdir(fullDirectory)
         except OSError: 
-            disp('OSError found; waiting 5 seconds');
+            print('OSError found; waiting 5 seconds');
             time.sleep(5)
             try:
                 files = os.listdir(fullDirectory)
             except OSError:
-                disp('OSError found again; waiting 15 seconds')
+                print('OSError found again; waiting 15 seconds')
                 time.sleep(15)
                 try:
                     files = os.listdir(fullDirectory)
                 except OSError:
-                    disp('OSError found again; waiting 60 seconds. Last time')
+                    print('OSError found again; waiting 60 seconds. Last time')
                     time.sleep(60)
                     files = os.listdir(fullDirectory)
         return files
