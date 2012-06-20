@@ -1,3 +1,7 @@
+ligo_data_find -o H -t H1_AMPS_C02_L2 -u file -s 931052708 -e 932807853 -u file --show-times > SFT200segsTestData.txt--show-times > SFT200segsTestData.txt
+./compareSegLists.tcl -f1 divided200Seglist.txt -f2 segsH1ScienceMinusAllVetoes_AllS6VSR2VSR3times.txt -i > SFT200segsTestList.txt
+./compareSegLists.tcl -f1 SFT200segsTestList.txt -f2 SFT200segsTestData.txt -i > SFT200segsTestIntersection.txt
 MakeSFTDAG -f SFTtest200jobs.dag -G SFTTEST200JOBS -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/test200jobs -N H1:AMPS-STRAIN -m 1 -g SFT200segsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8
+
 
 # is the command for making SFTS out of the two hundred test jobs.
