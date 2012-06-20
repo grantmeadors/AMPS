@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os, sys, re
+import os, sys, re, time
 
 # Grant David Meadors
 # 02012-06-18
@@ -12,7 +12,22 @@ def interstate(n, cacheHoft, observatory, duration, analysisDate):
         dataDirectory = siteFull[1] + '-' +siteFull[1] + '1_' + frameType + '_C02_L2-' + str(n)
         fullDirectory = headDirectory + siteFull + dataDirectory
         print(fullDirectory)
-        files = os.listdir(fullDirectory)
+        try:
+            files = os.listdir(fullDirectory)
+        except OSError: 
+            disp('OSError found; waiting 5 seconds');
+            time.sleep(5)
+            try:
+                files = os.listdir(fullDirectory)
+            except OSError:
+                disp('OSError found again; waiting 15 seconds')
+                time.sleep(15)
+                try:
+                    files = os.listdir(fullDirectory)
+                except OSError:
+                    disp('OSError found again; waiting 60 seconds. Last time')
+                    time.sleep(60)
+                    files = os.listdir(fullDirectory)
         return files
     fileFilter = archiveString('/archive/frames/S6/pulsar/feedforward/', \
     'L' + observatory + 'O/', 'AMPS')

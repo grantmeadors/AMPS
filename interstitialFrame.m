@@ -26,18 +26,36 @@ function data = framePull(frame, cache, observatory, duration)
         {strcat(observatory, '1:LDAS-STRAIN')...
          strcat(observatory, '1:IFO-SV_STATE_VECTOR')...
          strcat(observatory, '1:LSC-DATA_QUALITY_VECTOR')};
-    [Hoft.baseline,lastIndex,errCode,samplingFrequency.baseline,times] =...
-        readFrames(cache, cname{1}, frame, duration); 
-    [Hoft.stateVector ,lastIndex,errCode,samplingFrequency.stateVector,times] =...
-        readFrames(cache, cname{2}, frame, duration);
-    [Hoft.dqFlag, lastIndex,errCode,samplingFrequency.dqFlag,times] =...
-        readFrames(cache, cname{3}, frame, duration);
+    function dataArray = readFramesVerily(cache, whichChannel, startTime, duration, samplingFrequency)
+        numberOfTries = 100;
+        for hh = 1:numberOfTries
+            dataArray = readFrames(...
+                cache, whichChannel, startTime, duration);
+            if length(dataArray) == (samplingFrequency*duration)
+                hh = numberOfTries + 1;
+            end
+            if (hh > 1) & (hh < numberOfTries)
+                disp('Failure to correctly retrieve data; pausing and will retry')
+                pause(5);
+            end
+            if hh == numberOfTries
+                disp(horzcat(...
+                    'Failed to correctly retrieve data after ',...
+                num2str(numberOfTries), ' attempts.'))
+            end
+        end
+    end
+    Hoft.baseline  =...
+        readFramesVerily(cache, cname{1}, frame, duration, 16384); 
+    Hoft.stateVector  =...
+        readFramesVerily(cache, cname{2}, frame, duration, 16);
+    Hoft.dqFlag  =...
+        readFramesVerily(cache, cname{3}, frame, duration, 1);
     disp('Retrieved the following number of samples for Hoft, state vector and DQ flag')
     disp(length(Hoft.baseline))
     disp(length(Hoft.stateVector))
     disp(length(Hoft.dqFlag))
     data.Hoft = Hoft;
-    data.samplingFrequency = samplingFrequency;
 end
 function finale = framePush(frame, cache, observatory, duration)
     if ~isnumeric(frame)
@@ -79,19 +97,31 @@ function finale = framePush(frame, cache, observatory, duration)
         HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
         HoftSub.type = 'd';
         HoftSub.mode = 'a';
-        mkframe(frameName, HoftSub, 'n', duration, frame);
+        try
+            mkframe(frameName, HoftSub, 'n', duration, frame);
+        catch err
+            mkframe(frameName, HoftSub, 'n', duration, frame);
+        end
         % Append the frame with state vector information.
         stateVectorSub.data = double(data.Hoft.stateVector);
         stateVectorSub.channel = strcat(site, '1:AMPS-SV_STATE_VECTOR');
         stateVectorSub.type = 'd';
         stateVectorSub.mode = 'a';
-        mkframe(frameName, stateVectorSub, 'a', duration, frame);
+        try
+            mkframe(frameName, stateVectorSub, 'a', duration, frame);
+        catch err
+            mkframe(frameName, stateVectorSub, 'a', duration, frame);
+        end
         % Append the frame with DQ flag information
         dqFlagSub.data = double(data.Hoft.dqFlag);
         dqFlagSub.channel = strcat(site, '1:AMPS-DATA_QUALITY_FLAG');
         dqFlagSub.type = 'd';
         dqFlagSub.mode = 'a';
-        mkframe(frameName, dqFlagSub, 'a', duration, frame);
+        try
+            mkframe(frameName, dqFlagSub, 'a', duration, frame);
+        catch err
+            mkframe(frameName, dqFlagSub, 'a', duration, frame);
+        end
     end
     % We are done.
     finale = 'Interstitial frame appears successfully written.';
