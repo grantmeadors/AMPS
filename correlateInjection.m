@@ -79,9 +79,12 @@ function metadata = frameMetadata(frameObject)
     metadata.cnameRef = strcat(metadata.site, '1:LDAS-STRAIN');
     % And the name for DARM
     metadata.cnameDARM = strcat(metadata.site, '1:LSC-DARM_ERR');
+    % And the name for the ETMX coil current:
+    metadata.cnameCOIL = strcat(metadata.site, '1:SUS-ETMX_COIL_UR');
 
     % Assume a sampling frequency of 16384 Hz
     metadata.fs = 16384;
+    % Note that the coil current is 2048 Hz and must be interpolated.
 
     % Choose a center frequency for the injection:
     % (First set defaults for testing time of 931130713)
@@ -125,7 +128,7 @@ function dataOut = firstFrame(metadata);
                 frgetvect(metadata.fname, metadata.cname,...
                 metadata.gpsStart,...
                 128);
-        elseif metadata.refOrFilterFlag == 4
+        elseif (metadata.refOrFilterFlag == 4) | (metadata.refOrFilterFlag == 5)
             setenv('STARTTIME', num2str(metadata.gpsStart));
             setenv('ENDTIME', num2str(metadata.gpsStart+128));          
             [status.darm, result.darm] = system(...
@@ -141,9 +144,16 @@ function dataOut = firstFrame(metadata);
             for jj = 1:numberOfLines
                 listing.darm{jj} = result.darm(startString(jj):endString(jj)+length('.gwf'));
             end
-            [dataOut,lastIndex,errCode,sRate,times] =...
-                readFrames(listing.darm, metadata.cnameDARM, metadata.gpsStart, 128, 1);
-        end
+            if metadata.refOrFilterFlag == 4
+                [dataOut,lastIndex,errCode,sRate,times] =...
+                    readFrames(listing.darm, metadata.cnameDARM, metadata.gpsStart, 128, 1);
+            elseif metadata.refOrFilterFlag == 5
+                [dataOut,lastIndex,errCode,sRate,times] =...
+                    readFrames(listing.darm, metadata.cnameCOIL, metadata.gpsStart, 128, 1);
+                % Interpolate from 2048 to 16384 Hz
+                dataOut = interp(dataOut, 8);
+            end 
+        end  
     elseif metadata.passedDataFlag == 1
         if metadata.refOrFilterFlag == 0
         disp('Obtaining passed reference data')
@@ -155,13 +165,16 @@ function dataOut = firstFrame(metadata);
         elseif metadata.refOrFilterFlag == 4
             dataOut = metadata.ref.DARM;
             clear metadata.ref.DARM
+        elseif metata.refOrFilterFlag == 5
+            dataOut = metadata.ref.COIL;
+            clear metadata.ref.COIL
         end
     end
 end
 
 function plots = plotMaker(metadata)
     if (metadata.refOrFilterFlag == 0) | (metadata.refOrFilterFlag == 1) |...
-        (metadata.refOrFilterFlag == 4)
+        (metadata.refOrFilterFlag == 4) | (metadata.refOrFilterFlag == 5)
         dataOut = firstFrame(metadata);
         disp('Total data obtained:')
         disp(length(dataOut))
@@ -182,6 +195,9 @@ function plots = plotMaker(metadata)
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, metadata.ETMX);
     elseif metadata.refOrFilterFlag == 4
         plots.DARM = filterZPKs(...
+            metadata.zb, metadata.pb, metadata.kb, metadata.fs, dataOut);
+    elseif metadata.refOrFilterFlag == 5
+        plots.COIL = filterZPKs(...
             metadata.zb, metadata.pb, metadata.kb, metadata.fs, dataOut);
     end
 end
@@ -234,6 +250,10 @@ function plots = plotCompare(metadata)
     plotting = plotMaker(metadata);
     plots.DARM = plotting.DARM;
     clear plotting
+    metadata.refOrFilterFlag = 5;
+    plotting = plotMaker(metadata);
+    plots.COIL = plotting.COIL;
+    clear plotting
 end
 
 function graphing = grapher(plots, metadata)
@@ -261,16 +281,18 @@ function graphing = grapher(plots, metadata)
     smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
     smallETMX = plots.ETMX(xlimitsIndex(1):xlimitsIndex(end));
     smallDARM = plots.DARM(xlimitsIndex(1):xlimitsIndex(end));
+    smallCOIL = plots.COIL(xlimits(1):xlimitsIndex(end));
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimitsGPS(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimitsGPS(1)));
     % Scaling factors based on standard deviation, with some margin for visibility.
-    scale.ETMX = 0.3*std(smallDarmRef)/std(smallETMX);
-    scale.DARM = 0.2*std(smallDarmRef)/std(smallDARM);
+    scale.ETMX = 0.4*std(smallDarmRef)/std(smallETMX);
+    scale.DARM = 0.3*std(smallDarmRef)/std(smallDARM);
+    scale.COIL = 0.2*std(smallDarmRef)/std(smallCOIL);
     % Ideally, they would vary in proportion to the DARM-to-Hoft calibration, lest
     % ETMX and DARM occlude Hoft at some frequencies and be overshadowed by it at others.
     plot(smallT, smallDarmRef, smallT, smallDarmFilter,...
          smallT, smallStrain, smallT, scale.ETMX*smallETMX,...
-         smallT, scale.DARM*smallDARM)
+         smallT, scale.DARM*smallDARM, smallT, scale.COIL*smallCOIL)
     xlim(xlimits)
     %ylim(ylimits)
     grid on
@@ -278,10 +300,11 @@ function graphing = grapher(plots, metadata)
     ylabel('Amplitude (strain)')
     legend('Before feedforward', 'After feedforward', 'Injection estimated strain',...
         horzcat('ETMX actuation *', num2str(scale.ETMX)),...
-        horzcat('DARM_ERR *', num2str(scale.DARM)))
+        horzcat('DARM_ERR *', num2str(scale.DARM)),...
+        horzcat('ETMX_COIL_UR *', num2str(scale.COIL)))
     titleStringTimeTop = horzcat('Post-filtering injection, GPS s ', num2str(xlimitsGPS(1)),...
         ' to ', num2str(xlimitsGPS(end)));
-    titleStringTimeBottom = '(ETMX, DARM not calibrated; for timing comparison only)';
+    titleStringTimeBottom = '(ETMX, DARM, COIL not calibrated; for timing comparison only)';
     title({titleStringTimeTop; titleStringTimeBottom})
     disp(outputFile)
     print('-dpng', strcat(outputFile, '.png'))

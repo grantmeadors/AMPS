@@ -94,13 +94,25 @@ end
 frameSync(varargin{1}, baseline, samplingFrequency, injectionInFrame, frequencyList, gpsStartTime, site, frame)
 
 function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration, cache)
-    % First pull DARM_ERR
+    % First pull SUS-ETMX_COIL_UR to check coil current during injection.
+    % Note that this is a 2048 Hz channel, so we have to upsample.
+    % The cache is the same as for DARM_ERR, so we use it.
+    cname = strcat(site, '1:SUS-ETMX_COIL_UR');
+    [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
+         readFrames(cache.DARM, cname, gpsStartTime, 128);
+    % Now upsample by interpolating from 2048 to 16384 Hz.
+    baseline.COIL = interp(rawBaseline, 8);
+    % Pull DARM_ERR
     % Note duration is a variable.
+    clear rawBaseline
+    clear cname
+    clear samplingFrequency
     cname = strcat(site, '1:LSC-DARM_ERR');
     [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
          readFrames(cache.DARM, cname, gpsStartTime, 128);
     baseline.DARM = rawBaseline;
     clear rawBaseline
+    clear cname
     % Then pull Hoft 
     % Duration is a variable based on the name of the filtered frame.
     cname = strcat(site, '1:LDAS-STRAIN');
@@ -108,6 +120,7 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
          readFrames(cache.Hoft, cname, gpsStartTime, duration);
     baseline.Hoft = rawBaseline;
     clear rawBaseline
+    clear cname
     testBit = 0;
     if testBit == 1
         % Can read subsequent frame Hoft  for a sanity check
@@ -123,6 +136,7 @@ function frameSync(data, baseline, samplingFrequency, injectionInFrame, frequenc
     % Bandpass filter the data to the bucket
     [zb, pb, kb] = butter(16, 2*pi*[100 2000], 's');
     dataFilt = filterZPKs(zb, pb, kb, samplingFrequency, data);
+    baselineFilt.COIL = filterZPKs(zb, pb, kb, samplingFrequency, baseline.COIL);
     baselineFilt.DARM = filterZPKs(zb, pb, kb, samplingFrequency, baseline.DARM);
     baselineFilt.Hoft = filterZPKs(zb, pb, kb, samplingFrequency, baseline.Hoft);
     disp('Display statistics: max, mean, std (before), max, mean, std (after)')
