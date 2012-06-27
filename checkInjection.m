@@ -97,11 +97,12 @@ function [baseline, samplingFrequency] = framePull(site, gpsStartTime, duration,
     % First pull SUS-ETMX_COIL_UR to check coil current during injection.
     % Note that this is a 2048 Hz channel, so we have to upsample.
     % The cache is the same as for DARM_ERR, so we use it.
-    cname = strcat(site, '1:SUS-ETMX_COIL_UR');
+    cname = strcat(site, '1:LSC-ETMX_EXC_DAQ');
     [rawBaseline,lastIndex,errCode,samplingFrequency,times] =...
          readFrames(cache.DARM, cname, gpsStartTime, 128);
     % Now upsample by interpolating from 2048 to 16384 Hz.
-    baseline.COIL = interp(rawBaseline, 8);
+    % baseline.COIL = interp(rawBaseline, 8);
+    baseline.COIL = rawBaseline;
     % Pull DARM_ERR
     % Note duration is a variable.
     clear rawBaseline

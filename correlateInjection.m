@@ -80,7 +80,7 @@ function metadata = frameMetadata(frameObject)
     % And the name for DARM
     metadata.cnameDARM = strcat(metadata.site, '1:LSC-DARM_ERR');
     % And the name for the ETMX coil current:
-    metadata.cnameCOIL = strcat(metadata.site, '1:SUS-ETMX_COIL_UR');
+    metadata.cnameCOIL = strcat(metadata.site, '1:LSC-ETMX_EXC_DAQ');
 
     % Assume a sampling frequency of 16384 Hz
     metadata.fs = 16384;
@@ -151,7 +151,7 @@ function dataOut = firstFrame(metadata);
                 [dataOut,lastIndex,errCode,sRate,times] =...
                     readFrames(listing.darm, metadata.cnameCOIL, metadata.gpsStart, 128, 1);
                 % Interpolate from 2048 to 16384 Hz
-                dataOut = interp(dataOut, 8);
+                % dataOut = interp(dataOut, 8);
             end 
         end  
     elseif metadata.passedDataFlag == 1
@@ -165,7 +165,7 @@ function dataOut = firstFrame(metadata);
         elseif metadata.refOrFilterFlag == 4
             dataOut = metadata.ref.DARM;
             clear metadata.ref.DARM
-        elseif metata.refOrFilterFlag == 5
+        elseif metadata.refOrFilterFlag == 5
             dataOut = metadata.ref.COIL;
             clear metadata.ref.COIL
         end
@@ -281,7 +281,7 @@ function graphing = grapher(plots, metadata)
     smallStrain = plots.strain(xlimitsIndex(1):xlimitsIndex(end));
     smallETMX = plots.ETMX(xlimitsIndex(1):xlimitsIndex(end));
     smallDARM = plots.DARM(xlimitsIndex(1):xlimitsIndex(end));
-    smallCOIL = plots.COIL(xlimits(1):xlimitsIndex(end));
+    smallCOIL = plots.COIL(xlimitsIndex(1):xlimitsIndex(end));
     outputFile = strcat(outputFileHead, 'correlateInjection-', num2str(xlimitsGPS(1)));
     outputFileCrossCorr = strcat(outputFileHead, 'crossCorrInjection-', num2str(xlimitsGPS(1)));
     % Scaling factors based on standard deviation, with some margin for visibility.
@@ -299,12 +299,12 @@ function graphing = grapher(plots, metadata)
     xlabel(horzcat('Time (s) - ', num2str(metadata.injGPSstart)))
     ylabel('Amplitude (strain)')
     legend('Before feedforward', 'After feedforward', 'Injection estimated strain',...
-        horzcat('ETMX actuation *', num2str(scale.ETMX)),...
-        horzcat('DARM_ERR *', num2str(scale.DARM)),...
-        horzcat('ETMX_COIL_UR *', num2str(scale.COIL)))
+        horzcat('Injection estimated ETMX *', num2str(scale.ETMX)),...
+        horzcat('DARM\_ERR *', num2str(scale.DARM)),...
+        horzcat('ETMX\_EXC\_DAQ *', num2str(scale.COIL)))
     titleStringTimeTop = horzcat('Post-filtering injection, GPS s ', num2str(xlimitsGPS(1)),...
         ' to ', num2str(xlimitsGPS(end)));
-    titleStringTimeBottom = '(ETMX, DARM, COIL not calibrated; for timing comparison only)';
+    titleStringTimeBottom = '(ETMX, DARM, EXC not calibrated; for timing comparison only)';
     title({titleStringTimeTop; titleStringTimeBottom})
     disp(outputFile)
     print('-dpng', strcat(outputFile, '.png'))
