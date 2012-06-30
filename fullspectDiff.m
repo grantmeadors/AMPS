@@ -57,9 +57,10 @@ irun = 1;
      data1 = load(fname1);
      fname2 = sprintf('%s_%s_40_2000feedforward.txt',fnameroot,strtrim(windowlist(irun,:)));
      data2 = load(fname2);
-     freq{irun,iifo} = data1(:,1);
-     amppsd{irun,iifo} = data1(:,3) - data2(:,3);
-     amppsdwt{irun,iifo} = data1(:,5) - data2(:,5);
+     % Try resampling to smooth random variation.
+     freq{irun,iifo} = resample(data1(:,1), 1, 32, 100);
+     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1, 32, 100);
+     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1, 32, 100);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
 	bandlo = bandlolist(iband);
