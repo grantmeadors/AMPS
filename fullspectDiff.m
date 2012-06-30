@@ -13,7 +13,7 @@ plotcolor = ['RED  '; 'GREEN'];
 
 bandlolist = [40   40 69.9 199.9];
 bandhilist = [2000 70.1 700.1 2000];
-ylolist = [1.e-23 6.e-23 1.e-23 1.e-23];
+ylolist = 1e-6*[1.e-23 6.e-23 1.e-23 1.e-23];
 yhilist = [1.e-21 5.e-21 1.e-21 1.e-21];
 bandnames = ['40_2000_Hz ';'40_70_Hz   ';'70_700_Hz  ';'200_2000_Hz'];
 % 1 = linear-linear, 2 = linear-log, 3 = log-linear, 4 = log-log
@@ -59,7 +59,7 @@ irun = 1;
      data2 = load(fname2);
      freq{irun,iifo} = data1(:,1);
      amppsd{irun,iifo} = data1(:,3) - data2(:,3);
-     amppsdwt{irun,iifo} = data1(:,5) - data2(:,3);
+     amppsdwt{irun,iifo} = data1(:,5) - data2(:,5);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
 	bandlo = bandlolist(iband);
