@@ -85,7 +85,19 @@ def dagWriter(jobNumber, startTime, stopTime):
     g("JOB " + tagStringLine + " EleutheriaSubmit.sub")
     g("VARS " + tagStringLine + " argList=" + argumentList + " tagString=" + '"' + tagStringLine + '"')
 
+# Generate the list of start and stop science segment times
+segmentListObject = open(userDirectory + analysisDate + "/AMPS/dividedSeglist.txt")
+segmentList = segmentListObject.readlines()
+segmentListObject.close
+startTimeList = []
+stopTimeList = []
+for i, v in enumerate(segmentList):
+    startTimeList.append(v[0:9])
+    stopTimeList.append(v[10:19])
+
 dagObject = open(userDirectory + analysisDate + "/AMPS/EleutheriaDAG.dag", "w")
 # For test purposes
-dagWriter(1, 953164815, 953164875)
+#dagWriter(1, 953164815, 953164875)
+for j in range(0, len(startTimeList)):
+    dagWriter(j+1, int(startTimeList[j]), int(stopTimeList[j]))
 dagObject.close
