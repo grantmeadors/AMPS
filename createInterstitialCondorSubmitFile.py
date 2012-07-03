@@ -1,6 +1,11 @@
 #!/usr/bin/python
 import os, commands, shutil, sys, re
 
+# Create a Condor submission file for making AMPS frames between science segs
+# Grant David Meadors
+# 02012-07-03 (JD 2456112) 
+# g m e a d o r s @ u m i c h . e d u
+
 # Define a function to edit file objects conveniently
 def h(text):
     result = fileObject.write(text + '\n')

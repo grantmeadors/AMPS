@@ -1,9 +1,10 @@
 #!/usr/bin/python
 import os, sys
 
+# Peruse frames for structural errors and injection syncronization.
 # Grant David Meadors
-# 02012-04-24
-# gmeadors@umich.edu
+# 02012-07-03 (JD 2456112)
+# g m e a d o r s @ u m i c h . e d u
 
 # First look to see which output files have 'No data found'
 
@@ -11,7 +12,7 @@ def catter(n):
     print n
     headDirectory = '~pulsar/feedforward/'
     particularRun = '2012/06/19'
-    tailDirectory = '/AMPS/logs/'
+    tailDirectory = '/AMPS/eleutheriaLogs/'
     logName = 'eleutheria.out.'
     stringFile = headDirectory + particularRun + tailDirectory + logName
 

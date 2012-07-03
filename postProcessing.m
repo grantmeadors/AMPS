@@ -1,25 +1,26 @@
 % Grant David Meadors
 % Matlab post-processing for feedforward
-% 02012-03-19
+% 02012-07-03 (JD 2456112)
+% g m e a d o r s @ u m i c h . e d u
 
 % Clear any existing 'Whole log' entries
-system('rm logs/whole_log.txt');
-system('rm logs/whole_out.txt');
-system('rm logs/whole_err.txt');
+system('rm eleutheriaLogs/whole_log.txt');
+system('rm eleutheriaLogs/whole_out.txt');
+system('rm eleutheriaLogs/whole_err.txt');
 
 % Make sure that i in the bash script ranges to N-1, where N is the number of jobs
-system('for i in {0..199}; do cat logs/eleutheria.log.$i >> logs/whole_log.txt; done');
-system('for i in {0..199}; do cat logs/eleutheria.out.$i >> logs/whole_out.txt; done');
-system('for i in {0..199}; do cat logs/eleutheria.err.$i >> logs/whole_err.txt; done');
+system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.log.$i >> logs/whole_log.txt; done');
+system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.out.$i >> logs/whole_out.txt; done');
+system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.err.$i >> logs/whole_err.txt; done');
 
 
 % Read image sizes to make sure that none of the jobs is using too much memory
-system('cat logs/whole_log.txt | grep -n "Image size of job updated" > logs/whole_imagesize.txt');
-[status_image, result_image] = system('wc -l logs/whole_imagesize.txt');
+system('cat eleutheriaLogs/whole_log.txt | grep -n "Image size of job updated" > eleutheriaLogs/whole_imagesize.txt');
+[status_image, result_image] = system('wc -l eleutheriaLogs/whole_imagesize.txt');
 result_image_number = str2num(result_image(1:end-25));
 
 
-imagesizelines = textread('logs/whole_imagesize.txt', '%s');
+imagesizelines = textread('eleutheriaLogs/whole_imagesize.txt', '%s');
 imagesize = cell(size(imagesizelines));
 % Only one out of ten elements is the actual image size
 for ii = 10:10:(result_image_number*10)   
@@ -35,11 +36,11 @@ maximum_imagesize = max(imagesize);
 disp(maximum_imagesize)
 
 % Make file of range estimates files
-system('ls /home/pulsar//public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_rangelist_LHO.txt');
+system('ls /home/pulsar/public_html/feedforward/diagnostics/LHO/*/*Range* > eleutheriaLogs/whole_rangelist_LHO.txt');
 % Make file of range estimates
-system('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*/*Range* > logs/whole_range_LHO.txt');
+system('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*/*Range* > eleutheriaLogs/whole_range_LHO.txt');
 % Load into Matlab
-rangematrix = load('logs/whole_range_LHO.txt');
+rangematrix = load('eleutheriaLogs/whole_range_LHO.txt');
 
 % Make plot of range versus time
 figure(4000)
