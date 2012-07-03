@@ -40,14 +40,52 @@ h("queue 1")
 h("")
 
 condorObject.close
+ 
+# This next function searches LIGO data find and creates a frame cache
+# Note that Observatory is set to H, Hanford, by default.
+def dataFinder(startTime, stopTime, cacheDARM, cacheNOISE):
+    Observatory = "H"
+    frameTypeDARM = "H1_LDAS_C02_L2"
+    frameTypeNOISE = "R"
+    frameLengthDARM = 128
+    frameLengthNOISE = 32
+    
+    thisStartTime = str(startTime)
+    thisEndTime = str(stopTime)
+
+    thisdataFindOutputDARM = cacheDARM
+    thisdataFindOutputNOISE = cacheNOISE
+
+    thisEndTimePlusframeLengthDARM = str(stopTime + frameLengthDARM)
+    thisEndTimePlusframeLengthNOISE = str(stopTime + frameLengthNOISE)
+    ligoDataFindStringDARM = \
+    "ligo_data_find --observatory=" + Observatory + \
+    " --type=" + frameTypeDARM + " --gps-start-time=" + thisStartTime + \
+    " --gps-end-time=" + thisEndTimePlusframeLengthDARM + \
+    " --url-type=file --lal-cache > " + \
+    thisdataFindOutputDARM   
+    ligoDataFindStringNOISE = \
+    "ligo_data_find --observatory=" + Observatory + \
+    " --type=" + frameTypeNOISE + " --gps-start-time=" + thisStartTime + \
+    " --gps-end-time=" + thisEndTimePlusframeLengthNOISE + \
+    " --url-type=file --lal-cache > " + \
+    thisdataFindOutputNOISE   
+    os.system(ligoDataFindStringDARM)
+    os.system(ligoDataFindStringNOISE)
 
 # The following function will write each job of the DAG file
-def dagWriter(jobNumber, startTime, stopTime, cacheDARM, cacheNOISE):
+def dagWriter(jobNumber, startTime, stopTime):
+    cacheDARM = "cache/fileList-DARM-" + \
+    str(startTime) + "-" + str(stopTime) + ".txt"
+    cacheNOISE = "cache/fileList-NOISE-" + \
+    str(startTime) + "-" + str(stopTime) + ".txt"
+    dataFinder(startTime, stopTime, cacheDARM, cacheNOISE)
     argumentList = '"' + str(startTime) + " " + str(stopTime) + " " + cacheDARM + " " + cacheNOISE + '"'
     tagStringLine = "eleutheria_" + str(jobNumber)
     g("JOB " + tagStringLine + " EleutheriaSubmit.sub")
     g("VARS " + tagStringLine + " argList=" + argumentList + " tagString=" + '"' + tagStringLine + '"')
 
 dagObject = open(userDirectory + analysisDate + "/AMPS/EleutheriaDAG.dag", "w")
-dagWriter(1, 953154815, 953154875, 'hello', 'goodbye')
+# For test purposes
+dagWriter(1, 953164815, 953164875)
 dagObject.close
