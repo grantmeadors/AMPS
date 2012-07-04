@@ -9,7 +9,10 @@ def h(text):
     return result
 
 # Open the header object
-headerObject = open("/home/gmeadors/public_html/feedforward/diagnostics/HEADER.html", "w")
+userName = "gmeadors"
+diagnosticDirectory = "/home/" + userName + \
+"/public_html/feedforward/diagnostics/"
+headerObject = open(diagnosticDirectory + "HEADER.html", "w")
 
 # Write the header introduction
 h("<html>")
@@ -35,6 +38,13 @@ h("<br />")
 h("02012-07-03 (JD 2456112)")
 h("")
 h("")
+
+# Locate the files and directories underneath:
+sub0files = os.listdir(diagnosticDirectory)
+print sub0files
+
+
+# Close the header
 h("</body>")
 h("")
 h("</html>")

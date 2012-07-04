@@ -9,7 +9,10 @@ def h(text):
     return result
 
 # Open the header object
-headerObject = open("/home/gmeadors/public_html/feedforward/sciencesegments/HEADER.html", "w")
+userName = "gmeadors"
+sciencesegmentDirectory = "/home/" + userName + \
+"/public_html/feedforward/sciencesegments/"
+headerObject = open(sciencesegmentDirectory + "HEADER.html", "w")
 
 # Write the header introduction
 h("<html>")
