@@ -1,3 +1,3 @@
 #/bin/csh
 
-/home/keithr/master/opt/lscsoft/lalapps/bin/lalapps_spec_avg --SFTs /archive/frames/S6/pulsar/sfts/feedforward/test200jobs/H-1_H1_1800SFT_AMPSC02L2-931/\*.sft  --startGPS 931035615 --endGPS 971622015 --fMin 40. --fMax 1999.999 --freqRes 0.10 --timeBaseline 1800 -v 3 --IFO H1 --outputBname S6H1_Tukey_40_2000feedforward
+/home/keithr/master/opt/lscsoft/lalapps/bin/lalapps_spec_avg --SFTs /archive/frames/S6/pulsar/sfts/feedforward/tukey/H-1_H1_1800SFT_AMPSC02L2-931/\*.sft  --startGPS 931035615 --endGPS 971622015 --fMin 40. --fMax 1999.999 --freqRes 0.10 --timeBaseline 1800 -v 3 --IFO H1 --outputBname S6H1_Tukey_40_2000feedforward
