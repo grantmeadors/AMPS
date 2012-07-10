@@ -75,9 +75,12 @@ if length(injectionInFrame) > 0
     % Determine type of injection
     frequencyList = zeros(size(cellParameterFile{5}));
     parfor ii=1:length(injectionList)
+        % For checking sine gaussian injections.
         checkSinegaussian = strcmp(cellParameterFile{3}(ii), 'typesinegaussian=1');
+        % For checking ringdown injections.
+        checkRingdown = strcmp(cellParameterFile{3}(ii), 'typeringdown=1')
         checkTime = (injectionInFrame(1) == cellParameterFile{1}(ii));
-        if (checkSinegaussian & checkTime)
+        if ((checkSinegaussian | checkRingdown) & checkTime)
             rawFreqColumn = cellParameterFile{5}(ii) 
             frequencyList(ii) = str2num(rawFreqColumn{1}(6:end)); 
         end
