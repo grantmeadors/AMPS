@@ -54,13 +54,15 @@ irun = 1;
      color = strtrim(plotcolor(iifo,:));
      fnameroot = sprintf('%s%s',run,ifo);
      fname1 = sprintf('%s_%s_40_2000test.txt',fnameroot,strtrim(windowlist(irun,:)));
-     data1 = load(fname1);
+     fnameFull1 = strcat('~gmeadors/2012/06/29/AMPS/', fname1);
+     data1 = load(fnameFull1);
      fname2 = sprintf('%s_%s_40_2000feedforward.txt',fnameroot,strtrim(windowlist(irun,:)));
-     data2 = load(fname2);
+     fnameFull2 = strcat('~gmeadors/2012/06/29/AMPS/', fname2);
+     data2 = load(fnameFull2);
      % Try resampling to smooth random variation.
      freq{irun,iifo} = resample(data1(:,1), 1, 32, 100);
-     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1, 32, 100);
-     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1, 32, 100);
+     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1, 128, 256);
+     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1, 128, 256);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
 	bandlo = bandlolist(iband);
