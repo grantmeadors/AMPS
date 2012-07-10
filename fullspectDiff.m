@@ -60,9 +60,20 @@ irun = 1;
      fnameFull2 = strcat('~gmeadors/2012/06/29/AMPS/', fname2);
      data2 = load(fnameFull2);
      % Try resampling to smooth random variation.
-     freq{irun,iifo} = resample(data1(:,1), 1, 32, 100);
-     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1, 128, 256);
-     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1, 128, 256);
+     % This combines neighboring bins.
+     % Factor is the the divisor by which frequency resolution is reduced.
+     resampleFactor = 128
+     % FilterSize is the numbers of bins adjacent (nearest neighbor and beyond)
+     % that are used to calculate an FIR filter result for a resampled bin.
+     resampleFilterSize = 256;
+     % Theoretically, the frequency array is linear so it could be resampled
+     % using a less sophisticated algorithm. Yet why not try out resample here?
+     freq{irun,iifo} = resample(data1(:,1), 1,...
+         resampleFactor, resampleFilterSize);
+     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1,...
+         resampleFactor, resampleFilterSize);
+     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1,...
+         resampleFactor, resampleFilterSize);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
 	bandlo = bandlolist(iband);
