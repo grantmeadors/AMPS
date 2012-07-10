@@ -62,10 +62,10 @@ irun = 1;
      % Try resampling to smooth random variation.
      % This combines neighboring bins.
      % Factor is the the divisor by which frequency resolution is reduced.
-     resampleFactor = 128
+     resampleFactor = 450
      % FilterSize is the numbers of bins adjacent (nearest neighbor and beyond)
      % that are used to calculate an FIR filter result for a resampled bin.
-     resampleFilterSize = 256;
+     resampleFilterSize = 900;
      % Theoretically, the frequency array is linear so it could be resampled
      % using a less sophisticated algorithm. Yet why not try out resample here?
      freq{irun,iifo} = resample(data1(:,1), 1,...
