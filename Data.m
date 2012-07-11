@@ -373,7 +373,7 @@ classdef Data < handle
         function preFilter(channels)
             % pre-filter the noise by low-passing it and 
             % high passing it.
-            [zpreL, ppreL, kpreL] = butter(2, 2*pi*700, 's');
+            [zpreL, ppreL, kpreL] = butter(8, 2*pi*700, 's');
             [zpreH, ppreH, kpreH] = butter(2, 2*pi*30, 'high', 's');
             channels.noise = filterZPKS(...
                 zpreH, zpreH, zpreH, channels.Fs,...

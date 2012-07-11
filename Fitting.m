@@ -75,7 +75,7 @@ classdef Fitting < handle
             m = squeeze(m);
             weight = weight .* (m(:)');
             
-            % notch out the power lines, cal lines, pcal line, violins and f>400
+            % notch out the power lines, cal lines, pcal line, violins and f>800
             v   = find((abs(f - 60) < 4) |...
                 (abs(f - 120) < 3) | (abs(f - 180) < 3) | ...
                 (abs(f-240)<3) | (abs(f-300) < 3) | (abs(f-360) < 3));
@@ -122,7 +122,8 @@ classdef Fitting < handle
             D = SER.D;
             E = SER.E;
             
-            % Get real world zeros and poles out of this garbage % not GDM's words!
+            % Get real world zeros and poles out of this garbage 
+            % (above line is not GDM's words, but appropriate!)
             % ss(A,B,C,D)+zpk(0, [], E) is the SYS object of the fit.
             ourfit = ss(A,B,C,D) + zpk(0, [], E);
             
