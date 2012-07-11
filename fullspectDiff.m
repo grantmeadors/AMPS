@@ -11,7 +11,7 @@ windowlist = 'Tukey';
 ifolist = ['H1'];
 plotcolor = ['RED  '; 'GREEN'];
 
-bandlolist = [40   40 69.9 199.9 30 20];
+bandlolist = [40   40 69.9 199.9 30];
 bandhilist = [2000 70.1 700.1 2000 2000];
 ylolist = 1e-6*[1.e-23 6.e-23 1.e-23 1.e-23 -1.e-21];
 yhilist = [1.e-21 5.e-21 1.e-21 1.e-21 1.e-21];
