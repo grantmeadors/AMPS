@@ -11,13 +11,13 @@ windowlist = 'Tukey';
 ifolist = ['H1'];
 plotcolor = ['RED  '; 'GREEN'];
 
-bandlolist = [40   40 69.9 199.9];
-bandhilist = [2000 70.1 700.1 2000];
-ylolist = 1e-6*[1.e-23 6.e-23 1.e-23 1.e-23];
-yhilist = [1.e-21 5.e-21 1.e-21 1.e-21];
-bandnames = ['40_2000_Hz ';'40_70_Hz   ';'70_700_Hz  ';'200_2000_Hz'];
+bandlolist = [40   40 69.9 199.9 30];
+bandhilist = [2000 70.1 700.1 2000 2000];
+ylolist = 1e-6*[1.e-23 6.e-23 1.e-23 1.e-23 -1.e-21];
+yhilist = [1.e-21 5.e-21 1.e-21 1.e-21 1.e-1];
+bandnames = ['40_2000_Hz ';'40_70_Hz   ';'70_700_Hz  ';'200_2000_Hz';'30_2000_Hz'];
 % 1 = linear-linear, 2 = linear-log, 3 = log-linear, 4 = log-log
-plottypelist = [4 2 2 4];
+plottypelist = [4 2 2 4 1];
 
 combinedbandlolist = [40. 55. 96. 110. 144. 165. 429. 677. 932. 984. 1029. 1141.];
 combinedbandhilist = [2000. 65. 97. 130. 146. 195. 439. 678. 933. 985. 1031. 1143.];
@@ -61,8 +61,9 @@ irun = 1;
      data2 = load(fnameFull2);
      % Try resampling to smooth random variation.
      % This combines neighboring bins.
+     % Bins in the data files are 1/1800 Hz wide, from 1800 s SFTs.
      % Factor is the the divisor by which frequency resolution is reduced.
-     resampleFactor = 450
+     resampleFactor = 450;
      % FilterSize is the numbers of bins adjacent (nearest neighbor and beyond)
      % that are used to calculate an FIR filter result for a resampled bin.
      resampleFilterSize = 900;
