@@ -35,7 +35,7 @@ h("Grant David Meadors")
 h("<br />")
 h("g m e a d o r s @ u m i c h . e d u")
 h("<br />")
-h("02012-07-03 (JD 2456112)")
+h("02012-07-16 (JD 2456125)")
 h("")
 h("")
 h("</body>")
@@ -65,34 +65,42 @@ for x in monthlyList:
 
 
 segmentList = segmentListObject.readlines();
+segmentListObject.close()
 
 for i, v in enumerate(segmentList):
+    # Uncomment these lines to generate directories. 
     segmentName =  'segment-' + str(i).zfill(4) + '-GPS-' + v[0:9] + '-' + v[10:19]
-    #segmentCommand = 'mkdir -p ' + 'allsegments/' + segmentName
+    segmentCommand = 'mkdir -p ' + sciencesegmentDirectory + 'allsegments/' + segmentName
     #os.system(segmentCommand)
-    segmentLocation = '/home/gmeadors/public_html/feedforward/sciencesegments/allsegments/' + segmentName
+    segmentLocation = sciencesegmentDirectory + 'allsegments/' + segmentName
     #print segmentLocation
-    #monthPlace = [monthlyList[j] for j, w in enumerate(monthlyListGPS) if ((int(w) <= int(v[0:9])) & (int(v[0:9]) <= int(monthlyListGPS[j+1])))]
-    
-    #for j, w in enumerate(monthlyListGPS):
-    #    if (int(w) <= int(v[0:9])) & (int(v[0:9]) <= int(monthlyListGPS[j+1])):
-    #            #monthPlace = monthlyList[j]
-    #            print 'hello'
-    #print monthPlace
-
-    def monthPlacer(list, v):
-         greater = []
-         lesser = []
-         greaterList = [greater.append(j) for j, w in enumerate(list) if (int(w) <= int(v[0:9]))]
-         print greaterList
-
-    monthPlacer(monthlyListGPS, v)
-
     # To avoid overloading the file system, insert a pause
     time.sleep(0.001)
 
 
-segmentListObject.close()
+    
+
+    def monthPlacer(list, i, v):
+         greater = []
+         lesser = []
+         intersection = []
+         for j, w in enumerate(list):
+             # Greater is the list of all months before the science segment.
+             if int(w) <= int(v[0:9]):
+                 greater.append(j)
+             # Lesser is the list of all months after the science segment.
+             if int(w) > int(v[0:9]):
+                 lesser.append(j)
+         if greater[-1] == lesser[0] - 1:
+             return greater[-1]
+         else:
+             print 'Month start dates appear to be in error.'
+
+    monthPlace = monthPlacer(monthlyListGPS, i, v)
+    print monthPlace
+
+
+
 
 # Close the header object
 headerObject.close()
