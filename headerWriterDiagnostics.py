@@ -8,6 +8,10 @@ def h(text):
     result = headerObject.write(text + '\n')
     return result
 
+def s(place, text):
+    result = place.write(text + '\n')
+    return result
+
 # Open the header object
 userName = "gmeadors"
 diagnosticDirectory = "/home/" + userName + \
@@ -24,6 +28,7 @@ h("<body>")
 h("<center>")
 h("<h1>Auxiliary MICH-PRC Subtraction: S6 Feedforward</h1>")
 h("</center>")
+h("<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
 h("<b>Feedforward diagnostics</b><br />")
 h("<br />")
 h("Diagnostics for the <i>Auxiliary MICH-PRC Subtraction</i> (AMPS) feedforward program, <br />")
@@ -41,13 +46,26 @@ h("")
 
 # Locate the files and directories underneath:
 sub0files = os.listdir(diagnosticDirectory)
-directories = []
+directoriesRaw = []
 for entry in sub0files:
     if entry.find('AMPS') > -1:
         if os.path.isdir(diagnosticDirectory + entry):
-            directories.append(entry)
-print directories
+            directoriesRaw.append(entry)
+directories = sorted(directoriesRaw)
 
+# Make links to subdirectories:
+h("<br />")
+h("<br />")
+h("<b>Diagnostic directories</b><br />")
+for dir in directories:
+    # The five zeros at the end are because directories contain 100000 s each.
+    dirTime = dir[17:21] + "00000"
+    dirTimePlus = str(int(dirTime) + 100000)
+    dirTimeString = dirTime + " to " + dirTimePlus
+    h("<a href = " + dir + ">" + "Diagnostics for GPS times " + dirTimeString + "</a><br />")
+
+# Font family
+h("</p>")
 
 # Close the header
 h("</body>")
@@ -56,3 +74,21 @@ h("</html>")
 
 # Close the header object
 headerObject.close()
+
+for dir in directories:
+    dirObject = open(diagnosticDirectory + dir + '/' + "HEADER.html", "w")
+    s(dirObject, "<html>")
+    s(dirObject, "<head>")
+    s(dirObject, "<title>Feedforward diagnostics</title>")
+    s(dirObject, "</head>")
+    s(dirObject, "<body>")
+    s(dirObject, "<center>")
+    # The five zeros at the end are because directories contain 100000 s each.
+    dirTime = dir[17:21] + "00000"
+    dirTimePlus = str(int(dirTime) + 100000)
+    dirTimeString = dirTime + " to " + dirTimePlus
+    s(dirObject, "<h1>Diagnostics for GPS times " + dirTimeString + "</h1>")
+    s(dirObject, "</center>")
+    s(dirObject, "</body>")
+    s(dirObject, "</html>")
+    dirObject.close()
