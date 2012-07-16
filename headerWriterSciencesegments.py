@@ -70,15 +70,15 @@ segmentListObject.close()
 for i, v in enumerate(segmentList):
     # Uncomment these lines to generate directories. 
     segmentName =  'segment-' + str(i).zfill(4) + '-GPS-' + v[0:9] + '-' + v[10:19]
-    segmentCommand = 'mkdir -p ' + sciencesegmentDirectory + 'allsegments/' + segmentName
-    #os.system(segmentCommand)
-    segmentLocation = sciencesegmentDirectory + 'allsegments/' + segmentName
-    #print segmentLocation
-    # To avoid overloading the file system, insert a pause
-    time.sleep(0.001)
+    def segmentDirectory(segmentName, sciencesegmentDirectory):
+        segmentLocation = sciencesegmentDirectory + 'allsegments/' + segmentName
+        segmentCommand = 'mkdir -p ' + segmentLocation
+        #os.system(segmentCommand)
+        #print segmentLocation
+        # To avoid overloading the file system, insert a pause
+        time.sleep(0.001)
+    segmentDirectory(segmentName, sciencesegmentDirectory)
 
-
-    
 
     def monthPlacer(list, i, v):
          greater = []
@@ -97,7 +97,18 @@ for i, v in enumerate(segmentList):
              print 'Month start dates appear to be in error.'
 
     monthPlace = monthPlacer(monthlyListGPS, i, v)
-    print monthPlace
+    #print monthPlace
+    
+    def monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory):
+        monthInsert = monthlyList[monthPlace]
+        monthLocation = sciencesegmentDirectory + 'monthly/' + monthInsert + '/' + segmentName
+        monthCommand = 'mkdir -p ' + monthLocation
+        os.system(monthCommand)
+        #print monthCommand
+        # Again, give the filesystem a pause.
+        time.sleep(0.001)   
+    monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory)
+ 
 
 
 
