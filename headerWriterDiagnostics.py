@@ -35,13 +35,18 @@ h("Grant David Meadors")
 h("<br />")
 h("g m e a d o r s @ u m i c h . e d u")
 h("<br />")
-h("02012-07-03 (JD 2456112)")
+h("02012-07-16 (JD 2456125)")
 h("")
 h("")
 
 # Locate the files and directories underneath:
 sub0files = os.listdir(diagnosticDirectory)
-print sub0files
+directories = []
+for entry in sub0files:
+    if entry.find('AMPS') > -1:
+        if os.path.isdir(diagnosticDirectory + entry):
+            directories.append(entry)
+print directories
 
 
 # Close the header

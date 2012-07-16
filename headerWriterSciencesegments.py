@@ -103,7 +103,7 @@ for i, v in enumerate(segmentList):
         monthInsert = monthlyList[monthPlace]
         monthLocation = sciencesegmentDirectory + 'monthly/' + monthInsert + '/' + segmentName
         monthCommand = 'mkdir -p ' + monthLocation
-        os.system(monthCommand)
+        #os.system(monthCommand)
         #print monthCommand
         # Again, give the filesystem a pause.
         time.sleep(0.001)   
