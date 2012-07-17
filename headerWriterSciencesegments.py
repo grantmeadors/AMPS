@@ -148,14 +148,29 @@ for site in siteList:
             return subDiagnosticDirectory
         subList = plotFinder(userName, site, i, v)
     
-        #def plotMaker(targets, subList, i, v):
-        #    firstTarget = targets[0] + '/' + "HEADER.html"
-        #    secondTarget = targets[1] + '/' + "HEADER.html"
-        #    dirObject = open(firstTarget, "w")
-        #    dirObject.close()
-        #    print secondTarget
+        def plotMaker(targets, subList, i, v):
+            firstTarget = targets[0] + '/' + "HEADER.html"
+            secondTarget = targets[1] + '/' + "HEADER.html"
+            dirObject = open(firstTarget, "w")
+            s(dirObject, "<html>")
+            s(dirObject, "<head>")
+            s(dirObject, "<title>Feedforward science segment</title>>")
+            s(dirObject, "</head>")
+            s(dirObject, "<body>")
+            s(dirObject, "<center>")
+            sciString = str(i + 1) + " from GPS time " + v[0:9] + " to " + v[10:19]
+            s(dirObject, "<h1>Diagnostics for science segment " +  sciString + "</h1>")
+            s(dirObject, "</center>")
+            s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+            s(dirObject, "</p>")
+            s(dirObject, "</body>")
+            s(dirObject, "</html>")
+            dirObject.close()
+            # Copy one header file to the next location:
+            copyCommand = "cp " + firstTarget + " " + secondTarget
+            os.system(copyCommand)
             
-        #plotMaker([segmentLocation, monthLocation], subList, i, v)
+        plotMaker([segmentLocation, monthLocation], subList, i, v)
         
   
     # Now create links to the month directories from the top level, for convenience:
