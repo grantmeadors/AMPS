@@ -157,7 +157,7 @@ for site in siteList:
             dirObject = open(firstTarget, "w")
             s(dirObject, "<html>")
             s(dirObject, "<head>")
-            s(dirObject, "<title>Feedforward science segment</title>>")
+            s(dirObject, "<title>Feedforward science segment</title>")
             s(dirObject, "</head>")
             s(dirObject, "<body>")
             s(dirObject, "<center>")
@@ -205,7 +205,41 @@ for site in siteList:
             greaterAndLesser = segPlacer(candidateWindowListStart, candidateWindowListStop, startTime, stopTime)
             windowListStart = greaterAndLesser[0]
             windowListStop = greaterAndLesser[1]
-            print windowListStop
+            # Make the column labels
+            def c(dirObject, string):
+                s(dirObject, "<td>")
+                s(dirObject, "<center>" + string + "</center>")
+                s(dirObject, "</td>")
+            s(dirObject, "<tr>")
+            c(dirObject, "<b>Spectrum</b>")
+            c(dirObject, "<b>Spectrum (zoom)</b>")
+            c(dirObject, "<b>MICH Filter TF</b>")
+            c(dirObject, "<b>PRC Filter TF</b>")
+            s(dirObject, "</tr>")
+            # Write a short function to link images to each column entry
+            def cim(dirObject, subList, before, window, after): 
+                s(dirObject, "<td><center>")
+                headDirectory = []
+                for sub in subList:
+                    if int(sub[-4::]) == int(window[0:4]):
+                        # Remove the "home" string and replace it with
+                        # a web-compatible one:
+                        subPost = sub.find("/public_html")
+                        subUser = sub[6:subPost]
+                        subPointer = "http://ldas-jobs.ligo.caltech.edu" + \
+                        "/~" + subUser + sub[subPost+12::]
+                        headDirectory = subPointer
+                pdf = '"' + headDirectory + '/' + before + window + \
+                after + ".pdf" + '"'
+                png = '"' + headDirectory + '/' + before + window + \
+                after + ".png" + '"'
+                s(dirObject, before[10::])
+                s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>")
+                s(dirObject, "</center></td>")
+            for i, window in enumerate(windowListStart):
+                s(dirObject, "<tr>")
+                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i])
+                s(dirObject, "</tr>")
             s(dirObject, "</table>")
             s(dirObject, "</p>")
             s(dirObject, "</body>")
