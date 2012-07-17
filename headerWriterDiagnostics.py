@@ -110,16 +110,17 @@ for site in siteList:
             s(dirObject, "<center>" + string + "</center>")
             s(dirObject, "</td>")
         s(dirObject, "<tr>")
-        c(dirObject, "Spectrum")
-        c(dirObject, "Spectrum (zoom)")
-        c(dirObject, "MICH Filter TF")
-        c(dirObject, "PRC Filter TF")
+        c(dirObject, "<b>Spectrum</b>")
+        c(dirObject, "<b>Spectrum (zoom)</b>")
+        c(dirObject, "<b>MICH Filter TF</b>")
+        c(dirObject, "<b>PRC Filter TF</b>")
         s(dirObject, "</tr>")
         # Write a short function to link images to each column entry
         def cim(dirObject, string):
             s(dirObject, "<td><center>")
             pdf = '"' + string + ".pdf" + '"'
             png = '"' + string + ".png" + '"'
+            s(dirObject, string[10::])
             s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>" )
             s(dirObject, "</center></td>")
         for i, window in enumerate(windowListStart):
