@@ -104,6 +104,7 @@ for site in siteList:
                 if subentry.find('Zoom.png') > -1:
                     windowListStart.append(subentry[16:25])
                     windowListStop.append(subentry[26:35])
+        # Make the column labels
         def c(dirObject, string):
             s(dirObject, "<td>")    
             s(dirObject, "<center>" + string + "</center>")
@@ -113,12 +114,20 @@ for site in siteList:
         c(dirObject, "Spectrum (zoom)")
         c(dirObject, "MICH Filter TF")
         c(dirObject, "PRC Filter TF")
-        c(dirObject, "Hoft histogram")
         s(dirObject, "</tr>")
-        for window in windowListStart:
+        # Write a short function to link images to each column entry
+        def cim(dirObject, string):
+            s(dirObject, "<td><center>")
+            pdf = '"' + string + ".pdf" + '"'
+            png = '"' + string + ".png" + '"'
+            s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>" )
+            s(dirObject, "</center></td>")
+        for i, window in enumerate(windowListStart):
             s(dirObject, "<tr>")
-            s(dirObject, "<td>")
-            s(dirObject, "</td>")
+            cim(dirObject, "EleutheriaGraph-" + window + "-" +windowListStop[i])
+            cim(dirObject, "EleutheriaGraph-" + window + "-" +windowListStop[i]+"Zoom")
+            cim(dirObject, "EleutheriaFilter-" + window + "-MICH")
+            cim(dirObject, "EleutheriaFilter-" + window + "-PRC")
             s(dirObject, "</tr>")
         
         s(dirObject, "</table>")
