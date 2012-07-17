@@ -66,6 +66,8 @@ for x in monthlyList:
     monthlyListGPS.append(monthStringGPS)
 
 
+
+
 segmentList = segmentListObject.readlines();
 segmentListObject.close()
 
@@ -78,7 +80,7 @@ for i, v in enumerate(segmentList):
         #os.system(segmentCommand)
         #print segmentLocation
         # To avoid overloading the file system, insert a pause
-        time.sleep(0.001)
+        #time.sleep(0.001)
     segmentDirectory(segmentName, sciencesegmentDirectory)
 
 
@@ -108,7 +110,7 @@ for i, v in enumerate(segmentList):
         #os.system(monthCommand)
         #print monthCommand
         # Again, give the filesystem a pause.
-        time.sleep(0.001)   
+        #time.sleep(0.001)   
     monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory)
  
 
