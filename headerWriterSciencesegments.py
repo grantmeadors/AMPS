@@ -233,12 +233,15 @@ for site in siteList:
                 after + ".pdf" + '"'
                 png = '"' + headDirectory + '/' + before + window + \
                 after + ".png" + '"'
-                s(dirObject, before[10::])
+                s(dirObject, before[10::] + window + after)
                 s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>")
                 s(dirObject, "</center></td>")
             for i, window in enumerate(windowListStart):
                 s(dirObject, "<tr>")
                 cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i])
+                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i] + "Zoom")
+                cim(dirObject, subList, "EleutheriaFilter-", window, "-MICH")
+                cim(dirObject, subList, "EleutheriaFilter-", window, "-PRC")
                 s(dirObject, "</tr>")
             s(dirObject, "</table>")
             s(dirObject, "</p>")
