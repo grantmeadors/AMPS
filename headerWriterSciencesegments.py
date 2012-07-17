@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import subprocess, os, commands, shutil, sys, re, fileinput, time
+import math, subprocess, os, commands, shutil, sys, re, fileinput, time
 
 # Write the HTML header file for displaying science segment results
 
@@ -13,7 +13,7 @@ userName = "gmeadors"
 siteList = ["LHO"]
 for site in siteList:
     sciencesegmentDirectory = "/home/" + userName + \
-    "/public_html/feedforward/sciencesegments/"
+    "/public_html/feedforward/sciencesegments/" + site + "/"
     headerObject = open(sciencesegmentDirectory + "HEADER.html", "w")
 
     # Write the header introduction
@@ -41,10 +41,7 @@ for site in siteList:
     h("02012-07-16 (JD 2456125)")
     h("")
     h("")
-    h("</p>")
-    h("</body>")
     h("")
-    h("</html>")
 
     # Create science-segment based directories, if needed
     segmentListObject = open(sciencesegmentDirectory + "seglist.txt")
@@ -113,10 +110,53 @@ for site in siteList:
             # Again, give the filesystem a pause.
             #time.sleep(0.001)   
         monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory)
- 
+
+        def plotFinder(userName, site, i, v):
+            # For a given target directory associated with a science segment,
+            # we must calculate the location of it diagnostics.
+            # First, note the floors of the GPS start and stop times.
+            startTime = v[0:9]
+            stopTime = v[10:19]
+            # Note that the directories are subdivided into 1e5 s
+            floorStartTime = int(math.floor(int(startTime)/1e5))
+            floorStopTime = int(math.floor(int(stopTime)/1e5))
+            # Now the directories range from the start to the stop
+            # (Add one due to python's way of indexing)
+            dirRange = range(floorStartTime, floorStopTime + 1)
+            # Now reference the appropriate diagnostic directories
+            diagnosticDirectory = "/home/" + userName + \
+            "/public_html/feedforward/diagnostics/" + site + "/"
+            subString = []
+            for subDir in dirRange:
+                subString.append(site[1] + "-" + site[1] + "1_AMPS_C02_L2-" + \
+                str(subDir))
+            subDiagnosticDirectory = []
+            for subName in subString:
+                if os.path.isdir(diagnosticDirectory + subName):
+                    subDiagnosticDirectory.append(diagnosticDirectory + subName)
+            return subDiagnosticDirectory
+        subList = plotFinder(userName, site, i, v)
+        print subList
+  
+    # Now create links to the month directories from the top level, for convenience:
+    pathToMonth = sciencesegmentDirectory + "monthly" + "/"
+    sub0files = os.listdir(pathToMonth)
+    directoriesRaw = []
+    for entry in sub0files:
+        if os.path.isdir(pathToMonth + entry):
+            directoriesRaw.append(entry)
+    directories = sorted(directoriesRaw)
+    h("<br />")
+    h("<br />")
+    h("<b>Science segments by month</b><br />")
+    for dir in directories:
+        h("<a href = " + "monthly" + "/" + dir + ">" + "Diagnostics for month " + dir + "</a><br />")
 
 
 
 
+    h("</p>")
+    h("</body>")
+    h("</html>")
     # Close the header object
     headerObject.close()
