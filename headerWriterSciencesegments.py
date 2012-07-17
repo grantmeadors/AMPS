@@ -97,7 +97,8 @@ for site in siteList:
              greater = []
              lesser = []
              for j, w in enumerate(list):
-                 # Greater is the list of all months before the science segment.
+                 # Greater is the list of all months before or equal to the
+                 # start science segment.
                  if int(w) <= int(v[0:9]):
                      greater.append(j)
                  # Lesser is the list of all months after the science segment.
@@ -149,6 +150,8 @@ for site in siteList:
         subList = plotFinder(userName, site, i, v)
     
         def plotMaker(targets, subList, i, v):
+            startTime = int(v[0:9])
+            stopTime = int(v[10:19])
             firstTarget = targets[0] + '/' + "HEADER.html"
             secondTarget = targets[1] + '/' + "HEADER.html"
             dirObject = open(firstTarget, "w")
@@ -162,6 +165,48 @@ for site in siteList:
             s(dirObject, "<h1>Diagnostics for science segment " +  sciString + "</h1>")
             s(dirObject, "</center>")
             s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+            s(dirObject, "<table border = 1 cellpadding = 5>")
+            # Now comes the complicated work of organizing only the right
+            # graphs from the listed directories and of then integrating them
+            # into a table.
+            # First, proceed as with the parallel diagnostic directories
+            sub1files = []
+            for dir in subList:
+                sub1files.append(os.listdir(dir))
+            candidateWindowListStart = []
+            candidateWindowListStop = []
+            for subentry in sub1files:
+                # Nested for loop to handle list of lists
+                for subsubentry in subentry:
+                    if subsubentry.find('EleutheriaGraph') > -1:
+                        if subsubentry.find('Zoom.png') > -1:
+                            candidateWindowListStart.append(subsubentry[16:25]) 
+                            candidateWindowListStop.append(subsubentry[26:35])
+            # Now we have to find out whether these candidates are within
+            # the science segment. 
+            def segPlacer(listStart, listStop, startTime, stopTime):
+                greater = []
+                lesser = []
+                for j, w in enumerate(listStart):
+                    # Greater is the list of all start candidates after the start
+                    # of the science segment but before its end
+                    if int(w) >= startTime:
+                        if int(w) <= stopTime: 
+                            greater.append(w)
+                for j, w in enumerate(listStop):
+                    # Lesser is the list of all stop candidates before the stop
+                    # of the science segment but before its end
+                    if int(w) <= stopTime:
+                        if int(w) >= startTime:
+                            lesser.append(w)
+                if (not len(lesser) == len(greater)):
+                    print "Mismatch in number of diagnostic files"
+                return [greater, lesser]
+            greaterAndLesser = segPlacer(candidateWindowListStart, candidateWindowListStop, startTime, stopTime)
+            windowListStart = greaterAndLesser[0]
+            windowListStop = greaterAndLesser[1]
+            print windowListStop
+            s(dirObject, "</table>")
             s(dirObject, "</p>")
             s(dirObject, "</body>")
             s(dirObject, "</html>")
