@@ -8,6 +8,10 @@ def h(text):
     result = headerObject.write(text + '\n')
     return result
 
+def s(place, text):
+    result = place.write(text + '\n')
+    return result
+
 # Open the header object
 userName = "gmeadors"
 siteList = ["LHO"]
@@ -58,6 +62,11 @@ for site in siteList:
         month = '2010-' + str(j).zfill(2)
         monthlyList.append(month)
 
+    # Make sure that these months exist as directories
+    for month in monthlyList:
+        monthBasic = 'mkdir -p' + sciencesegmentDirectory + 'monthly' + month
+        #os.system(monthBasic)
+
     monthlyListGPS = []
 
     for x in monthlyList:
@@ -72,7 +81,7 @@ for site in siteList:
 
     for i, v in enumerate(segmentList):
         # Uncomment these lines to generate directories. 
-        segmentName =  'segment-' + str(i).zfill(4) + '-GPS-' + v[0:9] + '-' + v[10:19]
+        segmentName =  'segment-' + str(i+1).zfill(4) + '-GPS-' + v[0:9] + '-' + v[10:19]
         def segmentDirectory(segmentName, sciencesegmentDirectory):
             segmentLocation = sciencesegmentDirectory + 'allsegments/' + segmentName
             segmentCommand = 'mkdir -p ' + segmentLocation
@@ -80,7 +89,8 @@ for site in siteList:
             #print segmentLocation
             # To avoid overloading the file system, insert a pause
             #time.sleep(0.001)
-        segmentDirectory(segmentName, sciencesegmentDirectory)
+            return segmentLocation
+        segmentLocation = segmentDirectory(segmentName, sciencesegmentDirectory)
 
 
         def monthPlacer(list, i, v):
@@ -109,11 +119,12 @@ for site in siteList:
             #print monthCommand
             # Again, give the filesystem a pause.
             #time.sleep(0.001)   
-        monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory)
+            return monthLocation
+        monthLocation = monthDirectory(monthlyList, monthPlace, segmentName, sciencesegmentDirectory)
 
         def plotFinder(userName, site, i, v):
             # For a given target directory associated with a science segment,
-            # we must calculate the location of it diagnostics.
+            # we must calculate the location of its diagnostics.
             # First, note the floors of the GPS start and stop times.
             startTime = v[0:9]
             stopTime = v[10:19]
@@ -136,7 +147,16 @@ for site in siteList:
                     subDiagnosticDirectory.append(diagnosticDirectory + subName)
             return subDiagnosticDirectory
         subList = plotFinder(userName, site, i, v)
-        print subList
+    
+        #def plotMaker(targets, subList, i, v):
+        #    firstTarget = targets[0] + '/' + "HEADER.html"
+        #    secondTarget = targets[1] + '/' + "HEADER.html"
+        #    dirObject = open(firstTarget, "w")
+        #    dirObject.close()
+        #    print secondTarget
+            
+        #plotMaker([segmentLocation, monthLocation], subList, i, v)
+        
   
     # Now create links to the month directories from the top level, for convenience:
     pathToMonth = sciencesegmentDirectory + "monthly" + "/"
