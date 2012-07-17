@@ -78,7 +78,8 @@ for site in siteList:
     headerObject.close()
 
     for dir in directories:
-        dirObject = open(diagnosticDirectory + dir + '/' + "HEADER.html", "w")
+        dirName = diagnosticDirectory + dir
+        dirObject = open(dirName + '/' + "HEADER.html", "w")
         s(dirObject, "<html>")
         s(dirObject, "<head>")
         s(dirObject, "<title>Feedforward diagnostics</title>")
@@ -91,6 +92,37 @@ for site in siteList:
         dirTimeString = dirTime + " to " + dirTimePlus
         s(dirObject, "<h1>Diagnostics for GPS times " + dirTimeString + "</h1>")
         s(dirObject, "</center>")
+        s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+        s(dirObject, "<table border = 1 cellpadding = 5>")
+        # Now comes the complicated work of sorting graphs into a table.
+        sub1files = os.listdir(dirName)
+        # Use the spectrum graphs to sort, one row per filter window
+        windowListStart = []
+        windowListStop = []
+        for subentry in sub1files:
+            if subentry.find('EleutheriaGraph') > -1:
+                if subentry.find('Zoom.png') > -1:
+                    windowListStart.append(subentry[16:25])
+                    windowListStop.append(subentry[26:35])
+        def c(dirObject, string):
+            s(dirObject, "<td>")    
+            s(dirObject, "<center>" + string + "</center>")
+            s(dirObject, "</td>")
+        s(dirObject, "<tr>")
+        c(dirObject, "Spectrum")
+        c(dirObject, "Spectrum (zoom)")
+        c(dirObject, "MICH Filter TF")
+        c(dirObject, "PRC Filter TF")
+        c(dirObject, "Hoft histogram")
+        s(dirObject, "</tr>")
+        for window in windowListStart:
+            s(dirObject, "<tr>")
+            s(dirObject, "<td>")
+            s(dirObject, "</td>")
+            s(dirObject, "</tr>")
+        
+        s(dirObject, "</table>")
+        s(dirObject, "</p>")
         s(dirObject, "</body>")
         s(dirObject, "</html>")
         dirObject.close()
