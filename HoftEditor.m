@@ -110,24 +110,24 @@ classdef HoftEditor < handle
             Hoft.data = ones(16384*totalFrameDuration, 1);
             Hoft.baseline = ones(16384*totalFrameDuration, 1);
         end
-        function constructWhitespace(T, tSub, jj)
-            % The amount of data we need for the next window is a complicated question.
-            % First, compute the stop time, minus one -- it is an end, hence the minus one,
-            % which is necessary in the edge case where the window ends on mod(128).
-            insideEnd = tSub.tEnd(jj+1)-1;
-            % Then compute the start of the first window of the next frame:
-            insideStart = T.s*floor(tSub.tStart(jj+1)/T.s);
-            % We need at least that much, but not more than 512 seconds.
-            % Since, at jj=end-2, we just took off 512 seconds (but not more),
-            % the maximum length the next frame could occupy is
-            insideDifference = insideEnd - insideStart - 512;
-            % Yet we never want more than 512 seconds in our buffer;
-            % we need the min of 512 and the insideDifference for the middle of a long loop,
-            % when the latter is larger. This statement keeps out buffer the same size.
-            minForBuffer = min([512, insideDifference]);
-            % Finally, round to a multiple of the frame length
-            Hoft.nextSubWhitespace = T.s*floor(minForBuffer/T.s);
-        end
+        %function constructWhitespace(T, tSub, jj)
+        %    % The amount of data we need for the next window is a complicated question.
+        %    % First, compute the stop time, minus one -- it is an end, hence the minus one,
+        %    % which is necessary in the edge case where the window ends on mod(128).
+        %    insideEnd = tSub.tEnd(jj+1)-1;
+        %    % Then compute the start of the first window of the next frame:
+        %    insideStart = T.s*floor(tSub.tStart(jj+1)/T.s);
+        %    % We need at least that much, but not more than 512 seconds.
+        %    % Since, at jj=end-2, we just took off 512 seconds (but not more),
+        %    % the maximum length the next frame could occupy is
+        %    insideDifference = insideEnd - insideStart - 512;
+        %    % Yet we never want more than 512 seconds in our buffer;
+        %    % we need the min of 512 and the insideDifference for the middle of a long loop,
+        %    % when the latter is larger. This statement keeps out buffer the same size.
+        %    minForBuffer = min([512, insideDifference]);
+        %    % Finally, round to a multiple of the frame length
+        %    Hoft.nextSubWhitespace = T.s*floor(minForBuffer/T.s);
+        %end
         function initialMICH(Hoft, T, tSub, addenda)
             
             addenda.initialFixer(tSub, T);
@@ -326,23 +326,24 @@ classdef HoftEditor < handle
                 end
                 Hoft.gpsStart = Hoft.gpsStart + 512;
                 if length(tSub.tStart) > 2
-                    constructWhitespace(T, tSub, 1);
+                    nextSubWhitespace = constructWhitespace(T, tSub, 1);
                     
                     Hoft.data =...
                         [Hoft.data;...
-                        ones(16384*Hoft.nextSubWhitespace, 1)];
+                        ones(16384*nextSubWhitespace, 1)];
                     Hoft.baseline =...
                         [Hoft.baseline;...
-                        ones(16384*Hoft.nextSubWhitespace, 1)];
+                        ones(16384*nextSubWhitespace, 1)];
                     if T.pipe == 1
                         Hoft.dqFlag =...
                             [Hoft.dqFlag;...
-                            ones(1*Hoft.nextSubWhitespace, 1)];
+                            ones(1*nextSubWhitespace, 1)];
                         Hoft.stateVector =...
                             [Hoft.stateVector;...
-                            ones(16*Hoft.nextSubWhitespace, 1)];
+                            ones(16*nextSubWhitespace, 1)];
                     end
                 end
+                clear nextSubWhitespace
             end
             
             disp('Offline ZPKs displayed below')
@@ -669,23 +670,24 @@ classdef HoftEditor < handle
                 Hoft.gpsStart = Hoft.gpsStart + 512;
                 % And append if there are enough segments ahead that it will be needed.
                 if jj < (length(tSub.tStart)-1)
-                    constructWhitespace(T, tSub, jj);
+                    nextSubWhitespace = constructWhitespace(T, tSub, jj);
 
                     Hoft.data =...
                         [Hoft.data;...
-                        ones(16384*Hoft.nextSubWhitespace, 1)];
+                        ones(16384*nextSubWhitespace, 1)];
                     Hoft.baseline =...
                         [Hoft.baseline;...
-                        ones(16384*Hoft.nextSubWhitespace, 1)];
+                        ones(16384*nextSubWhitespace, 1)];
                     if T.pipe == 1
                         Hoft.dqFlag =...
                             [Hoft.dqFlag;...
-                            ones(1*Hoft.nextSubWhitespace, 1)];
+                            ones(1*nextSubWhitespace, 1)];
                         Hoft.stateVector =...
                             [Hoft.stateVector;...
                             ones(16*nextSubWhitespace, 1)];
                     end
                 end
+                clear nextSubWhitespace
             end
         end
         function frameWriter(Hoft)

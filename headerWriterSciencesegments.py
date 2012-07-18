@@ -13,7 +13,7 @@ def s(place, text):
     return result
 
 # Open the header object
-userName = "gmeadors"
+userName = "pulsar"
 siteList = ["LHO"]
 for site in siteList:
     sciencesegmentDirectory = "/home/" + userName + \
