@@ -51,6 +51,28 @@ for site in siteList:
     h("")
     h("")
 
+    # Write a science-segment overview header
+    allObject = open('../../../../../public_html/feedforward/sciencesegments/' +\
+                site + '/' + 'allsegments' + '/' + 'HEADER.html',"w")
+    s(allObject, "<html>")
+    s(allObject, "<head>")
+    s(allObject, "<title>All-science segment overview</title>")
+    s(allObject, "</head>")
+    s(allObject, "")
+    s(allObject, "<body>")
+    s(allObject, "<center>")
+    s(allObject, "<h1>Auxiliary MICH-PRC Subtraction: S6 Feedforward</h1>")
+    s(allObject, "</center>")
+    s(allObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+    s(allObject, "<b>All-science segment overview</b><br />")
+    s(allObject, "<br />")
+    s(allObject, "<center>")
+    s(allObject, "Summary plots of range improvements in all science segments,")
+    s(allObject, "four science segments per row.")
+    s(allObject, "</center>")
+    s(allObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+    s(allObject, "<table border = 1 cellpadding = 5>")
+
     # Create science-segment based directories, if needed
     segmentListObject = open(sciencesegmentDirectory + "seglist.txt")
 
@@ -153,7 +175,7 @@ for site in siteList:
             return subDiagnosticDirectory
         subList = plotFinder(userName, site, i, v)
     
-        def plotMaker(targets, subList, i, v):
+        def plotMaker(targets, subList, i, v, userName):
             startTime = int(v[0:9])
             stopTime = int(v[10:19])
             firstTarget = targets[0] + '/' + "HEADER.html"
@@ -244,23 +266,26 @@ for site in siteList:
                 except IOError:
                     print 'File not found or accessible; skipping'
             inspiralRangeList = []
-            for i, window in enumerate(windowListStart):
-                inspiralRangeList.append(rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i]))
+            for k, window in enumerate(windowListStart):
+                inspiralRangeList.append(rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[k]))
             inspiralRangeListClean = []
             inspiralRangeListClean = [x for x in inspiralRangeList if x]
             # Now make the plots proper
+            rangeGraphFlag = False
             if len(inspiralRangeListClean) > 0:
-                print inspiralRangeListClean
+                rangeGraphFlag = True
                 graphTitle = '../../../../../public_html/feedforward/sciencesegments/' +\
                 site + '/' + 'allsegments' + '/' + 'SegmentRangeGraph-' + str(startTime) + '-' + str(stopTime)
                 xymatrix = np.asarray(inspiralRangeListClean)
-                xaxis = xymatrix[:,0]
+                xaxisRaw = np.asarray(xymatrix[:,0], dtype=np.float32)
+                xaxis = [int(round(x)) for x in xaxisRaw]
                 beforeRange = xymatrix[:,1]
                 afterRange = xymatrix[:,2]
                 rangeGain = xymatrix[:,3]
                 plt.plot(xaxis, beforeRange, 'b')
                 plt.plot(xaxis, afterRange, 'g')
-                plt.title('Inspiral range versus time')
+                plt.title('Inspiral range versus time, from ' +\
+                str(startTime) + ' to ' + str(stopTime))
                 plt.xlabel('GPS time (s)')
                 plt.ylabel('Inspiral range (Mpc)')
                 plt.legend(('Before feedforward', 'After feedforward'), 'upper right', shadow=True, fancybox=True)
@@ -277,6 +302,31 @@ for site in siteList:
             c(dirObject, "<b>MICH Filter TF</b>")
             c(dirObject, "<b>PRC Filter TF</b>")
             s(dirObject, "</tr>")
+            # Write a function for the science segment overview range plot
+            def ssorp(allObject, i, graphTitle, linkPoint, userName):
+                if i % 4 == 0:
+                    s(allObject, "<tr>")
+                # Convert graph title location to a web-compatible form:
+                graphPost = graphTitle.find("/public_html")
+                graphPointer = "https://ldas-jobs.ligo.caltech.edu" + \
+                "/~" + userName + '/' + \
+                graphTitle[graphPost+12::]
+                thumb = graphPointer + '.png'
+                linkPost = linkPoint.find("/public_html")
+                linkWeb = "https://ldas-jobs.ligo.caltech.edu" + \
+                "/~" + userName + '/' + \
+                linkPoint[linkPost+13::]
+                percentageSize = '75'
+                sizing = " height=" + '"' + percentageSize + '%"' + \
+                " width=" + '"' + percentageSize + '%"'
+                s(allObject, "<td><center>")
+                s(allObject, "<a href=" + linkWeb + "><img src=" + thumb + sizing + "></a>")
+                s(allObject, "</center></td>")
+                if (i+1) % 4 == 0:
+                    s(allObject, "</tr>")
+            # Do the overall science segment graph
+            if rangeGraphFlag == True:
+                ssorp(allObject, i, graphTitle, targets[0], userName)
             # Write a short function to link images to each column entry
             def cim(dirObject, subList, before, window, after): 
                 s(dirObject, "<td><center>")
@@ -291,10 +341,10 @@ for site in siteList:
                 " width=" + '"' + percentageSize + '%"'
                 s(dirObject, "<a href=" + pdf + "><img src=" + png + sizing + "></a>")
                 s(dirObject, "</center></td>") 
-            for i, window in enumerate(windowListStart):
+            for k, window in enumerate(windowListStart):
                 s(dirObject, "<tr>")
-                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i])
-                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i] + "Zoom")
+                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[k])
+                cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[k] + "Zoom")
                 cim(dirObject, subList, "EleutheriaFilter-", window, "-MICH")
                 cim(dirObject, subList, "EleutheriaFilter-", window, "-PRC")
                 s(dirObject, "</tr>")
@@ -307,7 +357,7 @@ for site in siteList:
             copyCommand = "cp " + firstTarget + " " + secondTarget
             os.system(copyCommand)
             
-        plotMaker([segmentLocation, monthLocation], subList, i, v)
+        plotMaker([segmentLocation, monthLocation], subList, i, v, userName)
         
   
     # Now create links to the month directories from the top level, for convenience:
@@ -326,9 +376,15 @@ for site in siteList:
 
 
 
+    # Close the all-segments overview
+    s(allObject, "</table>")
+    s(allObject, "</p>")
+    s(allObject, "</body>")
+    s(allObject, "</html>")
+    allObject.close()
 
+    # Close the header object
     h("</p>")
     h("</body>")
     h("</html>")
-    # Close the header object
     headerObject.close()
