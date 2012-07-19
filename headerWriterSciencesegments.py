@@ -105,7 +105,7 @@ for site in siteList:
     s(allObject, "<table border = 1 cellpadding = 5>")
 
     # Create science-segment based directories, if needed
-    segmentListObject = open(sciencesegmentDirectory + "seglist.txt")
+    segmentListObject = open(sciencesegmentDirectory + "seglist_" + site + ".txt")
 
     monthlyList = []
 
@@ -400,6 +400,8 @@ for site in siteList:
             directoriesRaw.append(entry)
     directories = sorted(directoriesRaw)
     h("<br />")
+    h("<br />")
+    h("<a href = " + "allsegments" + "/" + ">" + "<b>All science segments</b></a><br/>")
     h("<br />")
     h("<b>Science segments by month</b><br />")
     for dir in directories:
