@@ -221,10 +221,6 @@ for site in siteList:
             sciString = str(i + 1) + " from GPS time " + v[0:9] + " to " + v[10:19]
             s(dirObject, "<h1>Diagnostics for science segment " +  sciString + "</h1>")
             s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
-            s(dirObject, "Each row shows one feedforward filter window (up to 1024 s, 50% overlap)<br />") 
-            s(dirObject, "</center>")
-            s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
-            s(dirObject, "<table border = 1 cellpadding = 5>")
             # Now comes the complicated work of organizing only the right
             # graphs from the listed directories and of then integrating them
             # into a table.
@@ -264,6 +260,15 @@ for site in siteList:
             greaterAndLesser = segPlacer(candidateWindowListStart, candidateWindowListStop, startTime, stopTime)
             windowListStart = sorted(greaterAndLesser[0])
             windowListStop = sorted(greaterAndLesser[1])
+            # Write the remainder of the header for the science segment
+            s(dirObject, "Each row shows one feedforward filter window (up to 1024 s, 50% overlap),<br />") 
+            pluralBit = ' in this science segment'
+            if len(windowListStart) > 1:
+                pluralBit = 's in this science segment'
+            s(dirObject, str(len(windowListStart)) + " filter window" + pluralBit)
+            s(dirObject, "</center>")
+            s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+            s(dirObject, "<table border = 1 cellpadding = 5>")
             # Find the head directory containing the plots:
             def headFinder(subList, window, typeFlag):
                 headDirectory = []
@@ -334,7 +339,7 @@ for site in siteList:
             c(dirObject, "<b>PRC Filter TF</b>")
             s(dirObject, "</tr>")
             # Write a function for the science segment overview range plot
-            def ssorp(allObject, i, graphTitle, linkPoint, userName):
+            def ssorp(allObject, i, graphTitle, linkPoint, userName, times):
                 if i % 4 == 0:
                     s(allObject, "<tr>")
                 # Convert graph title location to a web-compatible form:
@@ -351,13 +356,18 @@ for site in siteList:
                 sizing = " height=" + '"' + percentageSize + '%"' + \
                 " width=" + '"' + percentageSize + '%"'
                 s(allObject, "<td><center>")
-                s(allObject, "<a href=" + linkWeb + "><img src=" + thumb + sizing + "></a>")
+                s(allObject, "<a href=" + thumb + "><img src=" + thumb + sizing + "></a>")
+                s(allObject, "<a href=" + linkWeb + ">" + \
+                "<br />window-by-window details for <br />" + "segment " +\
+                 str(i+1) + ", <br \>" + "duration " +\
+                 str(times[1] - times[0]) + " s <br />"\
+                "</a>")
                 s(allObject, "</center></td>")
                 if (i+1) % 4 == 0:
                     s(allObject, "</tr>")
             # Do the overall science segment graph
             if rangeGraphFlag == True:
-                ssorp(allObject, i, graphTitle, targets[0], userName)
+                ssorp(allObject, i, graphTitle, targets[0], userName, [startTime, stopTime])
             # Write a short function to link images to each column entry
             def cim(dirObject, subList, before, window, after): 
                 s(dirObject, "<td><center>")
