@@ -42,7 +42,7 @@ for site in siteList:
     h("<br />")
     h("g m e a d o r s @ u m i c h . e d u")
     h("<br />")
-    h("02012-07-16 (JD 2456125)")
+    h("02012-07-18 (JD 2456127)")
     h("")
     h("")
     h("")
@@ -163,6 +163,8 @@ for site in siteList:
             s(dirObject, "<center>")
             sciString = str(i + 1) + " from GPS time " + v[0:9] + " to " + v[10:19]
             s(dirObject, "<h1>Diagnostics for science segment " +  sciString + "</h1>")
+            s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+            s(dirObject, "Each row shows one feedforward filter window (up to 1024 s, 50% overlap)<br />") 
             s(dirObject, "</center>")
             s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
             s(dirObject, "<table border = 1 cellpadding = 5>")
@@ -203,8 +205,29 @@ for site in siteList:
                     print "Mismatch in number of diagnostic files"
                 return [greater, lesser]
             greaterAndLesser = segPlacer(candidateWindowListStart, candidateWindowListStop, startTime, stopTime)
-            windowListStart = greaterAndLesser[0]
-            windowListStop = greaterAndLesser[1]
+            windowListStart = sorted(greaterAndLesser[0])
+            windowListStop = sorted(greaterAndLesser[1])
+            # Find the head directory containing the plots:
+            def headFinder(subList, window):
+                headDirectory = []
+                for sub in subList:
+                    if int(sub[-4::]) == int(window[0:4]):
+                        # Remove the "home" string and replace it with
+                        # a web-compatible one:
+                        subPost = sub.find("/public_html")
+                        subUser = sub[6:subPost]
+                        subPointer = "http://ldas-jobs.ligo.caltech.edu" + \
+                        "/~" + subUser + sub[subPost+12::]
+                        headDirectory = subPointer
+                        return headDirectory
+            # Make an overall range plot
+            def rangeReader(dirObject, subList, before, window, after):
+                headDirectory = headFinder(subList, window)
+                rangeTxt = '"' + headDirectory + '/' + before + window + \
+                after + ".txt" + '"'
+                print rangeTxt
+            for i, window in enumerate(windowListStart):
+                rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i])
             # Make the column labels
             def c(dirObject, string):
                 s(dirObject, "<td>")
@@ -219,23 +242,17 @@ for site in siteList:
             # Write a short function to link images to each column entry
             def cim(dirObject, subList, before, window, after): 
                 s(dirObject, "<td><center>")
-                headDirectory = []
-                for sub in subList:
-                    if int(sub[-4::]) == int(window[0:4]):
-                        # Remove the "home" string and replace it with
-                        # a web-compatible one:
-                        subPost = sub.find("/public_html")
-                        subUser = sub[6:subPost]
-                        subPointer = "http://ldas-jobs.ligo.caltech.edu" + \
-                        "/~" + subUser + sub[subPost+12::]
-                        headDirectory = subPointer
+                headDirectory = headFinder(subList, window)
                 pdf = '"' + headDirectory + '/' + before + window + \
                 after + ".pdf" + '"'
                 png = '"' + headDirectory + '/' + before + window + \
                 after + ".png" + '"'
                 s(dirObject, before[10::] + window + after)
-                s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>")
-                s(dirObject, "</center></td>")
+                percentageSize = '75'
+                sizing = " height=" + '"' + percentageSize + '%"' + \
+                " width=" + '"' + percentageSize + '%"'
+                s(dirObject, "<a href=" + pdf + "><img src=" + png + sizing + "></a>")
+                s(dirObject, "</center></td>") 
             for i, window in enumerate(windowListStart):
                 s(dirObject, "<tr>")
                 cim(dirObject, subList, "EleutheriaGraph-", window, "-" + windowListStop[i])

@@ -42,7 +42,7 @@ for site in siteList:
     h("<br />")
     h("g m e a d o r s @ u m i c h . e d u")
     h("<br />")
-    h("02012-07-16 (JD 2456125)")
+    h("02012-07-18 (JD 2456127)")
     h("")
     h("")
 
@@ -91,11 +91,13 @@ for site in siteList:
         dirTimePlus = str(int(dirTime) + 100000)
         dirTimeString = dirTime + " to " + dirTimePlus
         s(dirObject, "<h1>Diagnostics for GPS times " + dirTimeString + "</h1>")
+        s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+        s(dirObject, "Each row shows one feedforward filter window (up to 1024 s, 50% overlap)<br />")
         s(dirObject, "</center>")
         s(dirObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
         s(dirObject, "<table border = 1 cellpadding = 5>")
         # Now comes the complicated work of sorting graphs into a table.
-        sub1files = os.listdir(dirName)
+        sub1files = sorted(os.listdir(dirName))
         # Use the spectrum graphs to sort, one row per filter window
         windowListStart = []
         windowListStop = []
@@ -121,7 +123,10 @@ for site in siteList:
             pdf = '"' + string + ".pdf" + '"'
             png = '"' + string + ".png" + '"'
             s(dirObject, string[10::])
-            s(dirObject, "<a href=" + pdf + "><img src=" + png + "></a>" )
+            percentageSize = '75'
+            sizing = " height=" + '"' + percentageSize + '%"' + \
+            " width=" + '"' + percentageSize + '%"'
+            s(dirObject, "<a href=" + pdf + "><img src=" + png + sizing +"></a>" )
             s(dirObject, "</center></td>")
         for i, window in enumerate(windowListStart):
             s(dirObject, "<tr>")
