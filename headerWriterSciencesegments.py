@@ -1,5 +1,9 @@
 #!/usr/bin/python
 import math, subprocess, os, commands, shutil, sys, re, fileinput, time
+import matplotlib as matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Write the HTML header file for displaying science segment results
 
@@ -242,7 +246,26 @@ for site in siteList:
             inspiralRangeList = []
             for i, window in enumerate(windowListStart):
                 inspiralRangeList.append(rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i]))
-            print inspiralRangeList
+            inspiralRangeListClean = []
+            inspiralRangeListClean = [x for x in inspiralRangeList if x]
+            # Now make the plots proper
+            if len(inspiralRangeListClean) > 0:
+                print inspiralRangeListClean
+                graphTitle = '../../../../../public_html/feedforward/sciencesegments/' +\
+                site + '/' + 'allsegments' + '/' + 'SegmentRangeGraph-' + str(startTime) + '-' + str(stopTime)
+                xymatrix = np.asarray(inspiralRangeListClean)
+                xaxis = xymatrix[:,0]
+                beforeRange = xymatrix[:,1]
+                afterRange = xymatrix[:,2]
+                rangeGain = xymatrix[:,3]
+                plt.plot(xaxis, beforeRange, 'b')
+                plt.plot(xaxis, afterRange, 'g')
+                plt.title('Inspiral range versus time')
+                plt.xlabel('GPS time (s)')
+                plt.ylabel('Inspiral range (Mpc)')
+                plt.legend(('Before feedforward', 'After feedforward'), 'upper right', shadow=True, fancybox=True)
+                plt.savefig(graphTitle + '.png')
+                plt.close()
             # Make the column labels
             def c(dirObject, string):
                 s(dirObject, "<td>")
