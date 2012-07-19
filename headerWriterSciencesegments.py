@@ -208,24 +208,36 @@ for site in siteList:
             windowListStart = sorted(greaterAndLesser[0])
             windowListStop = sorted(greaterAndLesser[1])
             # Find the head directory containing the plots:
-            def headFinder(subList, window):
+            def headFinder(subList, window, typeFlag):
                 headDirectory = []
                 for sub in subList:
                     if int(sub[-4::]) == int(window[0:4]):
-                        # Remove the "home" string and replace it with
-                        # a web-compatible one:
                         subPost = sub.find("/public_html")
-                        subUser = sub[6:subPost]
-                        subPointer = "http://ldas-jobs.ligo.caltech.edu" + \
-                        "/~" + subUser + sub[subPost+12::]
+                        if typeFlag == 'graph':
+                            # Remove the "home" string and replace it with
+                            # a web-compatible one:
+                            subUser = sub[6:subPost]
+                            subPointer = "https://ldas-jobs.ligo.caltech.edu" + \
+                            "/~" + subUser + \
+                            sub[subPost+12::]
+                        if typeFlag == 'range':
+                            subPointer = "../../../../../public_html" + \
+                            sub[subPost+12::]
                         headDirectory = subPointer
                         return headDirectory
             # Make an overall range plot
             def rangeReader(dirObject, subList, before, window, after):
-                headDirectory = headFinder(subList, window)
+                headDirectory = headFinder(subList, window, 'range')
                 rangeTxt = '"' + headDirectory + '/' + before + window + \
                 after + ".txt" + '"'
-                print rangeTxt
+                rangeTxtFile =  rangeTxt[1:-1]
+                try:
+                    rangeTxtObject = open(rangeTxtFile)
+                    inspiralRange = rangeTxtObject.readlines()
+                    rangeTxtObject.close()
+                    print inspiralRange
+                except IOError:
+                    print 'File not found or accessible; skipping'
             for i, window in enumerate(windowListStart):
                 rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i])
             # Make the column labels
@@ -242,7 +254,7 @@ for site in siteList:
             # Write a short function to link images to each column entry
             def cim(dirObject, subList, before, window, after): 
                 s(dirObject, "<td><center>")
-                headDirectory = headFinder(subList, window)
+                headDirectory = headFinder(subList, window, 'graph')
                 pdf = '"' + headDirectory + '/' + before + window + \
                 after + ".pdf" + '"'
                 png = '"' + headDirectory + '/' + before + window + \
