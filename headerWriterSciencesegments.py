@@ -63,12 +63,43 @@ for site in siteList:
     s(allObject, "<center>")
     s(allObject, "<h1>Auxiliary MICH-PRC Subtraction: S6 Feedforward</h1>")
     s(allObject, "</center>")
+    s(allObject, "<center>")
     s(allObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
     s(allObject, "<b>All-science segment overview</b><br />")
+    s(allObject, "</p>")
+    s(allObject, "</center>")
     s(allObject, "<br />")
     s(allObject, "<center>")
-    s(allObject, "Summary plots of range improvements in all science segments,")
-    s(allObject, "four science segments per row.")
+    s(allObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
+    # We need a function to locate the top-level plots
+    # of inspiral range over the entire science run
+    def wholeRangeDirectory(userName):
+        webCluster = 'https://ldas-jobs.ligo.caltech.edu/~'
+        wholeString = webCluster + userName + '/feedforward/diagnostics/LHO/'
+        return wholeString
+    wholeRange = wholeRangeDirectory(userName)
+    # And, for each type of plot, insert the image
+    def wholePlotImager(wholeRange, plot):
+        wholePDF = wholeRange + plot + '.pdf'
+        wholePNG = wholeRange + plot + '.png'
+        s(allObject, "<a href=" + wholePDF + "><img src=" + wholePNG + "></a>")
+        s(allObject, "<br />")
+    s(allObject, "Before and after inspiral range versus time,")
+    s(allObject, "one point per feedforward filter window")
+    s(allObject, "(up to 1024 s, 50% overlap)")
+    s(allObject, "<br />")
+    wholePlotImager(wholeRange, 'inspiralRange')
+    s(allObject, "<br />")
+    s(allObject, "Range gain (after/before) versus time,")
+    s(allObject, "one point per feedforward filter window")
+    s(allObject, "(up to 1024 s, 50% overlap)")
+    s(allObject, "<br />")
+    wholePlotImager(wholeRange, 'inspiralRangeGain')
+    s(allObject, "<br />")
+    s(allObject, "Summary plots of range improvements in each science segment,")
+    s(allObject, "four segments per row, for all segments.")
+    s(allObject, "<br />")
+    s(allObject, "</p>")
     s(allObject, "</center>")
     s(allObject, "<p style = " + '"' + "font-family:sans-serif"+'"' + ">")
     s(allObject, "<table border = 1 cellpadding = 5>")
