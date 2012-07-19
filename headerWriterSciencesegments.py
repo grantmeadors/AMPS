@@ -233,13 +233,16 @@ for site in siteList:
                 rangeTxtFile =  rangeTxt[1:-1]
                 try:
                     rangeTxtObject = open(rangeTxtFile)
-                    inspiralRange = rangeTxtObject.readlines()
+                    inspiralRangeLines = rangeTxtObject.readlines()
                     rangeTxtObject.close()
-                    print inspiralRange
+                    inspiralRange = inspiralRangeLines[1]
+                    return str(inspiralRange).split()
                 except IOError:
                     print 'File not found or accessible; skipping'
+            inspiralRangeList = []
             for i, window in enumerate(windowListStart):
-                rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i])
+                inspiralRangeList.append(rangeReader(dirObject, subList, "EleutheriaRange-", window, "-" + windowListStop[i]))
+            print inspiralRangeList
             # Make the column labels
             def c(dirObject, string):
                 s(dirObject, "<td>")
