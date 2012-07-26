@@ -43,7 +43,7 @@ classdef Fitting < handle
             
             % Initial poles for Vector Fitting:
             % order of approximation
-            N = 64;
+            N = 16;
             poles = logspace(2, log10(filtering.Fs/10), N);
             % make sure poles are below the Nyquist
             
