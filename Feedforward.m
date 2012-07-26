@@ -60,7 +60,7 @@ classdef Feedforward < handle
             
             
             % pre-filter data
-            channels.preFilter
+            %channels.preFilter
             
             
             
