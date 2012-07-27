@@ -16,7 +16,7 @@ def g(text):
     result = dagObject.write(text + '\n')
     return result
 userDirectory = "/home/pulsar/feedforward/"
-analysisDate = "2012/07/17"
+analysisDate = "2012/07/27"
 
 # Make a directory for the output logs
 os.system('mkdir -p eleutheriaLogs')
@@ -30,7 +30,7 @@ h("universe = vanilla")
 h("executable = /home/pulsar/feedforward/" + analysisDate + "/AMPS/run_eleutheria-well.sh")
 h("output = /home/pulsar/feedforward/" + analysisDate + "/AMPS/eleutheriaLogs/eleutheria.out.$(tagstring)")
 h("error = eleutheriaLogs/eleutheria.err.$(tagstring)")
-h("log = /usr1/pulsar/eleutheria.dag.log")
+h("log = eleutheriaLogs/eleutheria.dag.log")
 h("requirements = Memory >= 3999")
 h("environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib")
 h("notification = never")
@@ -82,7 +82,7 @@ def dagWriter(jobNumber, startTime, stopTime):
     dataFinder(startTime, stopTime, cacheDARM, cacheNOISE)
     argumentList = '"' + str(startTime) + " " + str(stopTime) + " " + cacheDARM + " " + cacheNOISE + '"'
     tagStringLine = "eleutheria_" + str(jobNumber)
-    g("JOB " + tagStringLine + " EleutheriaSubmit.sub")
+    g("JOB " + tagStringLine + " EleutheriaSub.sub")
     g("VARS " + tagStringLine + " argList=" + argumentList + " tagString=" + '"' + tagStringLine + '"')
 
 # Generate the list of start and stop science segment times
