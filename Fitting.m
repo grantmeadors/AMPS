@@ -12,7 +12,6 @@ classdef Fitting < handle
         f
         z0
         Fs
-        currentTF
         rmserr
     end
     
@@ -28,7 +27,7 @@ classdef Fitting < handle
             
             
             % Vector fit!
-            filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
+            %filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
             
             n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM));
@@ -100,7 +99,7 @@ classdef Fitting < handle
             opts.logy = 1;       % Use logarithmic ordinate axis
             opts.errplot = 1;    % Include deviation in magnitude plot
             opts.phaseplot = 1;  % Also produce plot of phase angle (in addition to magnitiude)
-            opts.legend =1;      % Do include legends in plots
+            opts.legend = 1;     % Do include legends in plots
             opts.fignum = 337;
             
             disp('vector fitting...')
