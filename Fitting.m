@@ -89,7 +89,7 @@ classdef Fitting < handle
             
             opts.relax = 0;      % Do NOT use vector fitting with relaxed non-triviality constraint
             opts.stable = 1;     % Enforce stable poles
-            opts.asymp = 3;      % Include both D, E in fitting
+            opts.asymp = 2;      % Include only D, not E in fitting
             opts.skip_pole = 0;  % Do NOT skip pole identification
             opts.skip_res = 0;   % Do NOT skip identification of residues (C,D,E)
             opts.cmplx_ss = 0;   % Create real state space model
@@ -125,7 +125,7 @@ classdef Fitting < handle
             % Get real world zeros and poles out of this garbage 
             % (above line is not GDM's words, but appropriate!)
             % ss(A,B,C,D)+zpk(0, [], E) is the SYS object of the fit.
-            ourfit = ss(A,B,C,D) + zpk(0, [], E);
+            ourfit = ss(A,B,C,D);% + zpk(0, [], E);
             
             % subtract our fit from the current MICHD to make a new TF
             % note by GDM 2010-09-09: I think that we actually have to add to the how
