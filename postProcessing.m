@@ -1,6 +1,6 @@
 % Grant David Meadors
 % Matlab post-processing for feedforward
-% 02012-07-03 (JD 2456112)
+% 02012-08-02 (JD 2456142)
 % g m e a d o r s @ u m i c h . e d u
 
 % Clear any existing 'Whole log' entries
@@ -9,9 +9,9 @@ system('rm eleutheriaLogs/whole_out.txt');
 system('rm eleutheriaLogs/whole_err.txt');
 
 % Make sure that i in the bash script ranges to N-1, where N is the number of jobs
-system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.log.$i >> logs/whole_log.txt; done');
-system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.out.$i >> logs/whole_out.txt; done');
-system('for i in {0..199}; do cat eleutheriaLogs/eleutheria.err.$i >> logs/whole_err.txt; done');
+system('cat eleutheriaLogs/eleutheria.dag.log >> eleutheriaLogs/whole_log.txt');
+system('for i in {1..200}; do cat eleutheriaLogs/eleutheria.out.eleutheria_$i >> eleutheriaLogs/whole_out.txt; done');
+system('for i in {1..200}; do cat eleutheriaLogs/eleutheria.err.eleutheria_$i >> eleutheriaLogs/whole_err.txt; done');
 
 
 % Read image sizes to make sure that none of the jobs is using too much memory
@@ -32,7 +32,7 @@ imagesize = imagesize(~cellfun('isempty',imagesize));
 imagesize = cellfun(@str2num, imagesize);
 % Find maximum
 disp('Largest image size (in kilobytes)')
-maximum_imagesize = max(imagesize);
+%maximum_imagesize = max(imagesize);
 disp(maximum_imagesize)
 
 % Make file of range estimates files
