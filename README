@@ -84,7 +84,7 @@ Perusing frames:
 
 SFT generation:
 0. Follow the following BASH commands to make SFTs for AMPS data:
-1. "ligo_data_find -o H -t H1_AMPS_C02_L2 -u file -s 931052708 -e 971622015 -u file --show-times > SFTsegsTestData.txt--show-times > SFTsegTestData.txt"
+1. "ligo_data_find -o H -t H1_AMPS_C02_L2 -u file -s 931052708 -e 971622015 -u file --show-times > SFTsegsTestData.txt"
 2. "./compareSegLists.tcl -f1 dividedSeglist.txt -f2 segsH1ScienceMinusAllVetoes_AllS6VSR2VSR3times.txt -i > SFTsegsTestList.txt"
 3. "./compareSegLists.tcl -f1 SFTsegsTestList.txt -f2 SFTsegsTestData.txt -i > SFTsegsTestIntersection.txt"
 4. "MakeSFTDAG -f SFTtukey.dag -G SFTTUKEY -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/tukey -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8"
