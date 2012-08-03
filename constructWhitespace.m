@@ -1,8 +1,14 @@
 function nextSubWhitespace = constructWhitespace(T, tSub, jj)
     % The amount of data we need for the next window is a complicated question.
     % First, compute the stop time, minus one -- it is an end, hence the minus one,
-    % which is necessary in the edge case where the window ends on mod(128).
-    insideEnd = tSub.tEnd(jj+1)-1;
+    % which is necessary in the edge case where the window ends on mod(128),
+    % except in the case where the whole science segment started on mod(128).
+    if mod(tSub.tStart(1), 128) == 0
+        edgeException = 0;
+    else
+        edgeException = -1;
+    end
+    insideEnd = tSub.tEnd(jj+1) + edgeException;
     % Then compute the start of the first window of the next frame:
     insideStart = T.s*floor(tSub.tStart(jj+1)/T.s);
     % We need at least that much, but not more than 512 seconds.
