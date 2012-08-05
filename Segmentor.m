@@ -22,7 +22,7 @@ classdef Segmentor < handle
             
             disp(strcat('Beginning science segment ... ', num2str(ii)))
             % apply the subdivider to that specific segment,
-            % which gives thirty-minute subsections out to tsub.
+            % which gives 1024 second subsections out to tsub.
         end
     end
     
