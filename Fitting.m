@@ -88,7 +88,7 @@ classdef Fitting < handle
             
             opts.relax = 0;      % Do NOT use vector fitting with relaxed non-triviality constraint
             opts.stable = 1;     % Enforce stable poles
-            opts.asymp = 1;      % Include neither D, nor E in fitting
+            opts.asymp = 2;      % Include D but not  E in fitting
             opts.skip_pole = 0;  % Do NOT skip pole identification
             opts.skip_res = 0;   % Do NOT skip identification of residues (C,D,E)
             opts.cmplx_ss = 0;   % Create real state space model
