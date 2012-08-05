@@ -32,7 +32,7 @@ imagesize = imagesize(~cellfun('isempty',imagesize));
 imagesize = cellfun(@str2num, imagesize);
 % Find maximum
 disp('Largest image size (in kilobytes)')
-%maximum_imagesize = max(imagesize);
+maximum_imagesize = max(imagesize);
 disp(maximum_imagesize)
 
 % Make file of range estimates files
