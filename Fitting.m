@@ -30,9 +30,10 @@ classdef Fitting < handle
             %filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
             
-            n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM));
+            n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
+            coh = transpose(frequencies.coh(n));
 
             % Keep a copy of the raw transfer function for diagnostics
             z0 = z;
@@ -65,6 +66,25 @@ classdef Fitting < handle
             z = filter(movF, 1, z);
 
             
+            % Apply the same smoothing to the coherence and use it as a cutoff
+            % for the region in which to fit the transfer function.
+            %coh = filter(movF, 1, medfilt1(coh, 10));
+            function shapeFactor = cohShape(coh)
+                realCoherence = real(coh);
+                % Use a coherence of 0.01
+                % as a determiner of whether the transfer function
+                % is reshaped. If the coherence is greater,
+                % return one. If lesser, return the (real)
+                % the ratio of the coherence to the threshold
+                % to very gently surpress the transfer function magnitude.
+                thresholdCoherence = 0.01;
+                shapeFactor = ones(size(realCoherence));
+                shapeFactor(realCoherence < thresholdCoherence) =...
+                    realCoherence(realCoherence < thresholdCoherence)/thresholdCoherence;  
+                %shapeFactor = sqrt(shapeFactor);
+            end
+            % Multiply the transfer function by the shaping factor:
+            %z = z .* cohShape(coh);
             
             weight = ones(size(f));
             % All frequency points are given equal weight
@@ -74,14 +94,14 @@ classdef Fitting < handle
             m = squeeze(m);
             weight = weight .* (m(:)');
             
-            % notch out the power lines, cal lines, pcal line, violins and f>800
+            % notch out the power lines, cal lines, pcal line, violins and f>2000
             v   = find((abs(f - 60) < 4) |...
                 (abs(f - 120) < 3) | (abs(f - 180) < 3) | ...
                 (abs(f-240)<3) | (abs(f-300) < 3) | (abs(f-360) < 3));
             vv = find( (abs(f-46.7) < 3) |...
                 (abs(f-391.3) < 3) | (abs(f-1144.3) < 3)| ...
                 (abs(f - 346) < 20) | (abs(f-400.2) < 3));
-            vvv = find(f>800);
+            vvv = find(f>2000);
             
             weight([v vv vvv]) = 0;
             
@@ -201,6 +221,7 @@ classdef Fitting < handle
             ylabel('degree')
             xlabel('Hz')
             xlim([min(ff) max(ff)]);
+            
             % % FillPage('tall');
             if frequencies.PRCfilter
                 noiseNameString = 'PRC';
@@ -219,6 +240,18 @@ classdef Fitting < handle
             print('-dpdf', strcat(graphName, '.pdf'));
             print('-dpng', strcat(graphName, '.png'));
             close(210)
+            % Plot the coherence separately
+            figure(213)
+            loglog(f, coh)
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Coherence')
+            title('Coherence vs frequency')
+            ylabel('Coherence')
+            xlabel('Hz')
+            print('-dpdf', strcat(graphName, '-coherence', '.pdf'));
+            print('-dpng', strcat(graphName, '-coherence',  '.png'));
+            close(213)
             
             %
             %
