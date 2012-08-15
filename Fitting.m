@@ -96,7 +96,7 @@ classdef Fitting < handle
             
             
             [m, p] = bode(zpk([0 0], -2*pi*[100 100 700 700], 1), 2*pi*f);
-            m = squeeze(m);
+            m = (squeeze(m)).^2;
             weight = weight .* (m(:)');
             
             % notch out the power lines, cal lines, pcal line, violins and f>2000
