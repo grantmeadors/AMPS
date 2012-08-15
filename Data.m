@@ -107,6 +107,7 @@ classdef Data < handle
                         cache, whichChannel, startTime, duration);
                     if length(dataArray) == (samplingFrequency*duration)
                         hh = numberOfTries + 1;
+                        break
                     end    
                     if (hh > 1) & (hh < numberOfTries)
                         disp('Failure to correctly retrieve data; pausing and will retry')
