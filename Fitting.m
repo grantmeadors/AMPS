@@ -30,7 +30,7 @@ classdef Fitting < handle
             %filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
             
-            n = find(f > 50 & f < 5500 & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
+            n = find(f > 20 & f < 7000 & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
             coh = transpose(frequencies.coh(n));
@@ -43,7 +43,7 @@ classdef Fitting < handle
             
             % Initial poles for Vector Fitting:
             % order of approximation
-            N = 16;
+            N = 32;
             poles = logspace(2, log10(filtering.Fs/10), N);
             % make sure poles are below the Nyquist
             
@@ -88,7 +88,8 @@ classdef Fitting < handle
 
             % Instead, let us try multiplying the transfer function by a
             % shaping factor derived solely from a frequency threshold.
-            z(f > 500) = z(f > 500) .* (500 ./ f(f > 500)) .^4;
+            z(f > 500) = z(f > 500) .* (500 ./ f(f > 500)) .^8;
+            z(f < 50) = z(f < 50) .* (f(f < 50) ./ 50) .^8;
             
             weight = ones(size(f));
             % All frequency points are given equal weight
