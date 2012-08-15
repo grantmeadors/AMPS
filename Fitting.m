@@ -85,6 +85,10 @@ classdef Fitting < handle
             end
             % Multiply the transfer function by the shaping factor:
             %z = z .* cohShape(coh);
+
+            % Instead, let us try multiplying the transfer function by a
+            % shaping factor derived solely from a frequency threshold.
+            z(f > 500) = z(f > 500) .* (500 ./ f(f > 500)) .^4;
             
             weight = ones(size(f));
             % All frequency points are given equal weight
