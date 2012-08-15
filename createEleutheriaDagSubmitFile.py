@@ -16,7 +16,7 @@ def g(text):
     result = dagObject.write(text + '\n')
     return result
 userDirectory = "/home/pulsar/feedforward/"
-analysisDate = "2012/07/27"
+analysisDate = "2012/08/15-1"
 
 # Make a directory for the output logs
 os.system('mkdir -p eleutheriaLogs')
