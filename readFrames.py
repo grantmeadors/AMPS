@@ -103,7 +103,6 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
     # or a list like this,
     #
     # ['/path/filename1  ', '/path/filename2  ', '/path/filename3  ' ...] 
-    # special Python warning: the two trailing spaces after each filename are not optional
     #
     # Keeping everything past file://localhost, go through the list of files and parse out the
     # filename, GPS start times, and duration of each file and read the data from each file with
@@ -163,7 +162,7 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
     return [data, lastIndex, errCode, sRate, times]
 
 # For testing demonstrations:
-output = readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 129)
-#exampleListOfFiles = ['H H1_LDAS_C02_L2 953164800 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf  ', 'H H1_LDAS_C02_L2 953164928 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164928-128.gwf  ']
-#output = readFrames(exampleListOfFiles, 'H1:LDAS-STRAIN', 953164815, 129,1)
+#output = readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 129)
+exampleListOfFiles = ['H H1_LDAS_C02_L2 953164800 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf', 'H H1_LDAS_C02_L2 953164928 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164928-128.gwf']
+output = readFrames(exampleListOfFiles, 'H1:LDAS-STRAIN', 953164815, 129,1)
 print output
