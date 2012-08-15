@@ -7,10 +7,6 @@
 import re, numpy
 from pylal.Fr import frgetvect1d
 
-# Testing tools:
-output = frgetvect1d('/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf', 'H1:LDAS-STRAIN', 953164800, 1)
-#print output
-
 def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=None, startIndex=None):
     # Comments below, unless noted otherwise, are verbatim from the
     # comments of Greg Mendell in the Matlab version of this code.
@@ -92,7 +88,7 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
         listOfFiles = fileList
     else:
         fileListObject = open(fileList)        
-        listOfFiles = [line.strip().split() for line in fileListObject]
+        listOfFiles = [line.strip().split()[4] for line in fileListObject]
         fileListObject.close()
     listOfFilesLen = len(listOfFiles)
 
@@ -106,20 +102,21 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
     #
     # or a list like this,
     #
-    # ['/path/filename1', '/path/filename2', '/path/filename3' ...] 
+    # ['/path/filename1  ', '/path/filename2  ', '/path/filename3  ' ...] 
+    # special Python warning: the two trailing spaces after each filename are not optional
     #
     # Keeping everything past file://localhost, go through the list of files and parse out the
     # filename, GPS start times, and duration of each file and read the data from each file with
     # data between startGPSTime and endGPSTime. Break off of the loop when endGPSTime is reached.
     #
     ###########################################
-    for j in listOfFiles:
+    for k, j in enumerate(listOfFiles[startIndex - 1:listOfFilesLen]):
         
         # Get the filename with the path from each line in listOfFiles.
         thisLine = str(j) # convert this line into string data
         thisPos = thisLine.find(fileLocalHostStr) # find the position of the fileLocalHostStr string:
         if thisPos > -1: 
-            thisFile = thisLine[thisPos + fileLocalHostStrLen:-2] # slice out the filename with the path
+            thisFile = thisLine[thisPos + fileLocalHostStrLen:] # slice out the filename with the path
         else:
             thisFile = thisLine
 
@@ -141,15 +138,32 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
             try:
                 thisData = frgetvect1d(thisFile, chanName, gpsStart, dur)
                 data = numpy.concatenate((data, thisData[0]))
-                print data
                 durationFound = durationFound + dur 
             except KeyError:
                 errCode = 1
                 print 'Error reading data from ' + str(thisFile)
-    data = 0
-    lastIndex = 0
-    sRate = 0
-    times = 0
+            if (thisEndTime >= endGPSTime):
+                # This file ends after the end of the data we want; break out of the loop.            
+                break
+    
+    # Set lastIndex to the last index used in the loop above:
+    lastIndex = k
+    
+    if (len(data) == 0):
+        print 'No data found'
+        errCode = 2
+    elif (durationFound < duration):
+        print 'Some data is missing'
+        errCode = 3
+
+    nSamples = len(data)
+    sRate = int(numpy.floor(nSamples/duration + 0.5))
+    deltaT = 1.0/(1.0*sRate)
+    times = numpy.array(range(0, nSamples)) * deltaT 
     return [data, lastIndex, errCode, sRate, times]
 
-readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 1)
+# For testing demonstrations:
+output = readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 129)
+#exampleListOfFiles = ['H H1_LDAS_C02_L2 953164800 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf  ', 'H H1_LDAS_C02_L2 953164928 128 file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164928-128.gwf  ']
+#output = readFrames(exampleListOfFiles, 'H1:LDAS-STRAIN', 953164815, 129,1)
+print output
