@@ -47,7 +47,7 @@ class AddendaEditor:
     def loopFixer(self, Hoft, jj, tSub):
         if jj == len(tSub.tStart):
             self.frameTailFlag = 1
-        if jj == 2:
+        if jj == 1:
             nC = Hoft.nA
             nD = nC + 16384 * (min([512, tSub.tEnd[1] - tSub.tEnd[0] - 512]))
             self.passDARM = Hoft.baseline[nC:nD]
@@ -55,7 +55,7 @@ class AddendaEditor:
             del Hoft.passMICH
             self.passPRC = Hoft.passPRC
             del Hoft.passPRC
-        elif jj > 2:
+        elif jj > 1:
             self.passDARM = Hoft.passDARM
             del Hoft.passDARM
             self.passMICH = Hoft.passMICH
