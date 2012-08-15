@@ -11,7 +11,7 @@ from pylal.Fr import frgetvect1d
 #output = frgetvect1d('/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf', 'H1:LDAS-STRAIN', 953164800, 1)
 #print output
 
-def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory, startIndex):
+def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=None, startIndex=None):
     # Comments below, unless noted otherwise, are verbatim from the
     # comments of Greg Mendell in the Matlab version of this code.
     # # # # # # # # # # # # # # # # # #
@@ -24,9 +24,27 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory, s
     #    x = readFrames('myLALCacheFile.txt','H1:LSC-DARM_ERR',940000000,60)
     #
     # 2. Read 60 s of H1:LSC-DARM_ERR if myFileList is a list of filenames held in memory
-    # (feature not supported -- Grant David Meadors) 
+    #
+    #    x = readFrames(myFileList,'H1:LSC-DARM_ERR',940000000,60,1) 
+    # 
     # 3. Read 60 s of H1:LSC-DARM_ERR data from a list of files, myFileList:
-    # (feature not supported -- Grant David Meadors)
+    #
+    #    myFileList = ['/path/filename1', '/path/filename2', '/path/filename3' ...]
+    #    myChannel = 'H1:LSC-DARM_ERR'
+    #    startGPSTime = 940000000
+    #    endGPSTime = 940000000 + 86400
+    #    duration = 60
+    #    startIndex = 1
+    #    while (startGPSTime < endGPSTime):
+    #        x = readFrames(myFileList,myChannel,startGPSTime,duration,1,startIndex)      
+    #        lastIndex = x[1]
+    #
+    #        # Do something with x...
+    #
+    #        # Update for the next call in the loop:
+    #        startGPSTime = startGPSTime + duration
+    #        startIndex = lastIndex
+    #       
     # 
     # Inputs:
     #
@@ -36,4 +54,52 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory, s
     # duration: The duration in seconds to return.
     # fileListIsInMemory: Set this to 1 if fileList is a list of filenames, and not a fileName with this list. (Optional) 
     # startIndex: The index from which to start in the list of files (optional, default is 1)
+    #
+    # Outputs:
+    #
+    # data: The data from channel.
+    # lastIndex: The last index used in the list of files
+    # errCode: the error code returned (0 means no error)
+    # sRate: The sample rate of this channel.
+    # times: the times, 0, corresponds to startGPSTime.
+    #
+    # Note the last two Input options are useful if a long list of files held in memory is send to readFrames over and over,
+    # with each call running on the next sequential subset of the files. For example, if fileList contains the list of files
+    # covering an entire day, and we wish to run on every 60 seconds of data, then set isListNotFile to 1 and duration to 60,
+    # and after each call to readFrames update startGPSTime to startGPSTime + duration, and update startIndex to the returned
+    # value of lastIndex. The readFrames function will then pick up from the correct place in the fileList from which the last call left off.
+
+    # Initialize variables:
+    errCode = 0
+    endGPSTime = startGPSTime + duration
+    durationFound = 0
+    fileLocalHostStr = 'file://localhost'
+    fileLocalHostStrLen = len(fileLocalHostStr)
+    data = []
+
+    # set default values:
+    if fileListIsInMemory is None:
+        fileListIsInMemory = 0
+    if startIndex is None:
+        startIndex = 1
+
+    ###########################################
+    # 
+    # Read in the fileList or initialize listOfFiles
+    #
+    ###########################################
+    if (fileListIsInMemory > 0):
+        listOfFiles = fileList
+    else:
+        fileListObject = open(fileList)        
+        listOfFiles = [line.strip().split() for line in fileListObject]
+        print listOfFiles     
+        fileListObject.close()
+        data = 0
+        lastIndex = 0
+        sRate = 0
+        times = 0
+    listOfFilesLen = len(listOfFiles)
     return [data, lastIndex, errCode, sRate, times]
+
+readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 1)

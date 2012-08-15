@@ -88,7 +88,7 @@ classdef Fitting < handle
 
             % Instead, let us try multiplying the transfer function by a
             % shaping factor derived solely from a frequency threshold.
-            z(f > 500) = z(f > 500) .* (500 ./ f(f > 500)) .^8;
+            z(f > 400) = z(f > 400) .* (400 ./ f(f > 400)) .^8;
             z(f < 50) = z(f < 50) .* (f(f < 50) ./ 50) .^8;
             
             weight = ones(size(f));
