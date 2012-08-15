@@ -8,7 +8,7 @@ import re, numpy
 from pylal.Fr import frgetvect1d
 
 # Testing tools:
-#output = frgetvect1d('/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf', 'H1:LDAS-STRAIN', 953164800, 1)
+output = frgetvect1d('/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf', 'H1:LDAS-STRAIN', 953164800, 1)
 #print output
 
 def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=None, startIndex=None):
@@ -75,7 +75,7 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
     durationFound = 0
     fileLocalHostStr = 'file://localhost'
     fileLocalHostStrLen = len(fileLocalHostStr)
-    data = []
+    data = numpy.array([])
 
     # set default values:
     if fileListIsInMemory is None:
@@ -127,8 +127,25 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
         regExpOut = re.search('-(?P<GPS>\d+)-(?P<DUR>\d+)\.', thisFile)
         thisStartTime = int(regExpOut.group('GPS'))
         thisDuration = int(regExpOut.group('DUR'))
-        print thisStartTime
-        print thisDuration
+        thisEndTime = thisStartTime + thisDuration
+
+        if (thisEndTime <= startGPSTime):
+            continue # This file ends before the start of the data we want; continue to the next file
+        elif (thisStartTime >= endGPSTime):
+            break # This file starts after the end of the data we want; break out of the loop
+        else:
+            # This file contains some of the data we want. Read it out using frgetvect.
+            gpsStart = max([startGPSTime, thisStartTime])
+            gpsEnd = min( [endGPSTime, thisEndTime])
+            dur = gpsEnd - gpsStart
+            try:
+                thisData = frgetvect1d(thisFile, chanName, gpsStart, dur)
+                data = numpy.concatenate((data, thisData[0]))
+                print data
+                durationFound = durationFound + dur 
+            except KeyError:
+                errCode = 1
+                print 'Error reading data from ' + str(thisFile)
     data = 0
     lastIndex = 0
     sRate = 0

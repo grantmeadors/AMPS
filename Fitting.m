@@ -95,7 +95,7 @@ classdef Fitting < handle
             % All frequency points are given equal weight
             
             
-            [m, p] = bode(zpk([0 0], -2*pi*[100 100 1500 1500], 1), 2*pi*f);
+            [m, p] = bode(zpk([0 0], -2*pi*[100 100 2000 2000], 1), 2*pi*f);
             m = (squeeze(m)).^2;
             weight = weight .* (m(:)');
             
