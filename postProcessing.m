@@ -17,7 +17,7 @@ system('for i in {1..200}; do cat eleutheriaLogs/eleutheria.err.eleutheria_$i >>
 % Read image sizes to make sure that none of the jobs is using too much memory
 system('cat eleutheriaLogs/whole_log.txt | grep -n "Image size of job updated" > eleutheriaLogs/whole_imagesize.txt');
 [status_image, result_image] = system('wc -l eleutheriaLogs/whole_imagesize.txt');
-result_image_number = str2num(result_image(1:end-25));
+result_image_number = str2num(result_image(1:end-35));
 
 
 imagesizelines = textread('eleutheriaLogs/whole_imagesize.txt', '%s');
