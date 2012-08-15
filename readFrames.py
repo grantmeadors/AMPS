@@ -4,7 +4,7 @@
 # g m e a d o r s @ u m i c h . e d u
 # readFrames
 # Based on code by Gregory Mendell
-import numpy
+import re, numpy
 from pylal.Fr import frgetvect1d
 
 # Testing tools:
@@ -93,13 +93,42 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
     else:
         fileListObject = open(fileList)        
         listOfFiles = [line.strip().split() for line in fileListObject]
-        print listOfFiles     
         fileListObject.close()
-        data = 0
-        lastIndex = 0
-        sRate = 0
-        times = 0
     listOfFilesLen = len(listOfFiles)
+
+    ###########################################
+    #
+    # Here is the main loop over the listOfFiles
+    # Note that listOfFiles contains lines like this,
+    #
+    # ['H', 'H1_LDAS_C02_L2', '953164800', '128', 'file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164800-128.gwf']
+    # ['H', 'H1_LDAS_C02_L2', '953164928', '128', 'file://localhost/data/node191/frames/S6/LDAShoftC02/LHO/H-H1_LDAS_C02_L2-9531/H-H1_LDAS_C02_L2-953164928-128.gwf']
+    #
+    # or a list like this,
+    #
+    # ['/path/filename1', '/path/filename2', '/path/filename3' ...] 
+    #
+    # Keeping everything past file://localhost, go through the list of files and parse out the
+    # filename, GPS start times, and duration of each file and read the data from each file with
+    # data between startGPSTime and endGPSTime. Break off of the loop when endGPSTime is reached.
+    #
+    ###########################################
+    for j in listOfFiles:
+        
+        # Get the filename with the path from each line in listOfFiles.
+        thisLine = str(j) # convert this line into string data
+        thisPos = thisLine.find(fileLocalHostStr) # find the position of the fileLocalHostStr string:
+        if thisPos > -1: 
+            thisFile = thisLine[thisPos + fileLocalHostStrLen:-2] # slice out the filename with the path
+        else:
+            thisFile = thisLine
+
+        # parse out the GPS time and duration and get the start/end time of thisFile.
+        regExpOut =  
+    data = 0
+    lastIndex = 0
+    sRate = 0
+    times = 0
     return [data, lastIndex, errCode, sRate, times]
 
 readFrames('/home/pulsar/feedforward/2012/08/14/AMPS/cache/fileList-DARM-953164815-953165875.txt', 'H1:LDAS-STRAIN', 953164815, 1)

@@ -213,6 +213,7 @@ classdef Fitting < handle
             loglog(f, abs(z0), f, abs(z), ff, abs(squeeze(freqresp(filtering.newNOISE, 2*pi*ff))));
             grid on
             xlim([min(ff) max(ff)]);
+            ylim([1e-23 1e-18]);
             ylabel('abs')
             legend('current residual', 'pre-processed residual', 'new filter')
             % legend('current residual', 'fit', 'current MICHD filter', 'new MICHD = red - green', 'Location', 'NorthWest');
