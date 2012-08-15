@@ -17,12 +17,12 @@ class ScienceFinder:
         # self.pipe = 1 for science run S6, self.pipe = 2 for squeezing
         # For future reference,
         # note the size of gwf frame files in seconds
-        # self.S = 32 for squeezing data, = 128 for science run S6
+        # self.s = 32 for squeezing data, = 128 for science run S6
         self.pipe = 1
         if self.pipe == 1:
-            self.S = 128
+            self.s = 128
         elif self.pipe == 2:
-            self.S = 32
+            self.s = 32
         
         # Input start and stop times
         self.time = [int(time0), int(time1)]
