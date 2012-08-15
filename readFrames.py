@@ -124,7 +124,11 @@ def readFrames(fileList, chanName, startGPSTime, duration, fileListIsInMemory=No
             thisFile = thisLine
 
         # parse out the GPS time and duration and get the start/end time of thisFile.
-        regExpOut =  
+        regExpOut = re.search('-(?P<GPS>\d+)-(?P<DUR>\d+)\.', thisFile)
+        thisStartTime = int(regExpOut.group('GPS'))
+        thisDuration = int(regExpOut.group('DUR'))
+        print thisStartTime
+        print thisDuration
     data = 0
     lastIndex = 0
     sRate = 0
