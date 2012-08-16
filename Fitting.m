@@ -29,8 +29,8 @@ classdef Fitting < handle
             % Vector fit!
             %filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
-            
-            n = find(f > 20 & f < 7000 & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
+            highEnd = 2000; 
+            n = find(f > 20 & f < highEnd & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
             coh = transpose(frequencies.coh(n));
@@ -106,7 +106,7 @@ classdef Fitting < handle
             vv = find( (abs(f-46.7) < 3) |...
                 (abs(f-391.3) < 3) | (abs(f-1144.3) < 3)| ...
                 (abs(f - 346) < 20) | (abs(f-400.2) < 3));
-            vvv = find(f>2000);
+            vvv = find(f>highEnd);
             
             weight([v vv vvv]) = 0;
             
