@@ -29,11 +29,15 @@ classdef Fitting < handle
             % Vector fit!
             %filtering.currentTF = 0.878*10^(-36/20); %just the gain of -36dB and 0.878.
             
-            highEnd = 2000; 
+            highEnd = 7000; 
             n = find(f > 20 & f < highEnd & ~isnan(frequencies.subNOISE_DARM) & ~isnan(frequencies.coh));
             %
             z = transpose(frequencies.subNOISE_DARM(n));
             coh = transpose(frequencies.coh(n));
+            pxx = transpose(frequencies.pxx(n));
+            pyy = transpose(frequencies.pyy(n));
+            tfxy = transpose(frequencies.tfxy(n));
+            sub12 = transpose(frequencies.sub12(n));
 
             % Keep a copy of the raw transfer function for diagnostics
             z0 = z;
@@ -204,7 +208,7 @@ classdef Fitting < handle
             % %% plot things
             % fitResid=z-transpose(squeeze(freqresp(zpk(ourfit)*zpk(z2,p2,k2),  2*pi*f)));
             %
-            ff=10:2000;
+            ff=10:8000;
             % figure
             figure(210)
             subplot 211
@@ -254,10 +258,79 @@ classdef Fitting < handle
             legend('Coherence')
             title('Coherence vs frequency')
             ylabel('Coherence')
-            xlabel('Hz')
+            xlabel('Frequency (Hz)')
             print('-dpdf', strcat(graphName, '-coherence', '.pdf'));
             print('-dpng', strcat(graphName, '-coherence',  '.png'));
             close(213)
+            % Plot the signal power:
+            figure(214)
+            loglog(f, sqrt(pxx))
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Hoft amplitude spectral density')
+            title('Hoft vs frequency')
+            ylabel('Hoft (sqrt Hz)')
+            xlabel('Frequency (Hz)')
+            print('-dpdf', strcat(graphName, '-Hoft-ASD', '.pdf'));
+            print('-dpng', strcat(graphName, '-Hoft-ASD', '.png'));
+            close(214)
+
+            % Plot the noise power:
+            figure(215)
+            loglog(f, sqrt(pyy))
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Noise amplitude spectral density')
+            title('Noise vs frequency')
+            ylabel('Noise (sqrt Hz)')
+            xlabel('Frequency (Hz)')
+            print('-dpdf', strcat(graphName, '-noise-ASD', '.pdf'));
+            print('-dpng', strcat(graphName, '-noise-ASD', '.png'));
+            close(215)
+
+            % Plot transfer function times noise:
+            % Due to phase, not all this magnitude will be subtracted
+            figure(216)
+            loglog(f, abs(z0 .* sqrt(pyy)))
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Transfer function times noise ASD')
+            title('Transfer function times noise amplitude spectral density vs frequency')
+            ylabel('TF times noise (sqrt Hz)')
+            xlabel('Frequency (Hz)')
+            print('-dpdf', strcat(graphName, '-TF-ASD', '.pdf'));
+            print('-dpng', strcat(graphName, '-TF-ASD', '.png'));
+            close(216)
+
+            % Plot estimated subtraction from this noise
+            % This accounts for phase effects; all this magnitude is subtracted
+            % (independent of any other noise)
+            figure(217)
+            loglog(f, sqrt(abs(sub12 - pxx)))
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Estimated noise to be subtracted')
+            title('Estimated noise to be subtracted ASD vs frequency')
+            ylabel('Noise subtraction (sqrt Hz)')
+            xlabel('Frequency (Hz)')
+            print('-dpdf', strcat(graphName, '-sub-ASD', '.pdf'))
+            print('-dpng', strcat(graphName, '-sub-ASD', '.png'))
+            close(217)
+
+            % Plot noise-subtracted signal
+            % (independent of any other noise)
+            figure(218)
+            loglog(f, sqrt(pxx), f, sqrt(abs(sub12)))
+            xlim([min(ff) max(ff)])
+            grid on
+            legend('Signal spectrum ASD before noise subtraction','Signal spectrum ASD after noise subtraction')
+            title('Hoft signal spectrum ASD after noise subtraction vs frequency')
+            ylabel('Hoft minus noise (sqrt Hz)')
+            xlabel('Frequency (Hz)')
+            print('-dpdf', strcat(graphName, '-Hoft-FF-ASD', '.pdf'));
+            print('-dpng', strcat(graphName, '-Hoft-FF-ASD', '.png'));
+            close(218)
+
             
             %
             %

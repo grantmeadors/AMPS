@@ -6,6 +6,9 @@ classdef Transfer < handle
     
     properties (SetAccess = private)
         coh
+        pxx
+        pyy
+        tfxy
         Fs
         f
         subNOISE_DARM
@@ -31,6 +34,9 @@ classdef Transfer < handle
             frequencies.subNOISE_DARM = 1 ./ vsig.tfxy;
             % Assign additional information used in later code;
             frequencies.coh = vsig.cxy;
+            frequencies.pxx = vsig.pxx;
+            frequencies.pyy = vsig.pyy;
+            frequencies.tfxy = vsig.tfxy;
             frequencies.PRCfilter = channels.PRCfilter;
             frequencies.t = channels.t;
             frequencies.t0 = channels.t0;
