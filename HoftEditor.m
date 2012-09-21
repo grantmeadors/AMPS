@@ -1077,10 +1077,19 @@ classdef HoftEditor < handle
                 RatioC = post(frequencyCombC) ./ pre(frequencyCombC);
                 RatioD = post(frequencyCombD) ./ pre(frequencyCombD);
                 RatioE = post(frequencyCombE) ./ pre(frequencyCombE);
+
+                % Calculate differences for the five bins at points in the comb
+                DiffA = pre(frequencyCombA) - post(frequencyCombA);
+                DiffB = pre(frequencyCombB) - post(frequencyCombB);
+                DiffC = pre(frequencyCombC) - post(frequencyCombC);
+                DiffD = pre(frequencyCombD) - post(frequencyCombD);
+                DiffE = pre(frequencyCombE) - post(frequencyCombE);
                 
                 % Take the average of the five bins
                 combOutput.Ratio = (RatioA + RatioB + RatioC + RatioD + RatioE) / 5;
+                combOutput.Diff = (DiffA + DiffB + DiffC + DiffD + DiffE) / 5;
                 % Compare to a cutoff: veto (one) if the post-filter spectrum
+                % ratio
                 % is more than 1.2 times worse than pre-filter,
                 % or more generous if less than 32 averages
                 % else pass (zero)
@@ -1109,7 +1118,9 @@ classdef HoftEditor < handle
             fidComb = fopen(outputFileComb, 'w');
             fprintf(fidComb, '%s', horzcat('Frequency (Hz) ', num2str(combOutputResult.frequencyList)));
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio)' )));
+            fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio) )));
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', horzcat('Pre - Post Filter Difference', num2str( combOutputResult.Diff  )));
             fprintf(fidComb, '\n');
             fprintf(fidComb, '%s', horzcat('Comb limit ', num2str(combOutputResult.combLimit)));
             fprintf(fidComb, '\n');
