@@ -1118,10 +1118,10 @@ classdef HoftEditor < handle
             fidComb = fopen(outputFileComb, 'w');
             fprintf(fidComb, '%s', horzcat('Frequency (Hz) ', num2str(combOutputResult.frequencyList)));
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio) )));
+            fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio)' )));
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', horzcat('Pre - Post Filter Difference', num2str( combOutputResult.Diff  )));
-            fprintf(fidComb, '\n');
+            %fprintf(fidComb, '%s', horzcat('Pre - Post Filter Difference', num2str( (combOutputResult.Diff)  )));
+            %fprintf(fidComb, '\n');
             fprintf(fidComb, '%s', horzcat('Comb limit ', num2str(combOutputResult.combLimit)));
             fprintf(fidComb, '\n');
             fclose(fidComb);
