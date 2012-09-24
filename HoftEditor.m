@@ -1097,11 +1097,13 @@ classdef HoftEditor < handle
                 combOutput.maximum = max(combOutput.Ratio >= combOutput.combLimit );
                 
                 disp('Comb limit for this window')
-                combOutput.combLimit
-                disp('Values of combed points')
-                combOutput.Ratio
+                disp(combOutput.combLimit)
+                disp('Values of combed points, ratios')
+                disp(combOutput.Ratio)
+                disp('Values of combed points, differences')
+                disp(combOutput.Diff)
                 disp('Maximum should be Boolean')
-                combOutput.maximum
+                disp(combOutput.maximum)
                 
                 % Store the bin index number in the output:
                 combOutput.frequencyCombC = frequencyCombC;
@@ -1111,18 +1113,36 @@ classdef HoftEditor < handle
             combOutputResult = comber(Fs, nfft, pdarmcal, perrcal);
             Hoft.successVector.comb = combOutputResult.maximum;
             disp('success (0) or failure (1) of the data in range and comb veto tests:')
-            Hoft.successVector.range
-            Hoft.successVector.comb
+            disp(Hoft.successVector.range)
+            disp(Hoft.successVector.comb)
             
             % Write values at the frequency combed points to a text file:
             fidComb = fopen(outputFileComb, 'w');
-            fprintf(fidComb, '%s', horzcat('Frequency (Hz) ', num2str(combOutputResult.frequencyList)));
-            fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio)' )));
-            fprintf(fidComb, '\n');
+            %fprintf(fidComb, '%s', horzcat('Frequency (Hz) ', num2str(combOutputResult.frequencyList)));
+            %fprintf(fidComb, '\n');
+            %fprintf(fidComb, '%s', horzcat('Post/Pre-Filter Ratio ', num2str( (combOutputResult.Ratio)' )));
+            %fprintf(fidComb, '\n');
             %fprintf(fidComb, '%s', horzcat('Pre - Post Filter Difference', num2str( (combOutputResult.Diff)  )));
             %fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', horzcat('Comb limit ', num2str(combOutputResult.combLimit)));
+            %fprintf(fidComb, '%s', horzcat('Comb limit ', num2str(combOutputResult.combLimit)));
+            %fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Frequency comb test results: rows in following order');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Frequency (Hz)');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Post/Pre-Filter Hoft Ratio');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Pre - Post Filter Hoft Difference');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Comb limit');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', num2str(combOutputResult.frequencyList, '% 8e'));
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', num2str((combOutputResult.Ratio)','% 8e'));
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', num2str((combOutputResult.Diff)', '% 8e'));
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%g', combOutputResult.combLimit);
             fprintf(fidComb, '\n');
             fclose(fidComb);
             clear fidFit
