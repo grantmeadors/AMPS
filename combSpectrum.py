@@ -57,6 +57,7 @@ def combSpectrum(targetDirectory):
             timeArray = np.asarray(times.group(1), dtype=np.int32)
             combRaw = combReader(targetDirectory, eachCombFile)
             frequencyArray = np.asarray(str(combRaw[0]).split(), dtype=np.float32)
+            frequencyArray = frequencyArray.astype(int)
             ratioArray = np.asarray(str(combRaw[1]).split(), dtype=np.float32)
             #differenceArray = np.asarray(str(combRaw[2]).split(), dtype=np.float32)
         if k > 0:
@@ -73,7 +74,9 @@ def combSpectrum(targetDirectory):
     # Note the inelegant way from extracting the start time as a label.
     graphTitle = targetDirectory + "EleutheriaPostPlotComb" +\
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
-    plt.plot(frequencyArray[0], ratioArray[0])
+    #plt.plot(frequencyArray[0], ratioArray[0])
+    x, y = np.meshgrid(timeArray, frequencyArray[0])
+    plt.contour(x.T, y.T, ratioArray, 50)
     plt.savefig(graphTitle + '.png')
     plt.close()
         
