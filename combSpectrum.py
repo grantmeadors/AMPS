@@ -46,33 +46,36 @@ def combSpectrum(targetDirectory):
             print 'File not found or accessible; skipping'
         return combLines[5:8]
     # Apply the function to all the comb files in the directory.
-    timeArray = np.asarray([1])
-    frequencyArray = np.asarray([1])
-    ratioArray = np.asarray([1])
-    differenceArray = np.asarray([1])
-    for eachCombFile in combFiles:
+    for k, eachCombFile in enumerate(combFiles):
         # Each file will have four properties:
         # start time, read in the GPS time of the file name
         # frequency bins, read from the fifth row of the file (0th of combRaw),
         # ratios, read from the sixth (1st of combRaw),
         # and difference, read from the seventh (2nd of combRaw).
-        times = re.search('-(?P<GPS>\d+)-(\d+)\.', eachCombFile)
-        timeArray = np.vstack([timeArray, np.asarray(times.group(1))])
-        combRaw = combReader(targetDirectory, eachCombFile)
-        frequencyArray = np.vstack([frequencyArray, np.asarray(combRaw[0])])
-        ratioArray = np.vstack([ratioArray, np.asarray(combRaw[1])])
-        differenceArray = np.vstack([differenceArray, np.asarray(combRaw[2])])
-    # Due to vstack's demand for equal dimensions in each argument,
-    # and the null dimensionality of the empty set, the arrays were
-    # initialized with a dummy one that is then deleted below.
-    timeArray = timeArray[1:]
-    frequencyArray = frequencyArray[1:]
-    ratioArray = ratioArray[1:]
-    differenceArray = differenceArray[1:]
-    print timeArray
-    print frequencyArray
-    print ratioArray
-    print differenceArray
+        if k == 0:
+            times = re.search('-(?P<GPS>\d+)-(\d+)\.', eachCombFile)
+            timeArray = np.asarray(times.group(1), dtype=np.int32)
+            combRaw = combReader(targetDirectory, eachCombFile)
+            frequencyArray = np.asarray(str(combRaw[0]).split(), dtype=np.float32)
+            ratioArray = np.asarray(str(combRaw[1]).split(), dtype=np.float32)
+            #differenceArray = np.asarray(str(combRaw[2]).split(), dtype=np.float32)
+        if k > 0:
+            times = re.search('-(?P<GPS>\d+)-(\d+)\.', eachCombFile)
+            timeArray = np.vstack([timeArray, np.asarray(times.group(1), dtype=np.int32)])
+            combRaw = combReader(targetDirectory, eachCombFile)
+            frequencyArray = np.vstack([frequencyArray, np.asarray(str(combRaw[0]).split(), dtype=np.float32)])
+            ratioArray = np.vstack([ratioArray, np.asarray(str(combRaw[1]).split(), dtype=np.float32)])
+            #differenceArray = np.vstack([differenceArray, np.asarray(str(combRaw[2]).split(), dtype=np.float32)])
+
+    # Now we are going to plot these arrays.
+    # First, set a directory for the output. At least for the time being,
+    # that can be the same directory as the target directory.
+    # Note the inelegant way from extracting the start time as a label.
+    graphTitle = targetDirectory + "EleutheriaPostPlotComb" +\
+    '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
+    plt.plot(frequencyArray[0], ratioArray[0])
+    plt.savefig(graphTitle + '.png')
+    plt.close()
         
 
 combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/')
