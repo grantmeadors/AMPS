@@ -76,7 +76,17 @@ def combSpectrum(targetDirectory):
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
     #plt.plot(frequencyArray[0], ratioArray[0])
     x, y = np.meshgrid(timeArray, frequencyArray[0])
-    plt.contour(x.T, y.T, ratioArray, 50)
+    plt.figure()
+    CS = plt.contourf(x.T, y.T, ratioArray, \
+    np.asarray([0.9, 0.92, 0.94,\
+    0.96, 0.98, 1,
+    1.02, 1.04,\
+    1.06, 1.08, 1.1]))
+    #plt.clabel(CS, inline=1, fontsize=10)
+    plt.colorbar(CS, shrink=0.8, extend='both')
+    plt.xlabel('GPS time (s)')
+    plt.ylabel('Frequency (Hz)')
+    plt.title('Post/pre-filtering Hoft ratio')
     plt.savefig(graphTitle + '.png')
     plt.close()
         
