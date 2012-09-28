@@ -1,7 +1,8 @@
 classdef HoftEditor < handle
     % Edit and manages the Hoft object for feedforward
     % Grant David Meadors
-    % 02012-04-03
+    % g m e a d o r s @ u m i c h . e d u
+    % 02012-09-28 (JD 2456199)
     
     properties (SetAccess = private)
         tSub
@@ -1136,11 +1137,11 @@ classdef HoftEditor < handle
             fprintf(fidComb, '\n');
             fprintf(fidComb, '%s', 'Comb limit');
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', num2str(combOutputResult.frequencyList, '% 8e'));
+            fprintf(fidComb, '%s', num2str(combOutputResult.frequencyList, '%8e \t'));
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', num2str((combOutputResult.Ratio)','% 8e'));
+            fprintf(fidComb, '%s', num2str((combOutputResult.Ratio)','%8e \t'));
             fprintf(fidComb, '\n');
-            fprintf(fidComb, '%s', num2str((combOutputResult.Diff)', '% 8e'));
+            fprintf(fidComb, '%s', num2str((combOutputResult.Diff)', '%8e \t'));
             fprintf(fidComb, '\n');
             fprintf(fidComb, '%g', combOutputResult.combLimit);
             fprintf(fidComb, '\n');
