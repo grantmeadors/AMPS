@@ -31,19 +31,26 @@ def combSpectrum(targetDirectory, flag):
     # in row 6; the differences are in row 7.
 
     if flag == 'all':
-        highDirectoryList = os.listdir(grandTarget)
+    # The comb files are in the directories listed under the target directory.
+        highDirectoryList = os.listdir(targetDirectory)
         highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+        # Because the GPS time 953100000 is used so often for testing,
+        # it is temporarily excluded:
+        highDirectoryListDirOnly = [x for x in highDirectoryListDirOnly if x.find('9531') == -1]
+        combFiles = []
         for x in highDirectoryListDirOnly:
-            # combSpectrum(grandTarget + x)
-            print 'Generating directory-by-directory plots: ' + x
-    
-    # The comb files are in the targest directory.
-    # Pull a list of all the comb files.
-    targetDirectoryFiles = os.listdir(targetDirectory)
-    combFiles = []
-    for file in targetDirectoryFiles:
-        if file.find('EleutheriaComb') > -1:
-            combFiles.append(file)
+            targetDirectoryFiles = os.listdir(targetDirectory + x)
+            for file in targetDirectoryFiles:
+                if file.find('EleutheriaComb') > -1:
+                    combFiles.append(x + '/' + file)
+    if flag == 'one':
+        # The comb files are in the target directory.
+        # Pull a list of all the comb files.
+        targetDirectoryFiles = os.listdir(targetDirectory)
+        combFiles = []
+        for file in targetDirectoryFiles:
+            if file.find('EleutheriaComb') > -1:
+                combFiles.append(file)
 
     # Now write a function that can read an individual file into memory.
     def combReader(targetDirectory, eachCombFile):
@@ -111,7 +118,7 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
         
 # Uncomment below to test on one directory only:
-combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-#combSpectrum(grandTarget, 'all')
+#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+combSpectrum(grandTarget, 'all')
 
