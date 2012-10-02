@@ -60,7 +60,8 @@ def combSpectrum(targetDirectory, flag):
             combLines = combObject.readlines()
             combObject.close()
         except IOError:
-            print 'File not found or accessible; skipping'
+            print 'File not found or accessible; skipping ' +\
+            combFileName
         return combLines[5:8]
     # Apply the function to all the comb files in the directory.
     for k, eachCombFile in enumerate(combFiles):
@@ -119,6 +120,14 @@ def combSpectrum(targetDirectory, flag):
         
 # Uncomment below to test on one directory only:
 #combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-combSpectrum(grandTarget, 'all')
+# Uncomment below to test all directories and produce a whole-run overview.
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+#combSpectrum(grandTarget, 'all')
+# Uncomment below to test each directory, making plots one-by-one.
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+highDirectoryList = os.listdir(grandTarget)
+highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+for x in highDirectoryListDirOnly:
+    combSpectrum(grandTarget + '/' + x + '/', 'one')
+
 
