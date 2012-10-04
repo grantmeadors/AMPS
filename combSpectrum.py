@@ -108,32 +108,33 @@ def combSpectrum(targetDirectory, flag):
     plt.savefig(graphTitleRatio + 'Contour.png')
     plt.savefig(graphTitleRatio + 'Contour.pdf')
     plt.close()
-    plt.figure()
     plt.clf()
-    CSratioIm = plt.imshow(ratioArray.T, origin='lower', \
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    CSratioIm = ax.imshow(ratioArray.T, origin='lower', \
     interpolation = 'nearest', extent=extensions, vmin=0.8, vmax=1.2) 
-    plt.show()
-    plt.colorbar(CSratioIm, shrink = 0.8, extend = 'both')
-    plt.xlabel('GPS time (s)')
-    plt.ylabel('Frequency (Hz)')
-    plt.title('Post/pre-filtering Hoft ratio (lower is better)')
-    plt.savefig(graphTitleRatio + '.png')
-    plt.savefig(graphTitleRatio + '.pdf')
-    plt.close()
-    plt.figure()
+    CSratioIm = fig.colorbar(CSratioIm, shrink = 0.8, extend = 'both')
+    ax.set_aspect('auto')
+    ax.set_xlabel('GPS time (s)')
+    ax.set_ylabel('Frequency (Hz)')
+    ax.set_title('Post/pre-filtering Hoft ratio (lower is better)')
+    fig.savefig(graphTitleRatio + '.png')
+    fig.savefig(graphTitleRatio + '.pdf')
     plt.clf()
-    CSdiffIm = plt.imshow(-differenceArray.T, origin='lower', \
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    CSdiffIm = ax.imshow(-differenceArray.T, origin='lower', \
     interpolation = 'nearest' , extent=extensions, vmin=-2e-24, vmax=2e-24)
     plt.show()
-    plt.colorbar(CSdiffIm, shrink = 0.8, extend = 'both')
-    plt.xlabel('GPS time (s)')
-    plt.ylabel('Frequency (Hz)')
-    plt.title('Post - pre Hoft difference (lower is better)')
-    plt.savefig(graphTitleDiff + '.png')
-    plt.savefig(graphTitleDiff + '.pdf')
-    plt.close()
-    plt.figure()
+    CSdiffIm = fig.colorbar(CSdiffIm, shrink = 0.8, extend = 'both')
+    ax.set_aspect('auto')
+    ax.set_xlabel('GPS time (s)')
+    ax.set_ylabel('Frequency (Hz)')
+    ax.set_title('Post - pre Hoft difference (lower is better)')
+    fig.savefig(graphTitleDiff + '.png')
+    fig.savefig(graphTitleDiff + '.pdf')
     plt.clf()
+    plt.figure()
     CSdiff = plt.contourf(x.T, y.T, -differenceArray, \
     np.asarray([-2e-24, -1.5e-24, -1e-24, -5e-25,\
     0, 5e-25, 1e-24, 1.5e-24, 2e-24]))
@@ -146,15 +147,15 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
         
 # Uncomment below to test on one directory only:
-combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-#combSpectrum(grandTarget, 'all')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
-#highDirectoryList = os.listdir(grandTarget)
-#highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
-#for x in highDirectoryListDirOnly:
-#    combSpectrum(grandTarget + '/' + x + '/', 'one')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+highDirectoryList = os.listdir(grandTarget)
+highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+for x in highDirectoryListDirOnly:
+    combSpectrum(grandTarget + '/' + x + '/', 'one')
 
 
