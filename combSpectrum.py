@@ -97,10 +97,23 @@ def combSpectrum(targetDirectory, flag):
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
     x, y = np.meshgrid(timeArray, frequencyArray[0])
     extensions = [x[0, 0], x[-1, -1], y[0, 0], y[-1, -1]]
+    # Define a helpfully broken color-scheme as found on the 
+    # SciPy Matplotlib Cookbook,
+    # http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps
+    cdict = {'red': ((0.0, 0.0, 0.0),\
+    (0.5, 1.0, 0.7),\
+    (1.0, 1.0, 1.0)),\
+    'green': ((0.0, 0.0, 0.0),\
+    (0.5, 1.0, 0.0),\
+    (1.0, 1.0, 1.0)),\
+    'blue': ((0.0, 0.0, 0.0),\
+    (0.5, 1.0, 0.0),\
+    (1.0, 0.5, 1.0))}
+    my_cmap = matplotlib.colors.LinearSegmentedColormap('my_colormap', cdict, 256)
     plt.figure()
     CSratio = plt.contourf(x.T, y.T, ratioArray, \
     np.asarray([0.8, 0.85, 0.9, 0.95, \
-    1, 1.05, 1.1, 1.15, 1.2]))
+    1, 1.05, 1.1, 1.15, 1.2]), cmap=my_cmap)
     plt.colorbar(CSratio, shrink=0.8, extend='both')
     plt.xlabel('GPS time (s)')
     plt.ylabel('Frequency (Hz)')
@@ -112,7 +125,8 @@ def combSpectrum(targetDirectory, flag):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     CSratioIm = ax.imshow(ratioArray.T, origin='lower', \
-    interpolation = 'nearest', extent=extensions, vmin=0.8, vmax=1.2) 
+    interpolation = 'nearest', extent=extensions, vmin=0.8, vmax=1.2,\
+    cmap=my_cmap) 
     CSratioIm = fig.colorbar(CSratioIm, shrink = 0.8, extend = 'both')
     ax.set_aspect('auto')
     ax.set_xlabel('GPS time (s)')
@@ -124,7 +138,8 @@ def combSpectrum(targetDirectory, flag):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     CSdiffIm = ax.imshow(-differenceArray.T, origin='lower', \
-    interpolation = 'nearest' , extent=extensions, vmin=-2e-24, vmax=2e-24)
+    interpolation = 'nearest' , extent=extensions, vmin=-2e-24, vmax=2e-24, \
+    cmap=my_cmap)
     plt.show()
     CSdiffIm = fig.colorbar(CSdiffIm, shrink = 0.8, extend = 'both')
     ax.set_aspect('auto')
@@ -137,7 +152,7 @@ def combSpectrum(targetDirectory, flag):
     plt.figure()
     CSdiff = plt.contourf(x.T, y.T, -differenceArray, \
     np.asarray([-2e-24, -1.5e-24, -1e-24, -5e-25,\
-    0, 5e-25, 1e-24, 1.5e-24, 2e-24]))
+    0, 5e-25, 1e-24, 1.5e-24, 2e-24]), cmap=my_cmap)
     plt.colorbar(CSdiff, shrink=0.8, extend='both')
     plt.xlabel('GPS time (s)')
     plt.ylabel('Frequency (Hz)')
@@ -147,15 +162,15 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
         
 # Uncomment below to test on one directory only:
-#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-combSpectrum(grandTarget, 'all')
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+#combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
-highDirectoryList = os.listdir(grandTarget)
-highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
-for x in highDirectoryListDirOnly:
-    combSpectrum(grandTarget + '/' + x + '/', 'one')
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+#highDirectoryList = os.listdir(grandTarget)
+#highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+#for x in highDirectoryListDirOnly:
+#    combSpectrum(grandTarget + '/' + x + '/', 'one')
 
 
