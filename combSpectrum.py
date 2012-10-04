@@ -3,13 +3,14 @@ import math, os, re
 import matplotlib as matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import numpy as np
 
 def combSpectrum(targetDirectory, flag):
 
     # Grant David Meadors
     # g m e a d o r s @  u m i c h . e d u
-    # 02012-09-21 (JD 2456192)
+    # 02012-10-04 (JD 2456205)
     # combSpectrum
     #
     # Scan output log files for parts of the spectrum where feedforward is 
@@ -95,6 +96,7 @@ def combSpectrum(targetDirectory, flag):
     graphTitleDiff = targetDirectory + "EleutheriaPostPlotCombDiff" +\
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
     x, y = np.meshgrid(timeArray, frequencyArray[0])
+    extensions = [x[0, 0], x[-1, -1], y[0, 0], y[-1, -1]]
     plt.figure()
     CSratio = plt.contourf(x.T, y.T, ratioArray, \
     np.asarray([0.8, 0.85, 0.9, 0.95, \
@@ -103,10 +105,33 @@ def combSpectrum(targetDirectory, flag):
     plt.xlabel('GPS time (s)')
     plt.ylabel('Frequency (Hz)')
     plt.title('Post/pre-filtering Hoft ratio (lower is better)')
+    plt.savefig(graphTitleRatio + 'Contour.png')
+    plt.savefig(graphTitleRatio + 'Contour.pdf')
+    plt.close()
+    plt.figure()
+    plt.clf()
+    CSratioIm = plt.imshow(ratioArray.T, origin='lower', extent=extensions)
+    plt.show()
+    plt.colorbar(CSratioIm, shrink = 0.8, extend = 'both')
+    plt.xlabel('GPS time (s)')
+    plt.ylabel('Frequency (Hz)')
+    plt.title('Post/pre-filtering Hoft ratio (lower is better)')
     plt.savefig(graphTitleRatio + '.png')
     plt.savefig(graphTitleRatio + '.pdf')
     plt.close()
     plt.figure()
+    plt.clf()
+    CSdiffIm = plt.imshow(-differenceArray.T, origin='lower', extent=extensions)
+    plt.show()
+    plt.colorbar(CSdiffIm, shrink = 0.8, extend = 'both')
+    plt.xlabel('GPS time (s)')
+    plt.ylabel('Frequency (Hz)')
+    plt.title('Post - pre Hoft difference (lower is better)')
+    plt.savefig(graphTitleDiff + '.png')
+    plt.savefig(graphTitleDiff + '.pdf')
+    plt.close()
+    plt.figure()
+    plt.clf()
     CSdiff = plt.contourf(x.T, y.T, -differenceArray, \
     np.asarray([-2e-24, -1.5e-24, -1e-24, -5e-25,\
     0, 5e-25, 1e-24, 1.5e-24, 2e-24]))
@@ -114,20 +139,20 @@ def combSpectrum(targetDirectory, flag):
     plt.xlabel('GPS time (s)')
     plt.ylabel('Frequency (Hz)')
     plt.title('Post - pre Hoft difference (lower is better)')
-    plt.savefig(graphTitleDiff + '.png')
-    plt.savefig(graphTitleDiff + '.pdf')
+    plt.savefig(graphTitleDiff + 'Contour.png')
+    plt.savefig(graphTitleDiff + 'Contour.pdf')
     plt.close()
         
 # Uncomment below to test on one directory only:
-#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
 #grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
 #combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
-highDirectoryList = os.listdir(grandTarget)
-highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
-for x in highDirectoryListDirOnly:
-    combSpectrum(grandTarget + '/' + x + '/', 'one')
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+#highDirectoryList = os.listdir(grandTarget)
+#highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+#for x in highDirectoryListDirOnly:
+#    combSpectrum(grandTarget + '/' + x + '/', 'one')
 
 
