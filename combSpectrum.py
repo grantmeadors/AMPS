@@ -110,7 +110,8 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
     plt.figure()
     plt.clf()
-    CSratioIm = plt.imshow(ratioArray.T, origin='lower', extent=extensions)
+    CSratioIm = plt.imshow(ratioArray.T, origin='lower', \
+    interpolation = 'nearest', extent=extensions, vmin=0.8, vmax=1.2) 
     plt.show()
     plt.colorbar(CSratioIm, shrink = 0.8, extend = 'both')
     plt.xlabel('GPS time (s)')
@@ -121,7 +122,8 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
     plt.figure()
     plt.clf()
-    CSdiffIm = plt.imshow(-differenceArray.T, origin='lower', extent=extensions)
+    CSdiffIm = plt.imshow(-differenceArray.T, origin='lower', \
+    interpolation = 'nearest' , extent=extensions, vmin=-2e-24, vmax=2e-24)
     plt.show()
     plt.colorbar(CSdiffIm, shrink = 0.8, extend = 'both')
     plt.xlabel('GPS time (s)')
