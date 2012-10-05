@@ -34,24 +34,26 @@ def combSpectrum(targetDirectory, flag):
     if flag == 'all':
     # The comb files are in the directories listed under the target directory.
         highDirectoryList = os.listdir(targetDirectory)
-        highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+        highDirectoryListDirOnly = sorted([x for x in highDirectoryList if x.find('.') == -1])
         # Because the GPS time 953100000 is used so often for testing,
         # it is temporarily excluded:
-        highDirectoryListDirOnly = [x for x in highDirectoryListDirOnly if x.find('9531') == -1]
+        highDirectoryListDirOnly = sorted([x for x in highDirectoryListDirOnly if x.find('9531') == -1])
         combFiles = []
         for x in highDirectoryListDirOnly:
             targetDirectoryFiles = os.listdir(targetDirectory + x)
             for file in targetDirectoryFiles:
                 if file.find('EleutheriaComb') > -1:
                     combFiles.append(x + '/' + file)
+        combFiles = sorted(combFiles)
     if flag == 'one':
         # The comb files are in the target directory.
         # Pull a list of all the comb files.
-        targetDirectoryFiles = os.listdir(targetDirectory)
+        targetDirectoryFiles = sorted(os.listdir(targetDirectory))
         combFiles = []
         for file in targetDirectoryFiles:
             if file.find('EleutheriaComb') > -1:
                 combFiles.append(file)
+        combFiles = sorted(combFiles)
 
     # Now write a function that can read an individual file into memory.
     def combReader(targetDirectory, eachCombFile):
@@ -160,17 +162,36 @@ def combSpectrum(targetDirectory, flag):
     plt.savefig(graphTitleDiff + 'Contour.png')
     plt.savefig(graphTitleDiff + 'Contour.pdf')
     plt.close()
+    plt.figure()
+    freqList = [25, 27, 29]
+    p0 = plt.scatter(timeArray, -differenceArray[:, 25], color='b')
+    mean0 = np.mean(-differenceArray[:, 25])
+    p1 = plt.scatter(timeArray, -differenceArray[:, 27], color='r')
+    mean1 = np.mean(-differenceArray[:, 27])
+    p2 = plt.scatter(timeArray, -differenceArray[:, 29], color='k')
+    mean2 = np.mean(-differenceArray[:, 29])
+    plt.grid(True)
+    plt.xlabel('GPS time (s)')
+    plt.ylabel('Post - pre Hoft difference (lower is better)')
+    plt.title('Difference vs time by frequency')
+    plt.legend([p0, p1, p2], \
+    [str(frequencyArray[0, freqList[0]]) + ' Hz, mean: ' + str(mean0),\
+    str(frequencyArray[0, freqList[1]]) + ' Hz, mean: ' + str(mean1),\
+    str(frequencyArray[0, freqList[2]]) + ' Hz, mean: ' + str(mean2)])
+    plt.savefig(graphTitleDiff + 'Freq.png')
+    plt.savefig(graphTitleDiff + 'Freq.pdf')
+    plt.close()
         
 # Uncomment below to test on one directory only:
-combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-#combSpectrum(grandTarget, 'all')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
-#highDirectoryList = os.listdir(grandTarget)
-#highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
-#for x in highDirectoryListDirOnly:
-#    combSpectrum(grandTarget + '/' + x + '/', 'one')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+highDirectoryList = os.listdir(grandTarget)
+highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+for x in highDirectoryListDirOnly:
+    combSpectrum(grandTarget + '/' + x + '/', 'one')
 
 
