@@ -1072,6 +1072,20 @@ classdef HoftEditor < handle
                 frequencyCombD = frequencyCombA + 3;
                 frequencyCombE = frequencyCombA + 4;
                 
+                % Raw before values
+                BeforeA = pre(frequencyCombA);
+                BeforeB = pre(frequencyCombB);
+                BeforeC = pre(frequencyCombC);
+                BeforeD = pre(frequencyCombD);
+                BeforeE = pre(frequencyCombE);
+
+                % Raw after values 
+                AfterA = post(frequencyCombA);
+                AfterB = post(frequencyCombB);
+                AfterC = post(frequencyCombC);
+                AfterD = post(frequencyCombD);
+                AfterE = post(frequencyCombE);
+
                 % Calculate ratios for the five bins at points in the comb
                 RatioA = post(frequencyCombA) ./ pre(frequencyCombA);
                 RatioB = post(frequencyCombB) ./ pre(frequencyCombB);
@@ -1087,6 +1101,8 @@ classdef HoftEditor < handle
                 DiffE = pre(frequencyCombE) - post(frequencyCombE);
                 
                 % Take the average of the five bins
+                combOutput.Before = (BeforeA + BeforeB + BeforeC + BeforeD + BeforeE) / 5;
+                combOutput.After = (AfterA + AfterB + AfterC + AfterD + AfterE) / 5;
                 combOutput.Ratio = (RatioA + RatioB + RatioC + RatioD + RatioE) / 5;
                 combOutput.Diff = (DiffA + DiffB + DiffC + DiffD + DiffE) / 5;
                 % Compare to a cutoff: veto (one) if the post-filter spectrum
@@ -1145,6 +1161,14 @@ classdef HoftEditor < handle
             fprintf(fidComb, '\n');
             fprintf(fidComb, '%g', combOutputResult.combLimit);
             fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'Before feedforward');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', 'After feedforward');
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', num2str((combOutputResult.Before)', '%8e \t'));
+            fprintf(fidComb, '\n');
+            fprintf(fidComb, '%s', num2str((combOutputResult.After)', '%8e \t'));
+            fprintf(fidComb, '\n')
             fclose(fidComb);
             clear fidFit
             
