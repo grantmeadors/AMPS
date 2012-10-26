@@ -63,10 +63,10 @@ irun = 1;
      % This combines neighboring bins.
      % Bins in the data files are 1/1800 Hz wide, from 1800 s SFTs.
      % Factor is the the divisor by which frequency resolution is reduced.
-     resampleFactor = 450;
+     resampleFactor = 225;
      % FilterSize is the numbers of bins adjacent (nearest neighbor and beyond)
      % that are used to calculate an FIR filter result for a resampled bin.
-     resampleFilterSize = 900;
+     resampleFilterSize = 225;
      % Theoretically, the frequency array is linear so it could be resampled
      % using a less sophisticated algorithm. Yet why not try out resample here?
      freq{irun,iifo} = resample(data1(:,1), 1,...
@@ -95,8 +95,8 @@ irun = 1;
         frequencyArray = freq{irun,iifo};
         beforeArray = amppsd{irun,iifo};
         afterArray = amppsdwt{irun,iifo};
-        beforeMean = mean(beforeArray(frequencyArray >= 850 - 5/16 & frequencyArray <= 850 + 5/16 ));
-        afterMean = mean(afterArray(frequencyArray >= 850 - 5/16 & frequencyArray <= 850 + 5/16));
+        beforeMean = mean(beforeArray(frequencyArray >= 850 - 2/16 & frequencyArray <= 850 + 2/16 ));
+        afterMean = mean(afterArray(frequencyArray >= 850 - 2/16 & frequencyArray <= 850 + 2/16));
         xlim([bandlo bandhi])
         ylim([ylo yhi])
         hold on
