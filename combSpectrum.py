@@ -217,7 +217,8 @@ def combSpectrum(targetDirectory, flag):
     plt.close()
         
 # Uncomment below to test on one directory only:
-combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9326/', 'one')
+#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9326/', 'one')
+combSpectrum('/home/pulsar/feedforward/2012/10/25/AMPS/files_for_comb/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
 #grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
 #combSpectrum(grandTarget, 'all')
