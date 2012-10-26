@@ -65,14 +65,18 @@ def combSpectrum(targetDirectory, flag):
         except IOError:
             print 'File not found or accessible; skipping ' +\
             combFileName
-        return combLines[5:8]
+        return combLines[5:8] + combLines[11:13]
     # Apply the function to all the comb files in the directory.
     for k, eachCombFile in enumerate(combFiles):
         # Each file will have four properties:
+        # (using zero-indexed terminology)
         # start time, read in the GPS time of the file name
         # frequency bins, read from the fifth row of the file (0th of combRaw),
         # ratios, read from the sixth (1st of combRaw),
         # and difference, read from the seventh (2nd of combRaw).
+        # Then, after some comment lines,
+        # before feedforward in the eleventh line (3rd of combRaw)
+        # and after feedforward in the twelfth line (4th of combRaw) 
         if k == 0:
             times = re.search('-(?P<GPS>\d+)-(\d+)\.', eachCombFile)
             timeArray = np.asarray(times.group(1), dtype=np.int32)
@@ -81,6 +85,8 @@ def combSpectrum(targetDirectory, flag):
             frequencyArray = frequencyArray.astype(int)
             ratioArray = np.asarray(str(combRaw[1]).split(), dtype=np.float32)
             differenceArray = np.asarray(str(combRaw[2]).split(), dtype=np.float32)
+            beforeArray = np.asarray(str(combRaw[3]).split(), dtype=np.float32)
+            afterArray = np.asarray(str(combRaw[4]).split(), dtype=np.float32)
         if k > 0:
             times = re.search('-(?P<GPS>\d+)-(\d+)\.', eachCombFile)
             timeArray = np.vstack([timeArray, np.asarray(times.group(1), dtype=np.int32)])
@@ -88,6 +94,8 @@ def combSpectrum(targetDirectory, flag):
             frequencyArray = np.vstack([frequencyArray, np.asarray(str(combRaw[0]).split(), dtype=np.float32)])
             ratioArray = np.vstack([ratioArray, np.asarray(str(combRaw[1]).split(), dtype=np.float32)])
             differenceArray = np.vstack([differenceArray, np.asarray(str(combRaw[2]).split(), dtype=np.float32)])
+            beforeArray = np.vstack([beforeArray, np.asarray(str(combRaw[3]).split(), dtype=np.float32)])
+            afterArray = np.vstack([afterArray, np.asarray(str(combRaw[4]).split(), dtype=np.float32)])
 
     # Now we are going to plot these arrays.
     # First, set a directory for the output. At least for the time being,
@@ -96,6 +104,8 @@ def combSpectrum(targetDirectory, flag):
     graphTitleRatio = targetDirectory + "EleutheriaPostPlotCombRatio" +\
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
     graphTitleDiff = targetDirectory + "EleutheriaPostPlotCombDiff" +\
+    '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
+    graphTitleBeforeAfter = targetDirectory + "EleutheriaPostPlotCombBeforeAfter" +\
     '-' + str(timeArray[0]).strip("[").strip("]").strip("'")
     x, y = np.meshgrid(timeArray, frequencyArray[0])
     extensions = [x[0, 0], x[-1, -1], y[0, 0], y[-1, -1]]
@@ -181,17 +191,41 @@ def combSpectrum(targetDirectory, flag):
     plt.savefig(graphTitleDiff + 'Freq.png')
     plt.savefig(graphTitleDiff + 'Freq.pdf')
     plt.close()
+    plt.figure()
+    p0 = plt.scatter(timeArray, beforeArray[:, 27], color='b')
+    mean0 = np.mean(beforeArray[:, 27])
+    numberofthings = np.shape(beforeArray[:,27])[0]
+    mean0array = mean0 * np.ones((np.shape(beforeArray[:, 27])[0], 1))
+    p1 = plt.scatter(timeArray, afterArray[:, 27], color='r')
+    mean1 = np.mean(afterArray[:, 27])
+    mean1array = mean1 * np.ones((np.shape(afterArray[:, 27])[0], 1))
+    p2 = plt.plot(timeArray, mean0array, 'b^')
+    p3 = plt.plot(timeArray, mean1array, 'r+')
+    plt.grid(True)
+    plt.xlabel('GPS time (s)')
+    plt.ylabel('Hoft')
+    plt.title('Before and after feedforward')
+    plt.legend([p0, p1, p2, p3], \
+    [str(frequencyArray[0, freqList[1]]) + ' Hz before, scatterplot', \
+    str(frequencyArray[0, freqList[1]]) + ' Hz before, mean: ' + str(mean0), \
+    str(frequencyArray[0, freqList[1]]) + ' Hz after, scatterplot', \
+    str(frequencyArray[0, freqList[1]]) + ' Hz after, mean: ' + str(mean1), \
+    ])
+    plt.savefig(graphTitleBeforeAfter + '.png')
+    plt.savefig(graphTitleBeforeAfter + '.pdf')
+    plt.legend
+    plt.close()
         
 # Uncomment below to test on one directory only:
-#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9531/', 'one')
+combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9326/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-combSpectrum(grandTarget, 'all')
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+#combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
-grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
-highDirectoryList = os.listdir(grandTarget)
-highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
-for x in highDirectoryListDirOnly:
-    combSpectrum(grandTarget + '/' + x + '/', 'one')
+#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
+#highDirectoryList = os.listdir(grandTarget)
+#highDirectoryListDirOnly = [x for x in highDirectoryList if x.find('.') == -1]
+#for x in highDirectoryListDirOnly:
+#    combSpectrum(grandTarget + '/' + x + '/', 'one')
 
 
