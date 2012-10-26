@@ -92,13 +92,20 @@ irun = 1;
 	elseif (plottypelist(iband)==4)
           loglog(freq{irun,iifo},amppsd{irun,iifo},'color','black')
 	end
+        frequencyArray = freq{irun,iifo};
+        beforeArray = amppsd{irun,iifo};
+        afterArray = amppsdwt{irun,iifo};
+        beforeMean = mean(beforeArray(frequencyArray >= 850 - 5/16 & frequencyArray <= 850 + 5/16 ));
+        afterMean = mean(afterArray(frequencyArray >= 850 - 5/16 & frequencyArray <= 850 + 5/16));
         xlim([bandlo bandhi])
         ylim([ylo yhi])
         hold on
         plot(freq{irun,iifo},amppsdwt{irun,iifo},'color',color)
 	%plot(freqdesign,sensdesign,'color','blue');
         grid
-	legend('Before-FF amplitude PSD','After-FF amplitude PSD','Location','North')
+        beforeLegend = horzcat('Before-FF ASD, mean: ', num2str(beforeMean));
+        afterLegend = horzcat('After-FF ASD, mean: ', num2str(afterMean));
+	legend(beforeLegend,afterLegend,'Location','North')
 	titlestr = sprintf('%s %s Average Spectra (%d-%d Hz)',run,ifo,round(bandlo),round(bandhi));
         title(titlestr)
 	fnamepdf = sprintf('%s_%s.pdf',fnameroot,bandname)
