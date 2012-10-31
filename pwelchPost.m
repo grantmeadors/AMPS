@@ -1,3 +1,4 @@
+function result = pwelchPost()
 % Grant David Meadors
 % 02012-10-30 (JD 2456231)
 % g m e a d o r s @ u m i c h . e d u
@@ -36,7 +37,7 @@ function data = framePull(frame, cache, observatory, duration, ctype)
             end
             if hh == numberOfTries
                 disp(horzcat(...
-                    'Failed to correctly retrieve data after ',...
+                'Failed to correctly retrieve data after ',...
                 num2str(numberOfTries), ' attempts.'))
             end
         end
@@ -47,6 +48,29 @@ function data = framePull(frame, cache, observatory, duration, ctype)
     disp(length(Hoft.baseline))
     data.Hoft = Hoft;
 end
-% Obtain first the raw S6 LDAS data, then the feedforward AMPS
-Hoft.LDAS = framePull('cache/fileList-DARM-932683547-932692763.txt', 932683547, 'H', 9216, 'LDAS');
-Hoft.AMPS = framePull('cache/fileList-AMPS-932683547-932692763.txt', 932683547, 'H', 9216, 'AMPS');
+% Build a function to retrieve data and pwelch it for each window, 1024 s long
+function eachWindowBin = windowWelch(GPSstart, duration)
+    % Obtain first the raw S6 LDAS data, then the feedforward AMPS
+    dataLDAS = framePull(GPSstart, 'cache/fileList-DARM-932683547-932692763.txt', 'H', duration, 'LDAS');
+    Hoft.LDAS = dataLDAS.Hoft;
+    clear dataLDAS
+    dataAMPS = framePull(GPSstart, 'cache/fileList-AMPS-932683547-932692763.txt', 'H', duration, 'AMPS');
+    Hoft.AMPS = dataAMPS.Hoft;
+    clear dataAMPS
+    % Then pwelch the data
+    Fs = 16384;
+    nfft = 16*Fs;
+    size(Hoft.LDAS)
+    size(Hoft.AMPS)
+    [pLDAS, fx] = pwelch(Hoft.LDAS, hanning(nfft), nfft/2, nfft, Fs);
+    [pAMPS, fx] = pwelch(Hoft.AMPS, hanning(nfft), nfft/2, nfft, Fs)
+    aLDAS = sqrt(pLDAS);
+    aAMPS = sqrt(pAMPS);
+    eachWindowBin = [aLDAS(fx == 850), aAMPS(fx == 850)];
+end
+for ii = 0:((932692763-932683547-1024)/1024)
+    eachWindowBin = windowWelch(932683547+ii, 1024);
+    disp(eachWindowBin)
+end
+
+end
