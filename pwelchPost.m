@@ -44,8 +44,11 @@ function data = framePull(frame, cache, observatory, duration, ctype)
     end
     Hoft.baseline  =...
         readFramesVerily(cache, cname{1}, frame, duration, 16384); 
-    disp('Retrieved the following number of samples for Hoft')
-    disp(length(Hoft.baseline))
+    %disp('Retrieved the following number of samples for Hoft')
+    %disp(length(Hoft.baseline))
+    disp('Evaluted the following GPS start to stop interval') 
+    disp(frame)
+    disp(frame+duration)
     data.Hoft = Hoft;
 end
 % Build a function to retrieve data and pwelch it for each window, 1024 s long
@@ -88,7 +91,7 @@ numberOfWindows = ((932692763-932683547-1024)/512)+1;
 windowBins = zeros(numberOfWindows, 2);
 windowCombs = zeros(numberOfWindows,2);
 for ii = 0:(numberOfWindows-1)
-    eachWindow = windowWelch(932683547+ii, 1024);
+    eachWindow = windowWelch(932683547+ii*512, 1024);
     windowBins(ii+1, :) = eachWindow.Bin(:);
     windowCombs(ii+1, :) = eachWindow.Comb(:);
 end
