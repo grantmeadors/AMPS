@@ -1060,13 +1060,18 @@ classdef HoftEditor < handle
                 % nfft/Fs is the 1/(binwidth)
                 % r/Fs is the number of seconds in the sample, r
                 % Thus r/nfft is the number of averages
+                % But remember that Matlab's pwelch
+                % starts with bin 0 in index 1
+                % corresponding to 0 Hz,
+                % so subtract 1 (rather than 2 as if Matlab were 0-indexed)
+                % off the bin number of the bin 2 to the left of the center.
                 frequencyCombA = (nfft./Fs) .* (...
                     [65, 70, 75, 85, 90, 95, 105, 110,...
                     130, 140, 150, 160, 170, 190,...
                     210, 220, 230, 250, 260, 270, 280, 290,...
                     320, 450, 550, 650, 750, 850, 950, 1050,...
                     1170, 1250, 1350, 1450, 1550, 1650, 1750,...
-                    1850, 1950, 2000]) - 2;
+                    1850, 1950, 2000]) - 1;
                 frequencyCombB = frequencyCombA + 1;
                 frequencyCombC = frequencyCombA + 2;
                 frequencyCombD = frequencyCombA + 3;
