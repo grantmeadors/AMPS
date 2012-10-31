@@ -60,6 +60,7 @@ int main(int argc, char **argv)
     FILE *fp2 = NULL;
     FILE *fp3 = NULL;
     FILE *fp4 = NULL;
+    FILE *fp5 = NULL;
     LALStatus status = blank_status;
     
     SFTCatalog *catalog = NULL;
@@ -73,7 +74,7 @@ int main(int argc, char **argv)
     REAL8 *timeavg =NULL, *timeavgwt=NULL, *sumweight=NULL;
     REAL8 PSD,AMPPSD,PSDWT,AMPPSDWT,weight,thispower,thisavepower,scalefactor,sumpower;
     REAL8 f =0, f0, deltaF;
-    CHAR outbase[256],outfile[256],outfile2[256],outfile3[256], outfile4[256]; /*, outfile6[256]; */
+    CHAR outbase[256],outfile[256],outfile2[256],outfile3[256], outfile4[256], outfile5[256]; /*, outfile6[256]; */
     //    REAL8 NumBinsAvg =0;
     REAL8 timebaseline =0;
     
@@ -165,11 +166,13 @@ int main(int argc, char **argv)
     sprintf(outfile2, "%s_timestamps", outbase);/*cg: name of second file to be output*/
     sprintf(outfile3, "%s.txt", outbase);/*cg; name of third file to be output*/
     sprintf(outfile4, "%s_date", outbase);/*cg;file for outputting the date, which is used in matlab plotting.*/
+    sprintf(outfile5, "%s_bins.txt", outbase); /*gdm; file for writing a few interesting bins*/
 
     fp = fopen(outfile, "w");/*cg;  open all three files for writing, if they don't exist create them, if they do exist overwrite them*/
     fp2 = fopen(outfile2, "w");
     fp3 = fopen(outfile3, "w");
     fp4 = fopen(outfile4, "w");
+    fp5 = fopen(outfile5, "w");
 
     LALCHARCreateVector(&status, &year_date, (UINT4)128); 
 
@@ -250,6 +253,20 @@ int main(int argc, char **argv)
 		}
 	      }
 	    thisavepower /= count;
+            if (i >= 1457995 && i <= 1458005)
+              {
+                f = f0 + ((REAL4)i)*deltaF;
+                printf("SFT number=%d\n",j);
+                printf("Frequency=%f\n",f);
+                printf("Bin=%d\n",i);
+                printf("Real component=%f\n", sft_vect->data[0].data->data[i].re);
+                printf("Imaginary component=%f\n", sft_vect->data[0].data->data[i].im);
+                printf("Bin power=%f\n", thispower);
+                printf("Bin-neighbor average power=%f\n", thisavepower);
+                printf("Scale-factor=%f\n", scalefactor);
+                printf("Time baseline=%f\n", timebaseline);
+                fprintf(fp5,"%d %16.8f %g %g %g %g\n",j, f, thispower, thisavepower, scalefactor, timebaseline);
+              }
 	    weight = 1./thisavepower;
 	    //	    weight = 1.;
 	    if (j == 0) 
@@ -310,6 +327,7 @@ int main(int argc, char **argv)
     fclose(fp2);
     fclose(fp3);
     fclose(fp4);
+    fclose(fp5);
 
     fprintf(stderr,"end of spec_avg\n");
 
