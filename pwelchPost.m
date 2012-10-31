@@ -66,10 +66,22 @@ function eachWindow = windowWelch(GPSstart, duration)
     aAMPS = sqrt(pAMPS);
     eachWindow.Bin = [aLDAS(fx == 850), aAMPS(fx == 850)];
     bin = find(fx == 850);
+    % It would seem that my comb may be off center, as it calculates
+    % 1/(binwidth) * frequency,
+    % but Matlab's pwelch is indexed with 0 Hz at bin 1,
+    % 1/(binwidth) at bin 2, et c.
+    % So in my prior comb calculations, I had 
+    % assumed 0 Hz at bin 0, et c. So to match that
+    % earlier, wrong
+    % model and see if I can replicate its results,
+    % I need to shift all of my bins down by one.
+    % Nota bene:
+    % even if they are in the correct place, there is still
+    % discrepancy with the harmonic average method
     eachWindow.Comb = [...
-        (aLDAS(bin-2)+aLDAS(bin-1)+aLDAS(bin)+aLDAS(bin+1)+aLDAS(bin+2))/5 ...
+        (aLDAS(bin-3)+aLDAS(bin-2)+aLDAS(bin-1)+aLDAS(bin+0)+aLDAS(bin+1))/5 ...
         ,...
-        (aAMPS(bin-2)+aAMPS(bin-1)+aAMPS(bin)+aAMPS(bin+1)+aAMPS(bin+1))/5 ...
+        (aAMPS(bin-3)+aAMPS(bin-2)+aAMPS(bin-1)+aAMPS(bin+0)+aAMPS(bin+1))/5 ...
         ];
 end
 numberOfWindows = ((932692763-932683547-1024)/512)+1;
