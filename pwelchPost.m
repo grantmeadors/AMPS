@@ -52,25 +52,38 @@ end
 function eachWindowBin = windowWelch(GPSstart, duration)
     % Obtain first the raw S6 LDAS data, then the feedforward AMPS
     dataLDAS = framePull(GPSstart, 'cache/fileList-DARM-932683547-932692763.txt', 'H', duration, 'LDAS');
-    Hoft.LDAS = dataLDAS.Hoft;
+    Hoft.LDAS = dataLDAS.Hoft.baseline;
     clear dataLDAS
     dataAMPS = framePull(GPSstart, 'cache/fileList-AMPS-932683547-932692763.txt', 'H', duration, 'AMPS');
-    Hoft.AMPS = dataAMPS.Hoft;
+    Hoft.AMPS = dataAMPS.Hoft.baseline;
     clear dataAMPS
     % Then pwelch the data
     Fs = 16384;
     nfft = 16*Fs;
-    size(Hoft.LDAS)
-    size(Hoft.AMPS)
     [pLDAS, fx] = pwelch(Hoft.LDAS, hanning(nfft), nfft/2, nfft, Fs);
-    [pAMPS, fx] = pwelch(Hoft.AMPS, hanning(nfft), nfft/2, nfft, Fs)
+    [pAMPS, fx] = pwelch(Hoft.AMPS, hanning(nfft), nfft/2, nfft, Fs);
     aLDAS = sqrt(pLDAS);
     aAMPS = sqrt(pAMPS);
     eachWindowBin = [aLDAS(fx == 850), aAMPS(fx == 850)];
 end
-for ii = 0:((932692763-932683547-1024)/1024)
+numberOfWindows = ((932692763-932683547-1024)/512)+1;
+windowBins = zeros(numberOfWindows, 2);
+for ii = 0:(numberOfWindows-1)
     eachWindowBin = windowWelch(932683547+ii, 1024);
+    windowBins(ii, :) = eachWindowBin;
     disp(eachWindowBin)
 end
+    disp('Raw values of before (left) and after (right) feedforward Hoft per window')
+    disp(windowBins)
+    disp('Arithmetic mean of windows')
+    disp('Before feedforward')
+    disp(mean(windowBins(:, 1)))
+    disp('After feedforward')
+    disp(mean(windowBins(:, 2)))
+    disp('Harmonic mean of windows')
+    disp('Before feedforward')
+    disp(harmmean(windowBins(:, 1)))
+    disp('After feedforward')
+    disp(harmmean(windowBins(:, 2)))
 
 end
