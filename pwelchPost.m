@@ -49,7 +49,7 @@ function data = framePull(frame, cache, observatory, duration, ctype)
     data.Hoft = Hoft;
 end
 % Build a function to retrieve data and pwelch it for each window, 1024 s long
-function eachWindowBin = windowWelch(GPSstart, duration)
+function eachWindow = windowWelch(GPSstart, duration)
     % Obtain first the raw S6 LDAS data, then the feedforward AMPS
     dataLDAS = framePull(GPSstart, 'cache/fileList-DARM-932683547-932692763.txt', 'H', duration, 'LDAS');
     Hoft.LDAS = dataLDAS.Hoft.baseline;
@@ -64,26 +64,46 @@ function eachWindowBin = windowWelch(GPSstart, duration)
     [pAMPS, fx] = pwelch(Hoft.AMPS, hanning(nfft), nfft/2, nfft, Fs);
     aLDAS = sqrt(pLDAS);
     aAMPS = sqrt(pAMPS);
-    eachWindowBin = [aLDAS(fx == 850), aAMPS(fx == 850)];
+    eachWindow.Bin = [aLDAS(fx == 850), aAMPS(fx == 850)];
+    bin = find(fx == 850);
+    eachWindow.Comb = [...
+        (aLDAS(bin-2)+aLDAS(bin-1)+aLDAS(bin)+aLDAS(bin+1)+aLDAS(bin+2))/5...
+        ,...
+        (aAMPS(bin-2)+aAMPS(bin-1)+aAMPS(bin)+aAMPS(bin+1)+aAMPS(bin+1))/5...
+        ];
 end
 numberOfWindows = ((932692763-932683547-1024)/512)+1;
 windowBins = zeros(numberOfWindows, 2);
+windowCombs = zeros(numberOfWindows,2);
 for ii = 0:(numberOfWindows-1)
-    eachWindowBin = windowWelch(932683547+ii, 1024);
-    windowBins(ii, :) = eachWindowBin;
-    disp(eachWindowBin)
+    eachWindow = windowWelch(932683547+ii, 1024);
+    windowBins(ii+1, :) = eachWindow.Bin(:);
+    windowCombs(ii+1, :) = eachWindow.Comb(:);
 end
-    disp('Raw values of before (left) and after (right) feedforward Hoft per window')
+    disp('Raw values of before (left) and after (right) feedforward Hoft per window bin')
     disp(windowBins)
-    disp('Arithmetic mean of windows')
+    disp('Arithmetic mean of window bins, 850 Hz only')
     disp('Before feedforward')
     disp(mean(windowBins(:, 1)))
     disp('After feedforward')
     disp(mean(windowBins(:, 2)))
-    disp('Harmonic mean of windows')
+    disp('Harmonic mean of window bins, 850 Hz only')
     disp('Before feedforward')
     disp(harmmean(windowBins(:, 1)))
     disp('After feedforward')
     disp(harmmean(windowBins(:, 2)))
+    disp('Raw values of before (left) and after (right) feedforward Hoft per window bin')
+    disp('Includes 5 bins, 2 to either side of 850 Hz, 1/16 Hz bin size')
+    disp(windowCombs)
+    disp('Arithmetic mean of window combs, 850 Hz')
+    disp('Before feedforward')
+    disp(mean(windowCombs(:, 1)))
+    disp('After feedforward')
+    disp(mean(windowCombs(:, 2)))
+    disp('Harmonic mean of window combs, 850 Hz')
+    disp('Before feedforward')
+    disp(harmmean(windowCombs(:, 1)))
+    disp('After feedforward')
+    disp(harmmean(windowCombs(:, 2)))
 
 end
