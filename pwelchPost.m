@@ -91,7 +91,7 @@ numberOfWindows = ((932692763-932683547-1024)/512)+1;
 windowBins = zeros(numberOfWindows, 2);
 windowCombs = zeros(numberOfWindows,2);
 for ii = 0:(numberOfWindows-1)
-    eachWindow = windowWelch(932683547+ii*512, 1024);
+    eachWindow = windowWelch(932683547+ii*512, 512);
     windowBins(ii+1, :) = eachWindow.Bin(:);
     windowCombs(ii+1, :) = eachWindow.Comb(:);
 end
