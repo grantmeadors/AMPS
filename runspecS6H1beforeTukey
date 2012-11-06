@@ -1,0 +1,4 @@
+#/bin/csh
+
+/home/gmeadors/master/opt/lscsoft/lalapps/bin/lalapps_spec_avg --SFTs /home/pulsar/feedforward/2012/11/05/beforeTukey/H-1_H1_1800SFT_LDASC02L2-932/\*.sft  --startGPS 932683547 --endGPS 932692763 --fMin 40. --fMax 1999.999 --freqRes 0.10 --timeBaseline 1800 -v 3 --IFO H1 --outputBname S6H1_Tukey_40_2000beforeTukey
+
