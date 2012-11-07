@@ -14,6 +14,19 @@ ahi = load('afterHannImaginary.txt');
 atr = load('afterTukeyReal.txt');
 ati = load('afterTukeyImaginary.txt');
 
+% Since each of these files contains not one but eleven frequencies,
+% choose only the eleventh element, given slightly below 849 Hz in
+% each SFT window
+
+bhr = bhr(1:11:end);
+bhi = bhi(1:11:end);
+btr = btr(1:11:end);
+bti = bti(1:11:end);
+ahr = ahr(1:11:end);
+ahi = ahi(1:11:end);
+atr = atr(1:11:end);
+ati = ati(1:11:end);
+
 th = 1:length(bhr);
 tt = 1:length(btr);
 
