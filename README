@@ -1,6 +1,6 @@
 Grant David Meadors
 Auxiliary MICH-PRC Subtraction
-2012-07-03 (JD 2456112)
+2012-11-09 (JD 2456241)
 g m e a d o r s @ u m i c h . e d u
 
 To run each section of the feedforward project
@@ -91,8 +91,12 @@ SFT generation:
 1. "ligo_data_find -o H -t H1_AMPS_C02_L2 -u file -s 931052708 -e 971622015 -u file --show-times > SFTsegsTestData.txt"
 2. "./compareSegLists.tcl -f1 dividedSeglist.txt -f2 segsH1ScienceMinusAllVetoes_AllS6VSR2VSR3times.txt -i > SFTsegsTestList.txt"
 3. "./compareSegLists.tcl -f1 SFTsegsTestList.txt -f2 SFTsegsTestData.txt -i > SFTsegsTestIntersection.txt"
-4. "MakeSFTDAG -f SFTtukey.dag -G SFTTUKEY -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/tukey -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8"
-5. "condor_submit_dag SFTtukey.dag"
+4a. "MakeSFTDAG -f SFTtukey.dag -G SFTTUKEY -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/tukey -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8"
+OR
+4b. "MakeSFTDAG -f SFThann.dag -G SFTHANN -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/hann -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8 -w 3 -P 0.5"
+5a. "condor_submit_dag SFTtukey.dag"
+OR
+5b. "condor_submit_dag SFThann.dag"
 
 Spectral averaging
 0. Modify, as needed for observatory or directory, "runspecS6H1feedforward"
