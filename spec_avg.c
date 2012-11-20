@@ -253,19 +253,22 @@ int main(int argc, char **argv)
 		}
 	      }
 	    thisavepower /= count;
-            if (i >= 1457995 && i <= 1458005)
+            // Print out the calibrated ASD bin value over about 5/16 Hz,
+            // centered on 850 Hz.
+            if (i >= 1457719 && i <= 1458281)
               {
                 f = f0 + ((REAL4)i)*deltaF;
-                printf("SFT number=%d\n",j);
-                printf("Frequency=%f\n",f);
-                printf("Bin=%d\n",i);
-                printf("Real component=%f\n", sft_vect->data[0].data->data[i].re);
-                printf("Imaginary component=%f\n", sft_vect->data[0].data->data[i].im);
-                printf("Bin power=%f\n", thispower);
-                printf("Bin-neighbor average power=%f\n", thisavepower);
-                printf("Scale-factor=%f\n", scalefactor);
-                printf("Time baseline=%f\n", timebaseline);
-                fprintf(fp5,"%d %16.8f %g %g %g %g\n",j, f, thispower, thisavepower, scalefactor, timebaseline);
+                //printf("SFT number=%d\n",j);
+                //printf("Frequency=%f\n",f);
+                //printf("Bin=%d\n",i);
+                //printf("Real component=%f\n", sft_vect->data[0].data->data[i].re);
+                //printf("Imaginary component=%f\n", sft_vect->data[0].data->data[i].im);
+                //printf("Bin power=%f\n", thispower);
+                //printf("Bin-neighbor average power=%f\n", thisavepower);
+                //printf("Scale-factor=%f\n", scalefactor);
+                //printf("Time baseline=%f\n", timebaseline);
+                printf("%f\n", pow(2*thispower/scalefactor/scalefactor/timebaseline, 0.5));
+                fprintf(fp5,"%d %16.8f %g %g %g %g\n",j, f, thispower, pow(2*thispower/scalefactor/scalefactor/timebaseline,0.5), scalefactor, timebaseline);
               }
 	    weight = 1./thisavepower;
 	    //	    weight = 1.;
