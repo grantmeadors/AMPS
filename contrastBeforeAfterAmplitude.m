@@ -96,28 +96,54 @@ print('-dpng', 'HannHist.png')
 close(3)
 
 % Try cutting statistical outliers to see how that affects the distribution
-beforeCut = before;
-afterCut = after;
-threshold = 7e-23;
-beforeCut(beforeCut > threshold) = [];
-afterCut(afterCut > threshold) = [];
-beforeCutHist = hist(beforeCut, HoftHistVector);
-afterCutHist = hist(afterCut, HoftHistVector);
-harmmeanBeforeCut = harmmean(beforeCut);
-harmmeanAfterCut = harmmean(afterCut);
-harmmeanDifferenceCut = harmmeanBeforeCut - harmmeanAfterCut;
-harmmeanStringCut = 'Harmonic mean, cut at 7e-23: before, after, difference';
+beforeCutLoose = before;
+beforeCutTight = before;
+afterCutLoose = after;
+afterCutTight = after;
+thresholdLoose = 9e-23;
+thresholdTight = 7e-23;
+beforeCutLoose(beforeCutLoose > thresholdLoose) = [];
+afterCutLoose(afterCutLoose > thresholdLoose) = [];
+beforeCutTight(beforeCutTight > thresholdTight) = [];
+afterCutTight(afterCutTight > thresholdTight) = [];
+countSFTBefore = length(before);
+countSFTAfter = length(after);
+countSFTCutLooseBefore = length(beforeCutLoose);
+countSFTCutLooseAfter = length(afterCutLoose);
+countSFTCutTightBefore = length(beforeCutTight);
+countSFTCutTightAfter = length(afterCutTight);
+harmmeanBeforeCutLoose = harmmean(beforeCutLoose);
+harmmeanAfterCutLoose = harmmean(afterCutLoose);
+harmmeanBeforeCutTight = harmmean(beforeCutTight);
+harmmeanAfterCutTight = harmmean(afterCutTight);
+harmmeanDifferenceCutLoose = harmmeanBeforeCutLoose - harmmeanAfterCutLoose;
+harmmeanDifferenceCutTight = harmmeanBeforeCutTight - harmmeanAfterCutTight;
+harmmeanStringCut = 'Harmonic means: all,  cut at 9e-23,  cut at 7e-23';
+medianBefore = median(before);
+medianAfter = median(after);
+medianDifference = medianBefore - medianAfter;
+medianBeforeCutLoose = median(beforeCutLoose);
+medianAfterCutLoose = median(afterCutLoose);
+medianDifferenceCutLoose = medianBeforeCutLoose - medianAfterCutLoose;
+medianBeforeCutTight = median(beforeCutTight);
+medianAfterCutTight = median(afterCutTight);
+medianDifferenceCutTight = medianBeforeCutTight - medianAfterCutTight;
 
 figure(4)
-plot(HoftHistVector, beforeCutHist, HoftHistVector, afterCutHist)
+plot(HoftHistVector, beforeHist, HoftHistVector, afterHist)
 xlabel('Hoft')
 ylabel('Histogram count')
 legend('Before feedforward', 'After feedforward')
 title({'Hann window calibrated amplitude histogram';...
     harmmeanStringCut;...
-    num2str(harmmeanBeforeCut);...
-    num2str(harmmeanAfterCut);...
-    num2str(harmmeanDifferenceCut)});
+    horzcat('number of SFTs before ', num2str(countSFTBefore), '   ', num2str(countSFTCutLooseBefore), '   ', num2str(countSFTCutTightBefore));...
+    horzcat('number of SFTs after  ', num2str(countSFTAfter), '   ', num2str(countSFTCutLooseAfter), '   ', num2str(countSFTCutTightAfter));...
+    horzcat('HM before:     ', num2str(harmmeanBefore), '   ', num2str(harmmeanBeforeCutLoose),'   ', num2str(harmmeanBeforeCutTight));...
+    horzcat('HM after:       ', num2str(harmmeanAfter),  '   ', num2str(harmmeanAfterCutLoose), '   ', num2str(harmmeanAfterCutTight));...
+    horzcat('Difference of HM:   ', num2str(harmmeanDifference), '   ', num2str(harmmeanDifferenceCutLoose), '   ', num2str(harmmeanDifferenceCutTight));...
+    horzcat('Median before:    ', num2str(medianBefore), '   ', num2str(medianBeforeCutLoose), '   ', num2str(medianBeforeCutTight));...
+    horzcat('Median after:     ', num2str(medianAfter), '   ', num2str(medianAfterCutLoose), '   ', num2str(medianAfterCutTight));...
+    horzcat('Difference of median:   ', num2str(medianDifference), '   ', num2str(medianDifferenceCutLoose), '   ', num2str(medianDifferenceCutTight))});
 grid on
 print('-dpdf', 'HannHistCut.pdf')
 print('-dpng', 'HannHistCut.png')
