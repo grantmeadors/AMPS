@@ -53,7 +53,6 @@ differenceClean = difference;
 differenceClean(isnan(difference)) = [];
 arithmean = mean(differenceClean)*ones(size(difference));
 arithmeanString = horzcat('Arithmetic mean of difference: ', num2str(arithmean(1)));
-length(difference)
 
 figure(2)
 plot(beforeL, difference, beforeL, arithmean)
@@ -88,10 +87,38 @@ ylabel('Histogram count')
 legend('Before feedforward', 'After feedforward')
 title({'Hann windowed calibrated amplitude histogram';...
     harmmeanString;...
-    num2str(harmmeanBefore);
-    num2str(harmmeanAfter);
+    num2str(harmmeanBefore);...
+    num2str(harmmeanAfter);...
     num2str(harmmeanDifference)})
 grid on
 print('-dpdf', 'HannHist.pdf')
 print('-dpng', 'HannHist.png')
 close(3)
+
+% Try cutting statistical outliers to see how that affects the distribution
+beforeCut = before;
+afterCut = after;
+threshold = 7e-23;
+beforeCut(beforeCut > threshold) = [];
+afterCut(afterCut > threshold) = [];
+beforeCutHist = hist(beforeCut, HoftHistVector);
+afterCutHist = hist(afterCut, HoftHistVector);
+harmmeanBeforeCut = harmmean(beforeCut);
+harmmeanAfterCut = harmmean(afterCut);
+harmmeanDifferenceCut = harmmeanBeforeCut - harmmeanAfterCut;
+harmmeanStringCut = 'Harmonic mean, cut at 7e-23: before, after, difference';
+
+figure(4)
+plot(HoftHistVector, beforeCutHist, HoftHistVector, afterCutHist)
+xlabel('Hoft')
+ylabel('Histogram count')
+legend('Before feedforward', 'After feedforward')
+title({'Hann window calibrated amplitude histogram';...
+    harmmeanStringCut;...
+    num2str(harmmeanBeforeCut);...
+    num2str(harmmeanAfterCut);...
+    num2str(harmmeanDifferenceCut)});
+grid on
+print('-dpdf', 'HannHistCut.pdf')
+print('-dpng', 'HannHistCut.png')
+close(4)
