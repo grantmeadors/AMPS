@@ -5,7 +5,7 @@ hold off
 runlist = ['S6'];
 run = ['S6'];
 %windowlist = ['Hann ';'Tukey']; 
-windowlist = 'Tukey';
+windowlist = 'Hann';
 
 %ifolist = ['H1'; 'L1'];
 ifolist = ['H1'];
@@ -54,10 +54,10 @@ irun = 1;
      color = strtrim(plotcolor(iifo,:));
      fnameroot = sprintf('%s%s',run,ifo);
      fname1 = sprintf('%s_%s_40_2000test.txt',fnameroot,strtrim(windowlist(irun,:)));
-     fnameFull1 = strcat('~gmeadors/2012/06/29/AMPS/', fname1);
+     fnameFull1 = strcat('~gmeadors/2012/11/21/AMPS/', fname1);
      data1 = load(fnameFull1);
      fname2 = sprintf('%s_%s_40_2000feedforward.txt',fnameroot,strtrim(windowlist(irun,:)));
-     fnameFull2 = strcat('~gmeadors/2012/06/29/AMPS/', fname2);
+     fnameFull2 = strcat('~gmeadors/2012/11/21/AMPS/', fname2);
      data2 = load(fnameFull2);
      % Try resampling to smooth random variation.
      % This combines neighboring bins.
@@ -69,11 +69,12 @@ irun = 1;
      resampleFilterSize = 900;
      % Theoretically, the frequency array is linear so it could be resampled
      % using a less sophisticated algorithm. Yet why not try out resample here?
+     % Because we are using Hann windows, multiply by sqrt(8/3)
      freq{irun,iifo} = resample(data1(:,1), 1,...
          resampleFactor, resampleFilterSize);
-     amppsd{irun,iifo} = resample(data1(:,3) - data2(:,3), 1,...
+     amppsd{irun,iifo} = sqrt(8/3)*resample(data1(:,3) - data2(:,3), 1,...
          resampleFactor, resampleFilterSize);
-     amppsdwt{irun,iifo} = resample(data1(:,5) - data2(:,5), 1,...
+     amppsdwt{irun,iifo} = sqrt(8/3)*resample(data1(:,5) - data2(:,5), 1,...
          resampleFactor, resampleFilterSize);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
@@ -99,7 +100,7 @@ irun = 1;
 	%plot(freqdesign,sensdesign,'color','blue');
         grid
 	legend('Average amplitude PSD','Weighted average amplitude PSD','Location','North')
-	titlestr = sprintf('%s %s Average Spectra (%d-%d Hz)',run,ifo,round(bandlo),round(bandhi));
+	titlestr = sprintf('%s %s Average Spectra, Before - After (%d-%d Hz)',run,ifo,round(bandlo),round(bandhi));
         title(titlestr)
 	fnamepdf = sprintf('%s_%s.pdf',fnameroot,bandname)
         print('-dpdf',fnamepdf)

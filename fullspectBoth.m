@@ -5,7 +5,7 @@ hold off
 runlist = ['S6'];
 run = ['S6'];
 %windowlist = ['Hann ';'Tukey']; 
-windowlist = 'Tukey';
+windowlist = 'Hann';
 
 %ifolist = ['H1'; 'L1'];
 ifolist = ['H1'];
@@ -54,10 +54,10 @@ irun = 1;
      color = strtrim(plotcolor(iifo,:));
      fnameroot = sprintf('%s%s',run,ifo);
      fname1 = sprintf('%s_%s_40_2000test.txt',fnameroot,strtrim(windowlist(irun,:)));
-     fnameFull1 = strcat('~gmeadors/2012/10/24/AMPS/', fname1);
+     fnameFull1 = strcat('~gmeadors/2012/11/21/AMPS/', fname1);
      data1 = load(fnameFull1);
      fname2 = sprintf('%s_%s_40_2000feedforward.txt',fnameroot,strtrim(windowlist(irun,:)));
-     fnameFull2 = strcat('~gmeadors/2012/10/24/AMPS/', fname2);
+     fnameFull2 = strcat('~gmeadors/2012/11/21/AMPS/', fname2);
      data2 = load(fnameFull2);
      % Try resampling to smooth random variation.
      % This combines neighboring bins.
@@ -69,11 +69,12 @@ irun = 1;
      resampleFilterSize = 225;
      % Theoretically, the frequency array is linear so it could be resampled
      % using a less sophisticated algorithm. Yet why not try out resample here?
+     % Multiply by sqrt(8/3) for the Hann window normalization
      freq{irun,iifo} = resample(data1(:,1), 1,...
          resampleFactor, resampleFilterSize);
-     amppsd{irun,iifo} = resample(data1(:,5), 1,...
+     amppsd{irun,iifo} = sqrt(8/3)*resample(data1(:,5), 1,...
          resampleFactor, resampleFilterSize);
-     amppsdwt{irun,iifo} = resample(data2(:,5), 1,...
+     amppsdwt{irun,iifo} = sqrt(8/3)*resample(data2(:,5), 1,...
          resampleFactor, resampleFilterSize);
      sprintf('Looping over single-IFO bands...')
      for iband = 1:length(bandlolist)
