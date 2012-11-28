@@ -216,19 +216,26 @@ def combSpectrum(targetDirectory, flag):
     #plt.savefig(graphTitleBeforeAfter + '.pdf')
     #plt.legend
     #plt.close()
+    histBins = 1e-24 * np.arange(50., 101.) 
     plt.figure()
-    p0 = plt.scatter(timeArray, beforeArray[:, 27], color='b')
+    #p0 = plt.scatter(timeArray, beforeArray[:, 27], color='b')
+    #p0 = plt.hist(beforeArray[:, 27], histBins)
+    p1 = plt.hist(afterArray[:, 27], histBins)
     plt.grid(True)
-    plt.savefig(graphWholeRun + '.png')
-    plt.savefig(graphWholeRun + '.pdf')
+    plt.xlabel('Hoft')
+    plt.ylabel('Histogram count (1e-24 bins from 5e-23 to 1e-24)')
+    plt.title('850 Hz comb histogram after feedforward')
+    #plt.legend([p0, p1], ['Before', 'After'])
+    plt.savefig(graphWholeRun + 'Histogram.png')
+    plt.savefig(graphWholeRun + 'Histogram.pdf')
     plt.close()
         
 # Uncomment below to test on one directory only:
-combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9326/', 'one')
+#combSpectrum('/home/pulsar/public_html/feedforward/diagnostics/LHO/H-H1_AMPS_C02_L2-9326/', 'one')
 #combSpectrum('/home/pulsar/feedforward/2012/10/25/AMPS/files_for_comb/', 'one')
 # Uncomment below to test all directories and produce a whole-run overview.
-#grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
-#combSpectrum(grandTarget, 'all')
+grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO/'
+combSpectrum(grandTarget, 'all')
 # Uncomment below to test each directory, making plots one-by-one.
 #grandTarget = '/home/pulsar/public_html/feedforward/diagnostics/LHO'
 #highDirectoryList = os.listdir(grandTarget)
