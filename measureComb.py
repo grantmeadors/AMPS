@@ -219,8 +219,10 @@ def combSpectrum(targetDirectory, flag):
     lengthofArray = beforeArray.shape[0]
     print [str(timeArray[i]) for i in range(lengthofArray) \
     if ((sum(afterArray[i, :]) > 7e-21))]
-    print [sum(afterArray[i, :]) for i in range(lengthofArray)\
-    if (timeArray[i] > 931386300 and timeArray[i] < 931389100)]
+    #print [sum(afterArray[i, :]) for i in range(lengthofArray)\
+    #if (timeArray[i] > 931386300 and timeArray[i] < 931389100)]
+    print [str(timeArray[i]) for i in range(lengthofArray) \
+    if ((sum(afterArray[i, 23:-1]) > 2.8e-21))]
 
     histBins = 1e-24 * np.arange(50., 101.) 
     plt.figure()
