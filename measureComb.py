@@ -10,7 +10,7 @@ def combSpectrum(targetDirectory, flag):
 
     # Grant David Meadors
     # g m e a d o r s @  u m i c h . e d u
-    # 02012-11-28 (JD 2456260)
+    # 02012-11-30 (JD 2456262)
     # combSpectrum
     #
     # Scan output log files for parts of the spectrum where feedforward is 
@@ -216,6 +216,12 @@ def combSpectrum(targetDirectory, flag):
     #plt.savefig(graphTitleBeforeAfter + '.pdf')
     #plt.legend
     #plt.close()
+    lengthofArray = beforeArray.shape[0]
+    print [str(timeArray[i]) for i in range(lengthofArray) \
+    if ((sum(afterArray[i, :]) > 7e-21))]
+    print [sum(afterArray[i, :]) for i in range(lengthofArray)\
+    if (timeArray[i] > 931386300 and timeArray[i] < 931389100)]
+
     histBins = 1e-24 * np.arange(50., 101.) 
     plt.figure()
     p0 = plt.hist(beforeArray[:, 27], histBins)
