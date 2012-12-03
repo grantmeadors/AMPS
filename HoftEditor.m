@@ -463,7 +463,17 @@ classdef HoftEditor < handle
         function dataReviewer(Hoft, newHoft, jj, jjStart)
             frameWriter(Hoft);
             Hoft.vetoAlarm = (Hoft.successVector.range | Hoft.successVector.comb);
-            if (Hoft.vetoAlarm & ~(Hoft.isFirstSubFlag) & ~(Hoft.tIsFollowed)) == 1
+            % Normally, if the vetoAlarm is raised, we will proceed to
+            % extricate our bad feedforward attempt and introduce normal data.
+            % However, a few conditions must be met.
+            % The followed method is not suited to the starting window,
+            % so we verify that isFirstSubFlag is not on. Moreover,
+            % the proceedure is inappropriate on the last window of a job for
+            % a segment that has been divided across multiple jobs.
+            dataCleaningFlag = Hoft.vetoAlarm &...
+                (Hoft.isFirstSubFlag == 0) &...
+                ((Hoft.tIsFollowed == 0) | (Hoft.isLastSubFlag == 0));
+            if dataCleaningFlag == 1
                 disp('Veto alarm raised in window; writing baseline instead of filtered data')
                 % First we have to back out bad data and renormalize the preceding window
                 windowRenormalize(Hoft, Hoft.tSub, Hoft.p, Hoft.s, newHoft, jj, jjStart);
@@ -1116,7 +1126,25 @@ classdef HoftEditor < handle
                 % or more generous if less than 32 averages
                 % else pass (zero)
                 combOutput.combLimit = max(1.2, 1.2 * sqrt(32 / (Hoft.r/nfft)));
-                combOutput.maximum = max(combOutput.Ratio >= combOutput.combLimit );
+                combOutput.maximum =... max(combOutput.Ratio >= combOutput.combLimit );
+
+                % In addition to the ratio cutoff, check the sum of comb
+                % values after feedforward. If the sum of points at
+                % frequencies greater than or equal to 450 Hz is greater
+                % than or equal to 2.75e-21, abort. 
+                % This threshold is chosen based
+                % on post-processing diagnostics that show worse values
+                % to be indicative of sufficiently noisy periods that
+                % feedforward should not be attempted, even if all other
+                % vetos are clear.
+                
+                % 450 Hz is the 24th index in the comb.
+                combSumOver450 = sum(combOutput.After(24:end));
+                combAfterSumThreshold = 2.75e-21;
+                combSumVeto = combSumOver450 >= combAfterSumThreshold;
+                
+                % Finaly Boolean result 
+                combOutput.combVetoFlag = combOutput.maximum | combSumVeto; 
                 
                 disp('Comb limit for this window')
                 disp(combOutput.combLimit)
@@ -1126,6 +1154,9 @@ classdef HoftEditor < handle
                 disp(combOutput.Diff)
                 disp('Maximum should be Boolean')
                 disp(combOutput.maximum)
+                disp('Sum of values >= 450 Hz')
+                disp(combSumOver450)
+                disp('Comb veto (one fails, zero passes)')
                 
                 % Store the bin index number in the output:
                 combOutput.frequencyCombC = frequencyCombC;
@@ -1133,7 +1164,7 @@ classdef HoftEditor < handle
                 combOutput.frequencyList = (Fs./nfft).*frequencyCombC;
             end
             combOutputResult = comber(Fs, nfft, pdarmcal, perrcal);
-            Hoft.successVector.comb = combOutputResult.maximum;
+            Hoft.successVector.comb = combOutputResult.combVetoFlag;
             disp('success (0) or failure (1) of the data in range and comb veto tests:')
             disp(Hoft.successVector.range)
             disp(Hoft.successVector.comb)
