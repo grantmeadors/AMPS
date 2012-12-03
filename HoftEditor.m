@@ -1126,7 +1126,7 @@ classdef HoftEditor < handle
                 % or more generous if less than 32 averages
                 % else pass (zero)
                 combOutput.combLimit = max(1.2, 1.2 * sqrt(32 / (Hoft.r/nfft)));
-                combOutput.maximum =... max(combOutput.Ratio >= combOutput.combLimit );
+                combOutput.maximum = max(combOutput.Ratio >= combOutput.combLimit );
 
                 % In addition to the ratio cutoff, check the sum of comb
                 % values after feedforward. If the sum of points at
