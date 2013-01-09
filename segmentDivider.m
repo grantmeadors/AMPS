@@ -73,7 +73,7 @@ function Hoft = segmentDivider(time0, time1)
         tA = tSegment.tA;
         tB = tSegment.tB;
         
-        % tStart is a list of start time of the 16*512 second subsections,
+        % tStart is a list of start time of the 16*1024 second subsections,
         % tEnd the end times
         tStart = [tA; tA + (32*512)*(1:floor((tB - tA)/(32*512)))'];
         % Instead of fifty percent overlap (via 32*512), overlap for 1024 s
@@ -96,6 +96,15 @@ function Hoft = segmentDivider(time0, time1)
         tStart((tEnd - tStart) < 32) = -1;
         tEnd(tStart == -1) = [];
         tStart(tStart == -1) = [];
+
+        % If there is more than one subsegment, obliterate
+        % any that are entirely in the overlap of another,
+        % i.e., those with duration less than 1024 s
+        if length(tStart) > 1
+            tStart((tEnd - tStart) < 1024) = -1;
+            tEnd(tStart == -1) = [];
+            tStart(tStart == -1) = [];
+        end
 
         % Set two column vectors to indicate whether this subsegment is
         % preceded or followed by another
@@ -124,8 +133,8 @@ function Hoft = segmentDivider(time0, time1)
           
         numberOfJobs = 200; 
 
-        for ii = 1:numberOfJobs
-        %for ii = 1:length(T.list{1})
+        %for ii = 1:numberOfJobs
+        for ii = 1:length(T.list{1})
             tSegment.tA = T.list{1}(ii);
             tSegment.tB = T.list{2}(ii);
             
