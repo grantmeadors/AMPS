@@ -16,7 +16,7 @@ def g(text):
     result = dagObject.write(text + '\n')
     return result
 userDirectory = "/home/pulsar/feedforward/"
-analysisDate = "2012/09/12"
+analysisDate = "2013/01/08"
 
 # Make a directory for the output logs
 os.system('mkdir -p eleutheriaLogs')
@@ -31,7 +31,7 @@ h("executable = /home/pulsar/feedforward/" + analysisDate + "/AMPS/run_eleutheri
 h("output = /home/pulsar/feedforward/" + analysisDate + "/AMPS/eleutheriaLogs/eleutheria.out.$(tagstring)")
 h("error = eleutheriaLogs/eleutheria.err.$(tagstring)")
 h("log = eleutheriaLogs/eleutheria.dag.log")
-h("requirements = Memory >= 3999")
+h("requirements = Memory >= 9999")
 h("environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib")
 h("notification = never")
 h("")
