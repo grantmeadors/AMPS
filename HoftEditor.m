@@ -730,6 +730,11 @@ classdef HoftEditor < handle
                     Hoft.data = Hoft.baseline;
                 end
                 disp('Filtering unable to improve data; writing baseline instead')
+                flagLoneFirstWindowWriteBaseline = 1;
+            else
+                % If the first window is not alone, or is good, this flag
+                % defaults to zero.
+                flagLoneFirstWindowWriteBaseline = 0;
             end
             % For windowed segments, we have the option of writing the
             % baseline only in the faulty window. That is done outside this
@@ -1219,11 +1224,24 @@ classdef HoftEditor < handle
             
             
             % Now, perform writing and range gain calculation for each frame
-            % Or, if the Hoft veto has already been trigged,
+            % Or, if the Hoft veto has already been triggered,
             % then write anyway -- we have done all possible to preserve data.
+
+            % The comb check is special. Usually we only write if it passes,
+            % when the comb equals zero, but if fails on the first window of
+            % a science segment, it will never write frames,
+            % even as baseline (later windows
+            % survive to be written, as baseline if they fail, 
+            % thanks to the goVetoEffort flag). 
+            % To handle this contigency, define the goHoftCombSuccess flag
+            % to pass if either the window passes (as zero) or if it fails
+            % but the flagLoneFirstWindowWriteBaseline is on (as one.)
+            goHoftCombSuccess = ((Hoft.successVector.comb == 0) |...
+                ((Hoft.successVector.comb == 1) &...
+                (flagLoneFirstWindowWriteBaseline == 1)));
             goHoftSuccess =...
                 ((Hoft.successVector.range == 0) &...
-                (Hoft.successVector.comb == 0));
+                goHoftCombSuccess);
             goVetoEffort = goHoftSuccess |...
                 (Hoft.vetoAlarm == 2);
             goFinalCheck = goVetoEffort &...
