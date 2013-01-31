@@ -35,18 +35,18 @@
 %maximum_imagesize = max(imagesize);
 %disp(maximum_imagesize)
 
-for ii = 3:7
-    % Make file of range estimates files
-    systemCommandRangelist = ...
-        horzcat('ls /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
-        '*/*Range* >> eleutheriaLogs/whole_rangelist_LHO.txt');
-    % Make file of range estimates
-    systemCommandRange = ...
-        horzcat('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
-        '*/*Range* >> eleutheriaLogs/whole_range_LHO.txt');
-    system(systemCommandRangelist);
-    system(systemCommandRange);
-end
+%for ii = 3:7
+%    % Make file of range estimates files
+%    systemCommandRangelist = ...
+%        horzcat('ls /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
+%        '*/*Range* >> eleutheriaLogs/whole_rangelist_LHO.txt');
+%    % Make file of range estimates
+%    systemCommandRange = ...
+%        horzcat('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
+%        '*/*Range* >> eleutheriaLogs/whole_range_LHO.txt');
+%    system(systemCommandRangelist);
+%    system(systemCommandRange);
+%end
 % Load into Matlab
 rangematrix = load('eleutheriaLogs/whole_range_LHO.txt');
 
@@ -71,6 +71,7 @@ grid on
 xlim([931e6 973e6])
 xlabel('GPS time (seconds)')
 ylabel('After/Before feedforward inspiral range')
+title('Inspiral range gain versus time')
 
 % Report average gain
 disp('Average gain in inspiral range over the science run (percent)')
@@ -89,7 +90,7 @@ close(5000)
 % Try making smoothed plots
 inspiralSmoothName = 'inspiralRangeSmooth';
 figure(6000)
-plot(rangematrix(:,1), smooth(rangematrix(:,2)/1e3,20), rangematrix(:,1), smooth(rangematrix(:,3)/1e3))
+plot(rangematrix(:,1), smooth(rangematrix(:,2)/1e3,50), rangematrix(:,1), smooth(rangematrix(:,3)/1e3,50))
 grid on
 xlim([931e6 973e6])
 xlabel('GPS time (seconds)')
@@ -105,10 +106,11 @@ print('-dpng', strcat(inspiralSmoothName, '.png'));
 close(6000)
 
 figure(7000)
-plot(rangematrix(:, 1), smooth(rangematrix(:, 4), 20))
+plot(rangematrix(:, 1), smooth(rangematrix(:, 4), 50))
 grid on
 xlim([931e6 973e6])
 ylabel('Smoothed after/before feedforward inspiral range')
+title('Smoothed inspiral range gain versus time')
 legend(gainLegend)
 inspiralSmoothGainGraphName = strcat(inspiralSmoothName , 'Gain');
 print('-dpdf', strcat(inspiralSmoothGainGraphName, '.pdf'));
