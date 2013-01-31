@@ -35,19 +35,19 @@
 %maximum_imagesize = max(imagesize);
 %disp(maximum_imagesize)
 
-%for ii = 3:7
-%    % Make file of range estimates files
-%    systemCommandRangelist = ...
-%        horzcat('ls /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
-%        '*/*Range* >> eleutheriaLogs/whole_rangelist_LHO.txt');
-%    % Make file of range estimates
-%    systemCommandRange = ...
-%        horzcat('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
-%        '*/*Range* >> eleutheriaLogs/whole_range_LHO.txt');
-%    system(systemCommandRangelist);
-%    system(systemCommandRange);
-%end
-% Load into Matlab
+for ii = 3:7
+    % Make file of range estimates files
+    systemCommandRangelist = ...
+        horzcat('ls /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
+        '*/*Range* >> eleutheriaLogs/whole_rangelist_LHO.txt');
+    % Make file of range estimates
+    systemCommandRange = ...
+        horzcat('tail -q -n 1 /home/pulsar/public_html/feedforward/diagnostics/LHO/*L2-9', num2str(ii),...
+        '*/*Range* >> eleutheriaLogs/whole_range_LHO.txt');
+    system(systemCommandRangelist);
+    system(systemCommandRange);
+end
+ Load into Matlab
 rangematrix = load('eleutheriaLogs/whole_range_LHO.txt');
 
 % Make plot of range versus time
@@ -109,6 +109,7 @@ figure(7000)
 plot(rangematrix(:, 1), smooth(rangematrix(:, 4), 50))
 grid on
 xlim([931e6 973e6])
+xlabel('GPS time (seconds)')
 ylabel('Smoothed after/before feedforward inspiral range')
 title('Smoothed inspiral range gain versus time')
 legend(gainLegend)
