@@ -1,0 +1,3 @@
+ligolw_segment_query -q -d -a L1:DMT-SCIENCE:4 -s 931035615 -e 971622015 -o temp.file
+ligolw_print temp.file --table segment --column start_time --column end_time --delimiter " " > S6L1science4_segs.txt
+
