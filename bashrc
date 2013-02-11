@@ -6,6 +6,7 @@ alias matlab7='/ldcg/matlab_r14_sp3/bin/matlab -nosplash -nodesktop'
 alias matlab2007a='/ldcg/matlab_r2007a/bin/matlab -nosplash -nodesktop'
 alias matlab2010b='/ldcg/matlab_r2010b/bin/matlab -nosplash -nodesktop'
 alias matlab2011a='/ldcg/matlab_r2011a/bin/matlab -nosplash -nodesktop'
+alias matlab2012a='/ldcg/matlab_r2012a/bin/matlab -nosplash -nodesktop'
 alias ee='eog'
 alias gv='ggv'
 
@@ -42,7 +43,7 @@ export _CONDOR_DAGMAN_LOG_ON_NFS_IS_ERROR=FALSE
 #      source ${LSC_DATAGRID_SERVER_LOCATION}/setup.sh
 #fi
 
-export MATLAB_ROOT=/ldcg/matlab_r2010b
+export MATLAB_ROOT=/ldcg/matlab_r2012a
 #export ARCH=glnx86
 export ARCH=glnxa64
 #

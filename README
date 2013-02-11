@@ -39,7 +39,11 @@ Cache and submit file creation:
 
 Compiling main feedforward program:
 0. Call "source bashrc" while logged in as user pulsar@ldas-grid.caltech.edu
-1. Run the Matlab compiler: "mcc -mv eleutheria.m"
+1a. Run the Matlab compiler: "mcc -mv eleutheria.m"
+1b. For better memory performance, run the Matlab 2012a compiler with
+    "/ldcg/matlab_r2012a/bin/mcc -mv -R -nodisplay -R -nojvm -R -singleCompThread eleutheria.m"
+    and note it may only compile on gmeadors, depending on env,
+    but it runs with a sourced bashrc on pulsar.
 
 Submitting main feedforward Condor jobs:
 0. Submit to the CIT cluster nodes with "condor_submit_dag EleutheriaDAG.dag"

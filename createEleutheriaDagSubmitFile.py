@@ -32,7 +32,7 @@ h("output = /home/pulsar/feedforward/" + analysisDate + "/AMPS/eleutheriaLogs/el
 h("error = eleutheriaLogs/eleutheria.err.$(tagstring)")
 h("log = eleutheriaLogs/eleutheria.dag.log")
 h("request_memory = 4 GB")
-h("environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib")
+h("environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2012a/runtime/glnxa64:/ldcg/matlab_r2012a/bin/glnxa64:/ldcg/matlab_r2012a/extern/lib/glnxa64:/ligotools/lib")
 h("notification = never")
 h("")
 h("arguments = $(argList)")
