@@ -15,7 +15,13 @@ function Hoft = segmentDivider(time0, time1)
         % Analyze the start and end times to determine the boundaries
         % of science segments in between
         % Load a list of science segments
-        T.segments = load('seglist.txt');
+        % Filter so only segments 60 s or longer are kept
+        tempSeglist = load('seglist.txt');
+        T.segments =...
+            tempSeglist(...
+            tempSeglist(:, 2) - tempSeglist(:,1) >= 60, :);
+        clear tempSeglist
+
         % Input start and stop times
         if isnumeric(time0);
             T.time(1) = time0;
