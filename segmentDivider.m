@@ -160,7 +160,11 @@ function Hoft = segmentDivider(time0, time1)
                 upperPre = 0;
                 intoPre = 0;
             end
-            if ii < numberOfJobs
+            if ii < 0 % numberOfJobs 
+                % numberOfJobs is a conversative option that will
+                % avoid any frame with two segments;
+                % if the check is against zero,
+                % the frame is given to the job that ends there.
                 lowerPost = 128*floor(T.list{1}(ii+1)/128);
                 intoPost = 128 - (T.list{1}(ii+1) - lowerPost);
             else
