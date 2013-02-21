@@ -117,6 +117,10 @@ function Hoft = segmentDivider(time0, time1)
         
         tIsPreceded = [0; ones((length(tStart)-1), 1)];
         tIsFollowed = [ones((length(tEnd)-1), 1); 0];
+        if length(tStart) == 0
+            tIsPreceded = [];
+            tIsFollowed = [];
+        end
         
         
         % Assign the list of subsection starts and ends to output
