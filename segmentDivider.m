@@ -137,7 +137,7 @@ function Hoft = segmentDivider(time0, time1)
 
         % by looking at an 'ii'th element of 't.startlist'
           
-        numberOfJobs = 200; 
+        numberOfJobs = length(T.list{1}); 
 
         %for ii = 1:numberOfJobs
         for ii = 1:length(T.list{1})
