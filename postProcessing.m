@@ -93,13 +93,14 @@ figure(6000)
 plot(rangematrix(:,1), smooth(rangematrix(:,2)/1e3,50), rangematrix(:,1), smooth(rangematrix(:,3)/1e3,50))
 grid on
 xlim([931e6 973e6])
+ylim([6 22])
 xlabel('GPS time (seconds)')
 ylabel('Inspiral range (Megaparsecs)')
 title('Smoothed inspiral range improvement versus time')
 beforeAvg = mean(rangematrix(:,2)/1e3);
 afterAvg = mean(rangematrix(:,3)/1e3);
-beforeNameSmooth = horzcat('Before feedforward: ', num2str(beforeAvg), ' Mpc arithmetric mean');
-afterNameSmooth = horzcat('After feedforward: ', num2str(afterAvg), ' Mpc arithmetric mean');
+beforeNameSmooth = horzcat('Before feedforward: ', num2str(beforeAvg), ' Mpc arithmetic mean');
+afterNameSmooth = horzcat('After feedforward: ', num2str(afterAvg), ' Mpc arithmetic mean');
 legend(beforeNameSmooth, afterNameSmooth)
 print('-dpdf', strcat(inspiralSmoothName, '.pdf'));
 print('-dpng', strcat(inspiralSmoothName, '.png'));
@@ -109,6 +110,7 @@ figure(7000)
 plot(rangematrix(:, 1), smooth(rangematrix(:, 4), 50))
 grid on
 xlim([931e6 973e6])
+ylim([0.95 1.30])
 xlabel('GPS time (seconds)')
 ylabel('Smoothed after/before feedforward inspiral range')
 title('Smoothed inspiral range gain versus time')
