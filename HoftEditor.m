@@ -49,6 +49,7 @@ classdef HoftEditor < handle
         successVector
         site
         siteFull
+        excessFrameAppliedFlag
     end
     
     methods
@@ -106,6 +107,7 @@ classdef HoftEditor < handle
             Hoft.isFirstSubFlag = 1;
             Hoft.isLastSubFlag = 0;
             Hoft.successVector = [];
+            Hoft.excessFrameAppliedFlag = [];
         end
         function constructVector(Hoft, totalFrameDuration)
             Hoft.data = ones(16384*totalFrameDuration, 1);
@@ -624,7 +626,46 @@ classdef HoftEditor < handle
                 disp(length(Hoft.data))
                 disp(length(Hoft.data((jjStart+s+1):end)))
                 disp(length(Hoft.frameTail))
-                if length(Hoft.frameTail) > 0
+                % There is an unusual special case now if the last window
+                % is between 512 and 512+32 s long. Subdivider obliterates
+                % all windows less than 32 s long, creating a category of
+                % final windows a bit longer than the 512 or less that is
+                % typical. If this extension pushes the end of the final
+                % window across a 128 s frame boundary from where the
+                % penultimate window ends (remember, they are usually
+                % together), then the above windowing will extend Hoft.data,
+                % because Matlab index assertions soft-extend arrays so long
+                % as left and right match. Yet the Hoft.data array will not
+                % be extended sufficiently to include the next full frameTail.
+                % Thus, in that rare instance, we create an exception.
+                durationFinalSub = tSub.tEnd(end) - tSub.tStart(end);  
+                excessFrameCondition = ( durationFinalSub > 512 ) &...
+                    ( durationFinalSub <= 512+32 );
+                % Note that we only make the correction the first
+                % time around; in a veto case, it must not be made again)
+                if excessFrameCondition & (Hoft.vetoAlarm == 0)
+                    if length(Hoft.data((jjStart+s+1):end)) == 0
+                        Hoft.data = [Hoft.data; Hoft.frameTail];
+                        Hoft.baseline = [Hoft.baseline; Hoft.frameTail];
+                        disp('Excess frame adjustment applied')
+                        Hoft.excessFrameAppliedFlag = 1;
+                        disp('New length of Hoft.data((jjStart+s+1):end) is')
+                        disp(length(Hoft.data((jjStart+s+1):end)))
+                    else
+                        Hoft.excessFrameAppliedFlag = 0;
+                        disp('No excess frame adjustment needed')
+                    end
+                elseif Hoft.vetoAlarm == 0
+                    Hoft.excessFrameAppliedFlag = 0;
+                end
+                % Below is the part for which the above discussion built up
+                % so much anticipation: the final attachment of the frameTail
+                % back into the main Hoft.data array, having been seperated
+                % as the latter made its voyage from being dirty to clean.
+                % With Hoft.data filtered, the frameTail now only serves
+                % to fill out the remainder of the final frame.
+                if (length(Hoft.frameTail) > 0) &...
+                    (Hoft.excessFrameAppliedFlag == 0);
                     Hoft.data((jjStart+s+1):end) = Hoft.frameTail;
                     Hoft.baseline((jjStart+s+1):end) = Hoft.frameTail;
                 end
