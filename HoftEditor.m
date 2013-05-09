@@ -50,6 +50,7 @@ classdef HoftEditor < handle
         site
         siteFull
         excessFrameAppliedFlag
+        oddFrameWarning
     end
     
     methods
@@ -89,6 +90,15 @@ classdef HoftEditor < handle
             % files that the program is being told to process
             Hoft.site = listContents(1);
             Hoft.siteFull  = strcat('L', listContents(1), 'O');
+            % Let us do a bit of list processing to determine if there are any
+            % frames of unusual length.
+            regExOut = regexp(listContents,'-(?<GPS>\d+)-(?<DUR>\d+)\.','names');
+            Hoft.oddFrameWarning = [];
+            for ii = 1:length(regExOut)
+                if str2num(regExOut(ii).DUR) ~= T.s
+                    Hoft.oddFrameWarning = [Hoft.oddFrameWarning; regExOut(ii)] ;
+                end
+            end
             Hoft.T = T;
             Hoft.tStart = tSub.tStart(1);
             Hoft.tEnd = tSub.tEnd(1);
@@ -133,7 +143,7 @@ classdef HoftEditor < handle
         %end
         function initialMICH(Hoft, T, tSub, addenda)
             
-            addenda.initialFixer(tSub, T);
+            addenda.initialFixer(Hoft.oddFrameWarning, tSub, T);
 
             % Call the filter function itself
             aFirstHoft = aletheia(tSub.tStart(1), tSub.tEnd(1), addenda);

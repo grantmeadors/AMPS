@@ -21,6 +21,7 @@ classdef AddendaEditor < handle
         baselineCheck
         site
         siteFull
+        oddFrameWarning
     end
     
     methods
@@ -45,7 +46,7 @@ classdef AddendaEditor < handle
             addenda.site = siteName;
             addenda.siteFull = strcat('L', siteName, 'O');
         end
-        function initialFixer(addenda, tSub, T)
+        function initialFixer(addenda, oddFrameWarning, tSub, T)
             tau1 = floor(tSub.tStart(1) / T.s)*T.s;
             tau2 = ceil(tSub.tEnd(1) / T.s)*T.s;
             if tSub.tStart(1) == tau1
@@ -65,6 +66,7 @@ classdef AddendaEditor < handle
             else
                 addenda.frameTailFlag = 1;
             end
+            addenda.oddFrameWarning = oddFrameWarning;
         end
         function loopFixer(addenda, Hoft, jj, tSub)
             if jj == length(tSub.tStart)
@@ -87,6 +89,7 @@ classdef AddendaEditor < handle
                 addenda.passPRC = Hoft.passPRC;
                 clear Hoft.passPRC
             end
+            addenda.oddFrameWarning = Hoft.oddFrameWarning;
         end
         function initialPRC(addenda, aFirstHoft)
             addenda.PRCfilter = 1;

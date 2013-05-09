@@ -55,7 +55,30 @@ classdef Data < handle
             else
                 channels.tau2 = channels.t(2);
             end
-            
+            % In a few rare cases, the frame files are of inconsistent length
+            % We check for this with the odd frame warning and adjust the tau,
+            % which are supposed to correctly correspond to the start and stop
+            % of frame files on disk, to match what ligo_data_find has told
+            % us are available, as written out to the cache files and then
+            % made into the oddFrameWarning flag.
+            % These errors only seem to occur in specific cases, so this fix
+            % is also quite specific
+            for ii = length(addenda.oddFrameWarning)
+                if str2num(addenda.oddFrameWarning(ii).DUR) ~= addenda.s
+                    if str2num(addenda.oddFrameWarning(ii).GPS) == channels.t(1)
+                        channels.tau1
+                        channels.tau1 = channels.t(1);
+                        channels.tau1
+                    end
+                    if str2num(addenda.oddFrameWarning(ii).GPS) +...
+                        str2num(addenda.oddFrameWarning(ii).DUR)...
+                        == channels.t(2)
+                        channels.tau2
+                        channels.tau2 = t(2);
+                        channels.tau2
+                    end
+                end
+            end
             % Find how far shifted the signal is into the science segment
             channels.durationHead =...
                 channels.t(1) - floor(channels.t(1)/addenda.s) * addenda.s;
