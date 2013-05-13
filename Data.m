@@ -63,7 +63,7 @@ classdef Data < handle
             % made into the oddFrameWarning flag.
             % These errors only seem to occur in specific cases, so this fix
             % is also quite specific
-            for ii = length(addenda.oddFrameWarning)
+            for ii = 1:length(addenda.oddFrameWarning)
                 if str2num(addenda.oddFrameWarning(ii).DUR) ~= addenda.s
                     if str2num(addenda.oddFrameWarning(ii).GPS) == channels.t(1)
                         channels.tau1
@@ -74,7 +74,7 @@ classdef Data < handle
                         str2num(addenda.oddFrameWarning(ii).DUR)...
                         == channels.t(2)
                         channels.tau2
-                        channels.tau2 = t(2);
+                        channels.tau2 = channels.t(2);
                         channels.tau2
                     end
                 end

@@ -329,15 +329,24 @@ classdef HoftEditor < handle
             
             % If we will continue, clear the first 512 seconds of frames
             % and add whitespace to their ends if necessary
+            % If the first frame is odd, then shorten the 512 s as needed
+            firstAddTime = 512;
+            if length(Hoft.oddFrameWarning) > 0
+                if Hoft.gpsStart ==...
+                    str2num(Hoft.oddFrameWarning(1).GPS)
+                    firstAddTime = firstAddTime -...
+                        (128 - str2num(Hoft.oddFrameWarning(1).DUR));
+                end 
+            end
             if length(tSub.tStart) > 1
                 Hoft.isFirstSubFlag = 0;
-                Hoft.data(1:(16384*512)) = [];
-                Hoft.baseline(1:(16384*512)) = [];
+                Hoft.data(1:(16384*firstAddTime)) = [];
+                Hoft.baseline(1:(16384*firstAddTime)) = [];
                 if T.pipe == 1
-                    Hoft.dqFlag(1:(1*512)) = [];
-                    Hoft.stateVector(1:(16*512)) = [];
+                    Hoft.dqFlag(1:(1*firstAddTime)) = [];
+                    Hoft.stateVector(1:(16*firstAddTime)) = [];
                 end
-                Hoft.gpsStart = Hoft.gpsStart + 512;
+                Hoft.gpsStart = Hoft.gpsStart + firstAddTime;
                 if length(tSub.tStart) > 2
                     nextSubWhitespace = constructWhitespace(T, tSub, 1);
                     
@@ -796,6 +805,11 @@ classdef HoftEditor < handle
             % If this another segment follows, only write 512 s
             if Hoft.anticipateFlag == 1
                 numberOfFrames = (512 / Hoft.T.s);
+                % If there are odd frames, then this number needs to be rounded
+                if length(Hoft.oddFrameWarning) > 0
+                    disp('Rounding up number of frames due to odd frame length')
+                    numberOfFrames = ceil(numberOfFrames);
+                end
             else
                 numberOfFrames = ceil(secondsDuration / Hoft.T.s);
             end
@@ -820,6 +834,17 @@ classdef HoftEditor < handle
             
             if Hoft.anticipateFlag == 1
                 Hoft.r = (16384*512 - 1);
+                % Again, this could be problematic if there
+                % happen to be odd frames, so we adjust it
+                if length(Hoft.oddFrameWarning) > 0
+                   if Hoft.tEnd == str2num(Hoft.oddFrameWarning(end).GPS) 
+                   % If we meet these conditionals, then the length of
+                   % Hoft.r must be shortened by the difference in length of
+                   % the odd frame (oddFrame.DUR) from a standard 128 s frame
+                       Hoft.r = Hoft.r - 16384*(128 -...
+                           str2num(Hoft.oddFrameWarning(end).DUR)); 
+                   end
+                end
             end
             if Hoft.anticipateFlag == 0
                 if Hoft.isFirstSubFlag == 0
@@ -831,6 +856,8 @@ classdef HoftEditor < handle
             
             % Generate names
             startNameBasic = strcat('-', num2str(Hoft.gpsStart + (1-1)*Hoft.T.s) );
+            % Note that the stop name will not be correct if a frame is an unusual length,
+            % but the stopName variable is never used anyway.
             stopNameBasic = strcat('-', num2str(Hoft.gpsStart + (numberOfFrames)*Hoft.T.s) );
             
             % Uncomment the mkframe commands below to write output
@@ -1303,13 +1330,46 @@ classdef HoftEditor < handle
                    
                     % Generate names
                     startName = strcat('-', num2str(Hoft.gpsStart + (kk-1)*Hoft.T.s) );
+                    % Again, stopName is never used.
                     stopName = strcat('-', num2str(Hoft.gpsStart + (kk)*Hoft.T.s) );
                     gpsStartFrame = Hoft.gpsStart + (kk-1)*Hoft.T.s;
                     
+                    % In the event of odd frames, this too needs to be modified
+                    oddOffset = [];
+                    if length(Hoft.oddFrameWarning) > 0 
+                        % Let us first deal with the case where the starting
+                        % frame needs its name adjusted
+                        if Hoft.gpsStart ==...
+                            str2num(Hoft.oddFrameWarning(1).GPS)
+                            if kk > 1
+                                oddOffset = (kk-1)*Hoft.T.s -...
+                                    (128 - str2num(Hoft.oddFrameWarning(1).DUR));
+                                startName = strcat('-', num2str(Hoft.gpsStart + oddOffset));
+                                gpsStartFrame = Hoft.gpsStart + oddOffset; 
+                            end 
+                        end
+                    end
+                    
                     % Uncomment the mkframe commands below to write output
-                    
-                    
-                    HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):(kk*Hoft.T.s*16384) );
+                    if length(Hoft.oddFrameWarning) == 0
+                        HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):(kk*Hoft.T.s*16384) );
+                    % Adjust for odd frames at the start
+                    elseif length(oddOffset) > 0
+                        HoftSub.data = Hoft.data( (oddOffset*16384+1):((oddOffset+Hoft.T.s)*16384));
+                    elseif Hoft.tStart == str2num(Hoft.oddFrameWarning(1).GPS)
+                        HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):...
+                            (str2num(Hoft.oddFrameWarning(1).DUR)*16384));
+                    elseif Hoft.tEnd == str2num(Hoft.oddFrameWarning(end).GPS) +...
+                        str2num(Hoft.oddFrameWarning(end).DUR)  
+                        if kk == numberOfFrames & Hoft.isLastSubFlag == 1
+                            HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):...
+                                ((kk-1)*Hoft.T.s*16384+str2num(Hoft.oddFrameWarning(end).DUR)*16384));
+                        else
+                            HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):(kk*Hoft.T.s*16384) );
+                        end
+                    else
+                        HoftSub.data = Hoft.data( ((kk-1)*Hoft.T.s*16384 + 1):(kk*Hoft.T.s*16384) );
+                    end
                     HoftSub.data = double(HoftSub.data);
                     disp('HoftSub.data is this long')
                     length(HoftSub.data)
@@ -1321,7 +1381,16 @@ classdef HoftEditor < handle
                     HoftSub.channel = strcat(site, '1:AMPS-STRAIN');
                     HoftSub.type = 'd';
                     HoftSub.mode = 'a';
-                    individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(Hoft.T.s), '.gwf');
+                    if length(Hoft.oddFrameWarning) == 0
+                        frameDuration = Hoft.T.s;
+                    elseif startName(2:10) == Hoft.oddFrameWarning(1).GPS
+                        frameDuration = str2num(Hoft.oddFrameWarning(1).DUR);
+                    elseif startName(2:10) == Hoft.oddFrameWarning(end).GPS
+                        frameDuration = str2num(Hoft.oddFrameWarning(end).DUR);
+                    else
+                        frameDuration = Hoft.T.s;
+                    end
+                    individualFrameName = strcat(site, '-', site, '1_AMPS_C02_L2',startName,'-', num2str(frameDuration), '.gwf');
                     directoryDataFrameName = strcat('/archive/frames/S6/pulsar/feedforward/', siteFull, '/', individualFrameName(1:21));
                     %directoryDiagnosticsFrameName = strcat('/home/pulsar/public_html/feedforward/diagnostics/', individualFrameName(1:21));
                     setenv('systemDirectoryDataFrameName', directoryDataFrameName);
@@ -1331,13 +1400,13 @@ classdef HoftEditor < handle
                     frameName = strcat(directoryDataFrameName, '/', individualFrameName);
                     try
                         if containsNonEmptyData
-                            mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                            mkframe(frameName, HoftSub, 'n', frameDuration, gpsStartFrame);
                         end
                     catch err
                         if strcmp(err.identifier, 'mkframe:frameFail')
                             disp('Trying to write frame file after one failure')
                             if containsNonEmptyData
-                                mkframe(frameName, HoftSub, 'n', Hoft.T.s, gpsStartFrame);
+                                mkframe(frameName, HoftSub, 'n', frameDuration, gpsStartFrame);
                             end
                         else
                             rethrow(err)
@@ -1345,7 +1414,24 @@ classdef HoftEditor < handle
                     end
                     if Hoft.T.pipe == 1
                         % Write data quality and state vector
-                        stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):(kk*Hoft.T.s*16) );
+                        if length(Hoft.oddFrameWarning) == 0
+                            stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):(kk*Hoft.T.s*16) );
+                        elseif length(oddOffset) > 0
+                            stateVectorSub.data = Hoft.stateVector( (oddOffset*16+1):((oddOffset+Hoft.T.s)*16));
+                        elseif Hoft.tStart == str2num(Hoft.oddFrameWarning(1).GPS)
+                            stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):...
+                                (str2num(Hoft.oddFrameWarning(1).DUR)*16));
+                        elseif Hoft.tEnd == str2num(Hoft.oddFrameWarning(end).GPS) +...
+                            str2num(Hoft.oddFrameWarning(end).DUR)
+                            if kk == numberOfFrames & Hoft.isLastSubFlag == 1
+                                stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):...
+                                    ((kk-1)*Hoft.T.s*16 + str2num(Hoft.oddFrameWarning(end).DUR)*16));
+                            else
+                                stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):(kk*Hoft.T.s*16) );
+                            end
+                        else
+                            stateVectorSub.data = Hoft.stateVector( ((kk-1)*Hoft.T.s*16 + 1):(kk*Hoft.T.s*16) );
+                        end
                         stateVectorSub.data = double(stateVectorSub.data);
                         disp('stateVectorSub.data is this long')
                         length(stateVectorSub.data)
@@ -1354,20 +1440,37 @@ classdef HoftEditor < handle
                         stateVectorSub.mode = 'a';
                         try
                             if containsNonEmptyData
-                                mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                                mkframe(frameName, stateVectorSub, 'a', frameDuration, gpsStartFrame);
                             end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')
                                 if containsNonEmptyData
-                                    mkframe(frameName, stateVectorSub, 'a', Hoft.T.s, gpsStartFrame);
+                                    mkframe(frameName, stateVectorSub, 'a', frameDuration, gpsStartFrame);
                                 end
                             else
                                 rethrow(err)
                             end
                         end
                         clear stateVectorSub
-                        dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
+                        if length(Hoft.oddFrameWarning) == 0
+                            dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
+                        elseif length(oddOffset) > 0
+                            dqFlagSub.data = Hoft.dqFlag( (oddOffset*1+1):((oddOffset+Hoft.T.s)*1));
+                        elseif Hoft.tStart == str2num(Hoft.oddFrameWarning(1).GPS)
+                            dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):...
+                                (str2num(Hoft.oddFrameWarning(1).DUR)*1));
+                        elseif Hoft.tEnd == str2num(Hoft.oddFrameWarning(end).GPS) +...
+                            str2num(Hoft.oddFrameWarning(end).DUR)
+                            if kk == numberOfFrames & Hoft.isLastSubFlag == 1
+                                dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):...
+                                    ((kk-1)*Hoft.T.s*1 + str2num(Hoft.oddFrameWarning(end).DUR)*1));
+                            else
+                                dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
+                            end
+                        else
+                            dqFlagSub.data = Hoft.dqFlag( ((kk-1)*Hoft.T.s*1 + 1):(kk*Hoft.T.s*1) );
+                        end
                         dqFlagSub.data = double(dqFlagSub.data);
                         disp('dqFlagSub.data is this long')
                         length(dqFlagSub.data)
@@ -1376,13 +1479,13 @@ classdef HoftEditor < handle
                         dqFlagSub.mode = 'a';
                         try
                             if containsNonEmptyData
-                                mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                                mkframe(frameName, dqFlagSub, 'a', frameDuration, gpsStartFrame);
                             end
                         catch err
                             if strcmp(err.identifier, 'mkframe:frameFail')
                                 disp('Trying to write frame file after one failure')
                                 if containsNonEmptyData
-                                    mkframe(frameName, dqFlagSub, 'a', Hoft.T.s, gpsStartFrame);
+                                    mkframe(frameName, dqFlagSub, 'a', frameDuration, gpsStartFrame);
                                 end
                             else
                                 rethrow(err)
