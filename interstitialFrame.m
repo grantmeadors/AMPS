@@ -1,7 +1,7 @@
 function output = interstitialFrame(frame, cache, observatory, duration)
 % Grant David Meadors
 % gmeadors@umich.edu
-% 02012-06-19
+% 02013-05-13
 % interstitialFrame.m
 %
 % interstitialFrame accepts a frame input from S6 Hoft and

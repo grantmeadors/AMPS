@@ -10,7 +10,7 @@ import os, commands, shutil, sys, re
 def h(text):
     result = fileObject.write(text + '\n')
     return result
-analysisDate = "2012/06/19"
+analysisDate = "2013/05/12"
 
 # Make a directory for the output logs
 os.system('mkdir -p interstitialLogs')
@@ -62,7 +62,7 @@ def queuer(n, observatory, duration, analysisDate):
     h("queue")
     h("")
 
-[queuer(n, 'H', 128, analysisDate) for n in range(9310, 9327+1)]
+[queuer(n, 'H', 128, analysisDate) for n in range(9330, 9330+1)]
 
 
 fileObject.close
