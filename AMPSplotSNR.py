@@ -32,8 +32,8 @@ def scatterplotter(observatory):
     plt.xlabel('SNR before feedforward (LDAS)')
     plt.ylabel('SNR after feedforward (AMPS)')
     plt.title(observatory + '1 iHope SNR after vs before feedforward')
-    plt.savefig(observatory + '1 AMPSplotSNR.png')
-    plt.savefig(observatory + '1 AMPSplotSNR.pdf')
+    plt.savefig(observatory + '1_AMPSplotSNR.png')
+    plt.savefig(observatory + '1_AMPSplotSNR.pdf')
     plt.close()
 
     plt.figure()
