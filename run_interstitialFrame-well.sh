@@ -23,7 +23,7 @@ echo "------------------------------------------"
 #	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE}/client ;
 #	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE} ;  
 #  XAPPLRESDIR=${MCRROOT}/X11/app-defaults ;
-LD_LIBRARY_PATH=/ldcg/matlab_r2010b/runtime/glnxa64:/ldcg/matlab_r2010b/bin/glnxa64:/ldcg/matlab_r2010b/extern/lib/glnxa64:/ligotools/lib ;
+LD_LIBRARY_PATH=/ldcg/matlab_r2012a/runtime/glnxa64:/ldcg/matlab_r2012a/bin/glnxa64:/ldcg/matlab_r2012a/extern/lib/glnxa64:/ligotools/lib ;
   export LD_LIBRARY_PATH;
   export XAPPLRESDIR;
   echo LD_LIBRARY_PATH is ${LD_LIBRARY_PATH};

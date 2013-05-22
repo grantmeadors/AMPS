@@ -54,6 +54,7 @@ h("output = /home/pulsar/feedforward/" + analysisDate + "/AMPS/interstitialLogs/
 h("error = interstitialLogs/interstitial.err.$(tagstring)")
 h("log = interstitialLogs/interstitial.log.$(tagstring)")
 h("request_memory = 4 GB")
+h("environment = HOME=/archive/home/pulsar;LD_LIBRARY_PATH=/ldcg/matlab_r2012a/runtime/glnxa64:/ldcg/matlab_r2012a/bin/glnxa64:/ldcg/matlab_r2012a/extern/lib/glnxa64:/ligotools/lib")
 h("notification = never")
 h("")
 h("arguments = $(argList)")

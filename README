@@ -46,18 +46,18 @@ Compiling main feedforward program:
     but it runs with a sourced bashrc on pulsar.
 
 Submitting main feedforward Condor jobs:
-0. Submit to the CIT cluster nodes with "condor_submit_dag EleutheriaDAG.dag"
+0. Submit to the CIT cluster nodes with "condor_submit_dag -maxjobs 100 EleutheriaDAG.dag"
 1. Watch progress and verify done with "condor_q pulsar" checks and
     reading the output logs.
 
 Filling in interstitial frames:
 0. Create the frames in between science segments after the main feedforward
     jobs are completed.
-1.  Text edit "createInterstitialCondorSubmitFile.py"
+1.  Text edit "createInterstitialCondorDagFile.py"
     to ensure that analysisDate has the current "yyyy/mm/dd".
-2. Run "./createInterstitialCondorSubmitFile.py"
-3. Compile "mcc -mv interstitialFrame.m"
-4. Submit "condor_submit InterstitialSub.sub"
+2. Run "./createInterstitialCondorDagFile.py"
+3. Compile "/ldcg/matlab_r2012a/bin/mcc -mv -R -nodisplay -R -nojvm -R -singleCompThread interstitialFrame.m"
+4. Submit "condor_submit_dag -maxjobs 100 InterstitialDAG.dag"
 
 Post-processing basic plots:
 0. Produce basic plots of range and verify log file output by starting
