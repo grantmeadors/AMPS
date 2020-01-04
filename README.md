@@ -1,0 +1,124 @@
+Grant David Meadors
+Auxiliary MICH-PRC Subtraction
+2012-11-09 (JD 2456241)
+g m e a d o r s @ u m i c h . e d u
+
+To run each section of the feedforward project
+known as AMPS (Auxiliary MICH-PRC Subtraction),
+follow these instructions.
+
+Setup: 
+0. Login to "pulsar@ldas-grid.ligo.caltech.edu"
+1. Make a directory of the form "~pulsar/feedforward/yyyy/mm/dd/",
+    where yyyy is current year, mm month and dd day, and cd there.
+2. Download the latest git repository, 
+    "git clone git@github.com:grantmeadors/AMPS.git"
+3. cd to the AMPS directory. Note, only the main pulsar account
+    will be able to access all functions.
+
+Segment query:
+0. Call "./getS6H1segs" to query S6 segments. Modify for observatory as needed
+    and copy output segment list to "seglist.txt"
+
+Segment division:
+0. Start Matlab, any recent version, e.g. "matlab -nodisplay"
+1. Trim the raw S6 seglist, "seglist.txt", into "dividedSeglist.txt",
+    using "segmentDivider(start GPS time, stop GPS time)",
+    which searches for S6 segments between the start and stop times
+    and divides segments longer than a certain duration. It also
+    returns only the first N such segments,
+    where N is coded in segmentDivider.
+
+Cache and submit file creation:
+0. Text edit "createEleutheriaDagSubmitFile.py" to ensure that 
+    analysisDate has the current "yyyy/mm/dd" value 
+1. Call "./createEleutheriaDagSubmitFile.py" to generate a cache
+    of ligo_data_find locations for S6 data and a Condor DAG submission file
+    for feedforward. Note that this can take a few minutes or more 
+    for every hundred segments. 
+
+Compiling main feedforward program:
+0. Call "source bashrc" while logged in as user pulsar@ldas-grid.caltech.edu
+1a. Run the Matlab compiler: "mcc -mv eleutheria.m"
+1b. For better memory performance, run the Matlab 2012a compiler with
+    "/ldcg/matlab_r2012a/bin/mcc -mv -R -nodisplay -R -nojvm -R -singleCompThread eleutheria.m"
+    and note it may only compile on gmeadors, depending on env,
+    but it runs with a sourced bashrc on pulsar.
+
+Submitting main feedforward Condor jobs:
+0. Submit to the CIT cluster nodes with "condor_submit_dag -maxjobs 100 EleutheriaDAG.dag"
+1. Watch progress and verify done with "condor_q pulsar" checks and
+    reading the output logs.
+
+Filling in interstitial frames:
+0. Create the frames in between science segments after the main feedforward
+    jobs are completed.
+1.  Text edit "createInterstitialCondorDagFile.py"
+    to ensure that analysisDate has the current "yyyy/mm/dd".
+2. Run "./createInterstitialCondorDagFile.py"
+3. Compile "/ldcg/matlab_r2012a/bin/mcc -mv -R -nodisplay -R -nojvm -R -singleCompThread interstitialFrame.m"
+4. Submit "condor_submit_dag -maxjobs 100 InterstitialDAG.dag"
+
+Post-processing basic plots:
+0. Produce basic plots of range and verify log file output by starting
+    "matlab2010b -nodisplay" and invoking "postProcessing"
+    (note: first verify that it is reading all the logs 
+    and in the right directory)
+
+Spectral scan (optional):
+0. Choose the first AMPS frame from a science segment
+    longer than 12288 seconds.
+1. Start "matlab2010b -nodisplay" 
+2. Run "spectralScan(framename)", where framename is the name of
+    the first frame only, not including the directory name.
+
+Comb spectrum (optional):
+0. Edit "combSpectrum.py" to process all the output diagnostic directories.
+1. Run "combSpectrum.py", review output plots in those same directories.
+
+Perusing frames:
+0. When at least main feedforward jobs are done, inspect the frames
+    for structural errors and check injection syncronization.
+1. Text edit "createPeruseCondorSubmitFile.py"
+    to ensure that analysisDate has the current "yyyy/mm/dd".
+2. Text edit "peruseManyFrames.py"; 
+    (optional) if desired, to ensure that its testBit is
+    set to allow the "catter" function to perform its check, that
+    "particularRun" is set to the date of the relelvant feedforward run,
+    and the the range of jobs equals the number of feedforward jobs.
+    This checks to see if "No data found" errors appear in the logs.
+3. Compile "mcc -mv peruseFrame.m"
+4. Submit "condor_submit PeruseSub.sub"
+
+SFT generation:
+0. Follow the following BASH commands to make SFTs for AMPS data:
+1. "ligo_data_find -o H -t H1_AMPS_C02_L2 -u file -s 931052708 -e 971622015 -u file --show-times > SFTsegsTestData.txt"
+2. "./compareSegLists.tcl -f1 dividedSeglist.txt -f2 segsH1ScienceMinusAllVetoes_AllS6VSR2VSR3times.txt -i > SFTsegsTestList.txt"
+3. "./compareSegLists.tcl -f1 SFTsegsTestList.txt -f2 SFTsegsTestData.txt -i > SFTsegsTestIntersection.txt"
+4a. "MakeSFTDAG -f SFTtukey.dag -G SFTTUKEY -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/tukey -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8"
+OR
+4b. "MakeSFTDAG -f SFThann.dag -G SFTHANN -d H1_AMPS_C02_L2 -x 128 -k 30 -F 38 -B 2000 -T 1800 -p /archive/frames/S6/pulsar/sfts/feedforward/hann -N H1:AMPS-STRAIN -m 1 -g SFTsegsTestIntersection.txt -o /usr1/pulsar -v 2 -D 3 -X AMPSC02L2 -u ADC_REAL8 -w 3 -P 0.5"
+5a. "condor_submit_dag SFTtukey.dag"
+OR
+5b. "condor_submit_dag SFThann.dag"
+
+Spectral averaging
+0. Modify, as needed for observatory or directory, "runspecS6H1feedforward"
+1. Run "./runspecS6H1feedforward"
+
+Spectral average plot generation:
+0. Start "matlab2010b -nodisplay"
+1. Run "fullspect", "fullspectDiff" or "fullspectZoom" as desired for plots.
+
+Website generation:
+0. Run scripts "./headerWriterDiagnostics.py" and
+    "./headerWriterSciencesegments.py"
+
+End of readme
+Finis
+
+Post-script:
+02020-01-03 (JD 2458852) --
+PGP-signing for inclusion in the
+Github Arctic Code Vault,
+Grant David Meadors, PhD
